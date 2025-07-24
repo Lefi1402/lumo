@@ -11,6 +11,15 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
+      <ion-refresher slot="fixed" @ionRefresh="doRefresh">
+        <ion-refresher-content
+          class="lum-refresher"
+          pulling-icon="crescent"
+          refreshing-spinner="crescent"
+        />
+      </ion-refresher>
+
+
       <!-- Lade‑Spinner -->
       <div v-if="loading" class="lumo-empty-gallery">
         <ion-spinner name="crescent" />
@@ -79,6 +88,8 @@ import {
   IonFabButton,
   IonIcon,
   IonSpinner,
+  IonRefresher,
+  IonRefresherContent,
   onIonViewWillEnter,
 } from '@ionic/vue';
 import { addOutline } from 'ionicons/icons';
@@ -89,11 +100,11 @@ import PhotoDetailModal from '@/components/PhotoDetailModal.vue';
 import appLogo from '@/assets/Logo.png';
 
 /* State */
-const photos     = ref<StoredPhoto[]>([]);
-const loading    = ref(true);
-const showModal  = ref(false);
+const photos      = ref<StoredPhoto[]>([]);
+const loading     = ref(true);
+const showModal   = ref(false);
 const activePhoto = ref<StoredPhoto | null>(null);
-const router     = useRouter();
+const router      = useRouter();
 
 /* Fotos laden */
 async function refresh() {
@@ -103,19 +114,22 @@ async function refresh() {
 }
 onIonViewWillEnter(refresh);
 
+/* Refresher-Callback */
+async function doRefresh(ev: CustomEvent) {
+  await refresh();
+  (ev.target as HTMLIonRefresherElement).complete();
+}
+
 /* Gruppiert nach Monat + Jahr */
 const groupedPhotos = computed(() => {
   const map = new Map<string, StoredPhoto[]>();
-
   for (const p of photos.value) {
     const key = new Date(p.date).toLocaleDateString('de-DE', {
       month: 'long',
       year: 'numeric',
-    }); // z. B. "Juli 2025"
+    });
     (map.get(key) || map.set(key, []).get(key)!).push(p);
   }
-
-  // Neueste Monate oben (Einträge sind bereits sortiert)
   return Array.from(map.entries());
 });
 
@@ -126,5 +140,3 @@ function openPhoto(photo: StoredPhoto) {
   showModal.value   = true;
 }
 </script>
-
-
