@@ -15,7 +15,6 @@
 
       <!-- Empty‑State -->
       <div v-else-if="photos.length === 0" class="lumo-empty-gallery">
-        <!-- Plus‑Button mittig -->
         <ion-fab vertical="center" horizontal="center" slot="fixed">
           <ion-fab-button class="fab-white" @click="goToCamera">
             <ion-icon :icon="addOutline" />
@@ -26,20 +25,30 @@
         </p>
       </div>
 
-      <!-- Grid bei ≥1 Foto -->
-      <ion-grid v-else>
-        <ion-row>
-          <ion-col
-            v-for="p in photos"
-            :key="p.fileName"
-            size="4"
-            class="p-0"
-            @click="openPhoto(p)"
-          >
-            <ion-img :src="p.webPath" />
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <!-- Galerie mit Monats‑Headern -->
+      <div v-else>
+        <div
+          v-for="([month, list]) in groupedPhotos"
+          :key="month"
+          class="month-block"
+        >
+          <h4 class="month-header">{{ month }}</h4>
+
+          <ion-grid>
+            <ion-row>
+              <ion-col
+                v-for="p in list"
+                :key="p.fileName"
+                size="4"
+                class="p-0"
+                @click="openPhoto(p)"
+              >
+                <ion-img :src="p.webPath" />
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </div>
 
       <!-- Detail‑Modal -->
       <PhotoDetailModal
@@ -71,7 +80,7 @@ import {
 } from '@ionic/vue';
 import { addOutline } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { loadPhotos, StoredPhoto } from '@/services/photoService';
 import PhotoDetailModal from '@/components/PhotoDetailModal.vue';
 
@@ -90,6 +99,22 @@ async function refresh() {
 }
 onIonViewWillEnter(refresh);
 
+/* Gruppiert nach Monat + Jahr */
+const groupedPhotos = computed(() => {
+  const map = new Map<string, StoredPhoto[]>();
+
+  for (const p of photos.value) {
+    const key = new Date(p.date).toLocaleDateString('de-DE', {
+      month: 'long',
+      year: 'numeric',
+    }); // z. B. "Juli 2025"
+    (map.get(key) || map.set(key, []).get(key)!).push(p);
+  }
+
+  // Neueste Monate oben (Einträge sind bereits sortiert)
+  return Array.from(map.entries());
+});
+
 /* Navigation & Modal */
 const goToCamera = () => router.push('/tabs/camera');
 function openPhoto(photo: StoredPhoto) {
@@ -97,3 +122,5 @@ function openPhoto(photo: StoredPhoto) {
   showModal.value   = true;
 }
 </script>
+
+
