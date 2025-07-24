@@ -3,7 +3,10 @@
     <!-- Header -->
     <ion-header>
       <ion-toolbar>
-        <ion-title class="lumo-title-center">LUMO</ion-title>
+        <ion-title class="lumo-title-center">
+          <span class="header-text">LUM</span>
+          <img :src="appLogo" class="header-logo" alt="Logo" />
+        </ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -83,6 +86,7 @@ import { useRouter } from 'vue-router';
 import { ref, computed } from 'vue';
 import { loadPhotos, StoredPhoto } from '@/services/photoService';
 import PhotoDetailModal from '@/components/PhotoDetailModal.vue';
+import appLogo from '@/assets/Logo.png';
 
 /* State */
 const photos     = ref<StoredPhoto[]>([]);

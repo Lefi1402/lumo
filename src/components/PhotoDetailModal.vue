@@ -1,5 +1,5 @@
 <template>
-  <ion-modal :is-open="isOpen" @didDismiss="close">
+  <ion-modal css-class="photo-modal"  :is-open="isOpen" @didDismiss="close">
     <ion-page>
       <!-- Header -->
       <ion-header>

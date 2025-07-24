@@ -1,20 +1,37 @@
-/* ==== Lumo Custom Styles =================================================== */
+/* ===========================================================================
+   LUMO – Global Theme
+========================================================================== */
 :root {
   --lumo-font-family: 'Bahnschrift', sans-serif;
   --lumo-text-color: #ffffff;
 }
 
-/* -------------------------------------------------------------------------- */
-/* Allgemeine Utility‑Klassen                                                */
-/* -------------------------------------------------------------------------- */
+/* ===========================================================================
+   Utility‑Klassen
+========================================================================== */
 
 .lumo-title-center {
-  text-align: center;
-  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
   font-family: var(--lumo-font-family);
 }
 
-/* Leerer Galerie‑State */
+.header-text {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.header-logo {
+  height: 21px;
+  margin-left: 1px;
+  object-fit: contain;
+}
+
 .lumo-empty-gallery {
   display: flex;
   flex-direction: column;
@@ -28,14 +45,12 @@
   margin-top: 140px;
   font-size: 1.2rem;
   text-align: center;
-  color: var(--lumo-text-color);
   font-family: var(--lumo-font-family);
 }
 
-/* -------------------------------------------------------------------------- */
-/* Kamera‑Seite                                                              */
-/* -------------------------------------------------------------------------- */
-
+/* ===========================================================================
+   Kamera‑Seite
+========================================================================== */
 .camera-content {
   --background: #111;
   position: relative;
@@ -71,14 +86,14 @@
 .camera-button {
   width: 70px;
   height: 70px;
-  background: white;
+  background: #fff;
   border-radius: 50%;
   border: 4px solid #aaa;
 }
 
 .camera-toggle {
   font-size: 28px;
-  color: white;
+  color: #fff;
 }
 
 .camera-thumbnail {
@@ -88,11 +103,10 @@
   border-radius: 12px;
 }
 
-/* -------------------------------------------------------------------------- */
-/* Galerie‑Grid & Monats‑Gruppierung                                         */
-/* -------------------------------------------------------------------------- */
+/* ===========================================================================
+   Galerie – Grid & Monats‑Header
+========================================================================== */
 
-/* Quadratische Thumbnails */
 ion-col.p-0 > ion-img {
   width: 100%;
   height: 100%;
@@ -100,30 +114,45 @@ ion-col.p-0 > ion-img {
   aspect-ratio: 1 / 1;
 }
 
-/* Monatliche Headerzeile */
 .month-header {
-  margin: 12px 0 4px 8px;         /* links fluchtet mit Grid‑Padding */
+  margin: 20px 0 4px 8px;   
+  font-size: 1.1rem;
   font-family: var(--lumo-font-family);
   color: var(--lumo-text-color);
-  font-size: 1.1rem;
 }
 
-/* Abstand zwischen Monats‑Blöcken */
 .month-block + .month-block {
   margin-top: 8px;
 }
 
-/* -------------------------------------------------------------------------- */
-/* Foto‑Detail‑Modal                                                         */
-/* -------------------------------------------------------------------------- */
+/* ===========================================================================
+   Foto‑Detail‑Modal
+========================================================================== */
 
-/* Bild im Modal */
-.detail-img {
-  width: 100%;
-  height: auto;
+ion-modal.photo-modal {
+  --border-radius: 20px;
+  overflow: hidden;
 }
 
-/* Footer‑Toolbar zentralisiert Buttons */
+.modal-close-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.detail-content {
+  --background: transparent;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --ion-background-color: transparent;
+}
+
+.detail-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 .modal-footer {
   --padding-start: 0;
   --padding-end: 0;
@@ -141,72 +170,47 @@ ion-col.p-0 > ion-img {
   font-family: var(--lumo-font-family);
 }
 
-/* Modalfoto – Content ohne Padding/Hintergrund */
-.detail-content {
-  --background: transparent;
-  --padding-top: 0;
-  --padding-bottom: 0;
-}
-
-/* Bild füllt den gesamten Content */
-.detail-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.modal-close-icon {
-  width: 30px;
-  height: 30px;
-}
-
-
-/* -------------------------------------------------------------------------- */
-/* IonAlert Custom Styling (runde Ecken, Button‑Farben)                      */
-/* -------------------------------------------------------------------------- */
+/* ===========================================================================
+   IonAlert – Runde Ecken & Button‑Farben
+========================================================================== */
 
 ion-alert.custom-alert .alert-wrapper {
-  border-radius: 16px;                        
-  font-family: 'Bahnschrift', sans-serif;
+  border-radius: 16px;
+  font-family: var(--lumo-font-family);
 }
 
-/* Alle Alert‑Buttons (Font angleichen) */
 ion-alert.custom-alert .alert-button {
-  font-family: 'Bahnschrift', sans-serif;
+  font-family: var(--lumo-font-family);
 }
 
-/* Cancel → weiße Schrift */
 ion-alert.custom-alert
   .alert-button.alert-button-role-cancel {
   color: #ffffff;
 }
 
-/* Destructive → rote Schrift */
 ion-alert.custom-alert
   .alert-button.alert-button-role-destructive {
   color: #ff4d4f;
 }
 
-/* -------------------------------------------------------------------------- */
-/* FAB Weiß (optional überall verwendbar)                                    */
-/* -------------------------------------------------------------------------- */
+/* ===========================================================================
+   Floating‑Action‑Button (weiß)
+========================================================================== */
 
 .fab-white {
   --background: #ffffff;
-  --color: #111111;   /* Icon‑Farbe */
+  --color: #111111; /* Icon */
 }
 
-/* -------------------------------------------------------------------------- */
-/* Tabs – Icon‑Größe & Farben                                                */
-/* -------------------------------------------------------------------------- */
+/* ===========================================================================
+   Tabs – Farbe & Icon‑Größe
+========================================================================== */
 
 ion-tab-bar {
-  --color: #8a8a8a;          /* inaktive Icons & Labels */
-  --color-selected: #ffffff; /* aktiver Tab = weiß */
+  --color: #8a8a8a;        
+  --color-selected: #ffffff;
 }
 
-/* Größerer Icon‑Wrapper falls benötigt */
 ion-tab-bar ion-icon {
   width: 26px;
   height: 26px;
