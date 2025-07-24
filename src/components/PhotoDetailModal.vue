@@ -13,26 +13,30 @@
         </ion-toolbar>
       </ion-header>
 
-      <!-- Bild (guarded, falls photo==null) -->
+      <!-- Bild -->
       <ion-content v-if="photo" scroll="vertical">
         <img :src="photo.webPath" class="detail-img" />
       </ion-content>
 
-      <!-- Footer -->
+      <!-- Footer (Buttons zentriert) -->
       <ion-footer v-if="photo">
-        <ion-toolbar>
-          <!-- Bearbeiten nur Android -->
-          <ion-buttons slot="start" v-if="isAndroid">
-            <ion-button fill="clear" @click="editPhoto">
-              <ion-icon :icon="createOutline" />
+        <ion-toolbar class="modal-footer" mode="md">
+          <ion-buttons class="modal-btn-group">
+            <ion-button
+              v-if="isAndroid"
+              fill="clear"
+              @click="editPhoto"
+            >
+              <ion-icon slot="start" :icon="createOutline" />
               Bearbeiten
             </ion-button>
-          </ion-buttons>
 
-          <!-- Löschen -->
-          <ion-buttons slot="end">
-            <ion-button color="danger" fill="clear" @click="confirmDelete">
-              <ion-icon :icon="trashOutline" />
+            <ion-button
+              color="danger"
+              fill="clear"
+              @click="confirmDelete"
+            >
+              <ion-icon slot="start" :icon="trashOutline" />
               Löschen
             </ion-button>
           </ion-buttons>
@@ -45,6 +49,7 @@
       :is-open="showAlert"
       header="Foto löschen?"
       message="Diese Aktion kann nicht rückgängig gemacht werden."
+      css-class="custom-alert"
       :buttons="alertButtons"
       @didDismiss="showAlert = false"
     />
@@ -52,7 +57,6 @@
 </template>
 
 <script setup lang="ts">
-/* Ionic */
 import {
   IonModal,
   IonPage,
@@ -66,28 +70,24 @@ import {
   IonIcon,
   IonAlert,
 } from '@ionic/vue';
-/* Icons */
 import {
   createOutline,
   trashOutline,
   closeOutline,
 } from 'ionicons/icons';
-/* Vue helpers */
+
 import { ref, watch, defineProps, defineEmits } from 'vue';
-/* Capacitor */
 import { Capacitor } from '@capacitor/core';
 import { PhotoEditor } from '@capawesome/capacitor-photo-editor';
-/* Service */
+
 import { StoredPhoto, deletePhoto } from '@/services/photoService';
 
-/* Props & Events */
 const props = defineProps<{
   modelValue: boolean;
   photo: StoredPhoto | null;
 }>();
 const emit = defineEmits(['update:modelValue', 'deleted', 'edited']);
 
-/* Local state */
 const isOpen    = ref(props.modelValue);
 const showAlert = ref(false);
 const isAndroid = Capacitor.getPlatform() === 'android';
@@ -95,24 +95,19 @@ const isAndroid = Capacitor.getPlatform() === 'android';
 watch(() => props.modelValue, v => (isOpen.value = v));
 watch(isOpen, v => emit('update:modelValue', v));
 
-/* Helpers */
 function close() {
   isOpen.value = false;
 }
 
+/* Bearbeiten (nur Android) */
 async function editPhoto() {
   if (!isAndroid || !props.photo) return;
-
   try {
-    // TypeScript‑Workaround: cast as any, sonst .edit nicht bekannt
     const editor = PhotoEditor as any;
-    const { path } = await editor.edit({
-      path: props.photo.webPath,
-    });
-
+    const { path } = await editor.edit({ path: props.photo.webPath });
     if (path) {
-      props.photo.webPath = path;  // Modal aktualisieren
-      emit('edited');              // Galerie refreshen
+      props.photo.webPath = path;
+      emit('edited');
     }
   } catch (e) {
     console.error('Edit failed:', e);
@@ -123,24 +118,23 @@ function confirmDelete() {
   showAlert.value = true;
 }
 
+/* Alert‑Buttons inkl. tatsächlichem Delete‑Handler 🔎 */
 const alertButtons = [
-  { text: 'Abbrechen', role: 'cancel' },
+  {
+    text: 'Abbrechen',
+    role: 'cancel',
+    cssClass: 'alert-btn-cancel',
+  },
   {
     text: 'Löschen',
     role: 'destructive',
+    cssClass: 'alert-btn-delete',
     handler: async () => {
       if (!props.photo) return;
       await deletePhoto(props.photo.fileName);
-      emit('deleted');
+      emit('deleted');    // Galerie neu laden
       close();
     },
   },
 ];
 </script>
-
-<style scoped>
-.detail-img {
-  width: 100%;
-  height: auto;
-}
-</style>

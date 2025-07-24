@@ -1,10 +1,20 @@
-/* ==== Lumo Custom Styles ==== */
+/* ==== Lumo Custom Styles =================================================== */
 :root {
   --lumo-font-family: 'Bahnschrift', sans-serif;
   --lumo-text-color: #ffffff;
 }
 
-/* Allgemeine Klassen */
+/* -------------------------------------------------------------------------- */
+/* Allgemeine Utility‑Klassen                                                */
+/* -------------------------------------------------------------------------- */
+
+.lumo-title-center {
+  text-align: center;
+  width: 100%;
+  font-family: var(--lumo-font-family);
+}
+
+/* Leerer Galerie‑State */
 .lumo-empty-gallery {
   display: flex;
   flex-direction: column;
@@ -22,13 +32,10 @@
   font-family: var(--lumo-font-family);
 }
 
-.lumo-title-center {
-  text-align: center;
-  width: 100%;
-  font-family: var(--lumo-font-family);
-}
+/* -------------------------------------------------------------------------- */
+/* Kamera‑Seite                                                              */
+/* -------------------------------------------------------------------------- */
 
-/* ==== CameraPage ==== */
 .camera-content {
   --background: #111;
   position: relative;
@@ -81,32 +88,105 @@
   border-radius: 12px;
 }
 
+/* -------------------------------------------------------------------------- */
+/* Galerie‑Grid & Monats‑Gruppierung                                         */
+/* -------------------------------------------------------------------------- */
+
+/* Quadratische Thumbnails */
 ion-col.p-0 > ion-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  aspect-ratio: 1 / 1;            
+  aspect-ratio: 1 / 1;
 }
 
-ion-tab-bar {
-  --color: #8a8a8a;          
-  --color-selected: #ffffff; 
-}
-
-.fab-white {
-  --background: #ffffff; /* Kreis */
-  --color: #111111;      /* Plus‑Icon */
-}
-
-/* ===== Galerie (Monats‑Gruppierung) ===== */
-
+/* Monatliche Headerzeile */
 .month-header {
-  margin: 20px 0px 4px 12px;
+  margin: 12px 0 4px 8px;         /* links fluchtet mit Grid‑Padding */
   font-family: var(--lumo-font-family);
   color: var(--lumo-text-color);
   font-size: 1.1rem;
 }
 
+/* Abstand zwischen Monats‑Blöcken */
 .month-block + .month-block {
-  margin-top: 10px;
+  margin-top: 8px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Foto‑Detail‑Modal                                                         */
+/* -------------------------------------------------------------------------- */
+
+/* Bild im Modal */
+.detail-img {
+  width: 100%;
+  height: auto;
+}
+
+/* Footer‑Toolbar zentralisiert Buttons */
+.modal-footer {
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+.modal-btn-group {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.modal-btn-group ion-button {
+  --padding-start: 12px;
+  --padding-end: 12px;
+  font-family: var(--lumo-font-family);
+}
+
+/* -------------------------------------------------------------------------- */
+/* IonAlert Custom Styling (runde Ecken, Button‑Farben)                      */
+/* -------------------------------------------------------------------------- */
+
+ion-alert.custom-alert .alert-wrapper {
+  border-radius: 16px;                        
+  font-family: 'Bahnschrift', sans-serif;
+}
+
+/* Alle Alert‑Buttons (Font angleichen) */
+ion-alert.custom-alert .alert-button {
+  font-family: 'Bahnschrift', sans-serif;
+}
+
+/* Cancel → weiße Schrift */
+ion-alert.custom-alert
+  .alert-button.alert-button-role-cancel {
+  color: #ffffff;
+}
+
+/* Destructive → rote Schrift */
+ion-alert.custom-alert
+  .alert-button.alert-button-role-destructive {
+  color: #ff4d4f;
+}
+
+/* -------------------------------------------------------------------------- */
+/* FAB Weiß (optional überall verwendbar)                                    */
+/* -------------------------------------------------------------------------- */
+
+.fab-white {
+  --background: #ffffff;
+  --color: #111111;   /* Icon‑Farbe */
+}
+
+/* -------------------------------------------------------------------------- */
+/* Tabs – Icon‑Größe & Farben                                                */
+/* -------------------------------------------------------------------------- */
+
+ion-tab-bar {
+  --color: #8a8a8a;          /* inaktive Icons & Labels */
+  --color-selected: #ffffff; /* aktiver Tab = weiß */
+}
+
+/* Größerer Icon‑Wrapper falls benötigt */
+ion-tab-bar ion-icon {
+  width: 26px;
+  height: 26px;
 }
