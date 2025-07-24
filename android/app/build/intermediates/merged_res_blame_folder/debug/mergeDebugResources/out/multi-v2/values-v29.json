@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "io.ionic.starter.app-mergeDebugResources-36:/values-v29/values-v29.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\leonr\\.gradle\\caches\\8.13\\transforms\\53f40aa6f6d840a54b93ab2747ad6132\\transformed\\core-splashscreen-1.0.1\\res\\values-v29\\values-v29.xml",
+                    "from": {
+                        "startLines": "2,7",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,374",
+                        "endLines": "6,8",
+                        "endColumns": "12,12",
+                        "endOffsets": "369,464"
+                    }
+                }
+            ]
+        }
+    ]
+}
