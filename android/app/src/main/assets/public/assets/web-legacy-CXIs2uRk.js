@@ -1,0 +1,1 @@
+System.register(["./photoService-legacy-yTgKtC9p.js","./index-legacy-Cgac9eAH.js"],function(e,t){"use strict";var o;return{setters:[e=>{o=e.W},null],execute:function(){e("PhotoEditorWeb",class extends o{async editPhoto(e){throw new Error("Not available on web.")}})}}});
