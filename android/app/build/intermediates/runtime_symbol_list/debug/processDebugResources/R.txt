@@ -4997,6 +4997,9 @@ int style Widget_MaterialComponents_Toolbar_PrimarySurface 0x7f10046f
 int style Widget_MaterialComponents_Toolbar_Surface 0x7f100470
 int style Widget_MaterialComponents_Tooltip 0x7f100471
 int style Widget_Support_CoordinatorLayout 0x7f100472
+int style capacitor_default_style 0x7f100473
+int style capacitor_full_screen_style 0x7f100474
+int style capacitor_immersive_style 0x7f100475
 int[] styleable ActionBar { 0x7f030043, 0x7f03004a, 0x7f03004b, 0x7f030121, 0x7f030122, 0x7f030123, 0x7f030124, 0x7f030125, 0x7f030126, 0x7f03014f, 0x7f030161, 0x7f030162, 0x7f030182, 0x7f0301f8, 0x7f030200, 0x7f030206, 0x7f030207, 0x7f03020b, 0x7f030216, 0x7f03022d, 0x7f0302a3, 0x7f03031d, 0x7f03034d, 0x7f030355, 0x7f030356, 0x7f0303bf, 0x7f0303c3, 0x7f03043d, 0x7f03044b }
 int styleable ActionBar_background 0
 int styleable ActionBar_backgroundSplit 1

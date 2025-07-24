@@ -47,5 +47,6 @@ io.ionic.starter.app-debug-45 C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\
 io.ionic.starter.app-debug-46 C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\haptics\android\build\intermediates\packaged_res\debug\packageDebugResources
 io.ionic.starter.app-debug-47 C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\keyboard\android\build\intermediates\packaged_res\debug\packageDebugResources
 io.ionic.starter.app-debug-48 C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\preferences\android\build\intermediates\packaged_res\debug\packageDebugResources
-io.ionic.starter.app-debug-49 C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\status-bar\android\build\intermediates\packaged_res\debug\packageDebugResources
-io.ionic.starter.app-debug-50 C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capawesome\capacitor-photo-editor\android\build\intermediates\packaged_res\debug\packageDebugResources
+io.ionic.starter.app-debug-49 C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\splash-screen\android\build\intermediates\packaged_res\debug\packageDebugResources
+io.ionic.starter.app-debug-50 C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\status-bar\android\build\intermediates\packaged_res\debug\packageDebugResources
+io.ionic.starter.app-debug-51 C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capawesome\capacitor-photo-editor\android\build\intermediates\packaged_res\debug\packageDebugResources

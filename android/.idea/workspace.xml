@@ -10,97 +10,53 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9b019c03-1f28-4fd7-8477-45822579c277" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/migrations.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/checksums/md5-checksums.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/checksums/sha1-checksums.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/resourceHashesCache.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/resourceHashesCache.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/config.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/capacitor.plugins.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/capacitor.plugins.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/CameraPage-CqaOn7jI.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/CameraPage-DnjFNiE6.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/CameraPage-legacy-DjsTsQix.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/GalleryPage-D1w57wYx.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/GalleryPage-legacy-DAhbwMSj.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/animation-dUcUjLxP.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/animation-legacy-D8nYFtsd.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/index-BE6v0z1I.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/index-D_pG1ruW.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/index-legacy-CUt0XMR6.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/index7-DwxbQcsW.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/index7-legacy-1jDssDnr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/input-shims-C3f5vAs1.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/input-shims-legacy-BbW7mV41.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/ios.transition-DCw8kdjV.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/ios.transition-legacy-Cke4JLMy.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/keyboard-D95YFqvC.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/keyboard-legacy-Bjf96rxq.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/md.transition-TC604GHt.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/md.transition-legacy-CJiJEbV5.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/polyfills-legacy-CToe0KIp.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/status-tap-CY4aPf77.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/status-tap-legacy-Bkf7Uitt.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/swipe-back-Df0eVR-c.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/swipe-back-legacy-BrcxC7bs.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/web-legacy-DQBfYbzd.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/assets/web-rimGKOSo.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/assets/debug/mergeDebugAssets/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/processDebugResources/R.jar" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/processDebugResources/R.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/capacitor.plugins.json.jar" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/capacitor.plugins.json.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/CameraPage-CqaOn7jI.css.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/CameraPage-DnjFNiE6.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/CameraPage-legacy-DjsTsQix.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/GalleryPage-D1w57wYx.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/GalleryPage-legacy-DAhbwMSj.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/animation-dUcUjLxP.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/animation-legacy-D8nYFtsd.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/index-BE6v0z1I.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/index-D_pG1ruW.css.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/index-legacy-CUt0XMR6.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/index7-DwxbQcsW.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/index7-legacy-1jDssDnr.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/input-shims-C3f5vAs1.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/input-shims-legacy-BbW7mV41.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/ios.transition-DCw8kdjV.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/ios.transition-legacy-Cke4JLMy.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/keyboard-D95YFqvC.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/keyboard-legacy-Bjf96rxq.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/md.transition-TC604GHt.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/md.transition-legacy-CJiJEbV5.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/polyfills-legacy-CToe0KIp.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/status-tap-CY4aPf77.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/status-tap-legacy-Bkf7Uitt.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/swipe-back-Df0eVR-c.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/swipe-back-legacy-BrcxC7bs.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/web-legacy-DQBfYbzd.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/assets/web-rimGKOSo.js.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/index.html.jar" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/public/index.html.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/debug/mergeDebugResources/compile-file-map.properties" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/debug/mergeDebugResources/compile-file-map.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/debug/mergeDebugResources/merger.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/debug/mergeDebugResources/merger.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugAssets/merger.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugAssets/merger.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/source_set_path_map/debug/mapDebugSourceSetPaths/file-map.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/source_set_path_map/debug/mapDebugSourceSetPaths/file-map.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/outputs/logs/manifest-merger-debug-report.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/outputs/logs/manifest-merger-debug-report.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/capacitor.build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/capacitor.build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/capacitor.config.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/capacitor.config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/capacitor.plugins.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/capacitor.plugins.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/CameraPage-_x3Ha8Mn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/CameraPage-legacy-C_DHbd0t.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/GalleryPage-CTwbgqZ9.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/GalleryPage-legacy-BtDCBOaY.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/index-Bs_OvxHx.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/index-Ds6Nf19-.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/index-legacy-Cgac9eAH.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/index7-D3Wt0b8k.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/index7-legacy-BK-zJ7Hg.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/input-shims-CSgsq76X.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/input-shims-legacy-DS-c6vOM.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/ios.transition-BhQqzugf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/ios.transition-legacy-itEvWlz4.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/md.transition-D0WbH_wN.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/md.transition-legacy-DYwubxpl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/photoService-legacy-yTgKtC9p.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/photoService-zMGk2de_.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/status-tap-DMOg3Pcg.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/status-tap-legacy-BxbjPM3S.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/swipe-back-BsFR7Mcn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/swipe-back-legacy-BsRJpqoW.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/web-Bdyl1BOq.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/web-_7YWtnOF.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/web-legacy-CXIs2uRk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/web-legacy-Dy1hd1jx.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/web-legacy-fioiV5Ly.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/assets/web-yvVNrwJB.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-land-hdpi/splash.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-land-hdpi/splash.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-land-mdpi/splash.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-land-mdpi/splash.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-land-xhdpi/splash.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-land-xhdpi/splash.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-land-xxhdpi/splash.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-land-xxhdpi/splash.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-land-xxxhdpi/splash.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-land-xxxhdpi/splash.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-port-hdpi/splash.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-port-hdpi/splash.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-port-mdpi/splash.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-port-mdpi/splash.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-port-xhdpi/splash.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-port-xhdpi/splash.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-port-xxhdpi/splash.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-port-xxhdpi/splash.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-port-xxxhdpi/splash.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-port-xxxhdpi/splash.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/splash.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/splash.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/capacitor.settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/capacitor.settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../capacitor.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/theme/variables.css" beforeDir="false" afterPath="$PROJECT_DIR$/../src/theme/variables.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,24 +103,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Android App.app.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "settings.editor.selected.configurable": "preferences.general"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Android App.app.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.general&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="android.app" />

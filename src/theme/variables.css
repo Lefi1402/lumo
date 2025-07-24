@@ -101,7 +101,7 @@ ion-tab-bar {
 /* ===== Galerie (Monats‑Gruppierung) ===== */
 
 .month-header {
-  margin: 20px 0px 4px 8px;
+  margin: 20px 0px 4px 12px;
   font-family: var(--lumo-font-family);
   color: var(--lumo-text-color);
   font-size: 1.1rem;
