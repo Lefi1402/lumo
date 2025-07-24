@@ -17,7 +17,7 @@
       <div v-else-if="photos.length === 0" class="lumo-empty-gallery">
         <!-- Plus‑Button mittig -->
         <ion-fab vertical="center" horizontal="center" slot="fixed">
-          <ion-fab-button @click="goToCamera">
+          <ion-fab-button class="fab-white" @click="goToCamera">
             <ion-icon :icon="addOutline" />
           </ion-fab-button>
         </ion-fab>

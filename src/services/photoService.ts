@@ -4,30 +4,34 @@ import { Capacitor } from '@capacitor/core';
 
 export interface StoredPhoto {
   fileName: string;
-  webPath: string;    // Pfad im nativen FS ODER Data‑URL im Browser
+  webPath: string;   // Data‑URL (Web) oder convertFileSrc‑Pfad (Native)
   date: string;
 }
 
 const PHOTOS_KEY = 'photos';
 const isWeb = Capacitor.getPlatform() === 'web';
 
-/* Fotos laden – liefert sortierte Liste */
+/** Liste laden */
 export async function loadPhotos(): Promise<StoredPhoto[]> {
   const { value } = await Preferences.get({ key: PHOTOS_KEY });
-  return value ? (JSON.parse(value) as StoredPhoto[]) : [];
+  try {
+    return value ? (JSON.parse(value) as StoredPhoto[]) : [];
+  } catch {
+    // JSON kaputt → Storage leeren, sonst app‑weiter Crash
+    await Preferences.remove({ key: PHOTOS_KEY });
+    return [];
+  }
 }
 
-/* Base64‑Foto speichern + Metadaten ablegen */
-export async function savePhoto(base64: string): Promise<StoredPhoto> {
+/** Bild speichern */
+export async function savePhoto(base64: string): Promise<void> {
   const fileName = `${Date.now()}.jpeg`;
-
   let webPath: string;
 
   if (isWeb) {
-    /* Browser: keine Datei schreiben → direkt Data‑URL nutzen */
     webPath = `data:image/jpeg;base64,${base64}`;
   } else {
-    /* Native: Datei ins App‑Verzeichnis schreiben */
+    // Native: Datei schreiben
     const saved = await Filesystem.writeFile({
       path: fileName,
       data: base64,
@@ -36,25 +40,18 @@ export async function savePhoto(base64: string): Promise<StoredPhoto> {
     webPath = Capacitor.convertFileSrc(saved.uri);
   }
 
-  const photo: StoredPhoto = {
-    fileName,
-    webPath,
-    date: new Date().toISOString(),
-  };
-
-  /* Liste updaten */
-  const list = await loadPhotos();
-  list.unshift(photo);
-  await Preferences.set({ key: PHOTOS_KEY, value: JSON.stringify(list) });
-
-  return photo;
+  // Metadaten + Liste aktualisieren
+  const photo: StoredPhoto = { fileName, webPath, date: new Date().toISOString() };
+  const photos = await loadPhotos();
+  photos.unshift(photo);
+  await Preferences.set({ key: PHOTOS_KEY, value: JSON.stringify(photos) });
 }
 
-/* Foto löschen (optional für später) */
+/** Foto löschen */
 export async function deletePhoto(fileName: string) {
   if (!isWeb) {
     await Filesystem.deleteFile({ path: fileName, directory: Directory.Data });
   }
-  const list = (await loadPhotos()).filter(p => p.fileName !== fileName);
-  await Preferences.set({ key: PHOTOS_KEY, value: JSON.stringify(list)});
+  const remaining = (await loadPhotos()).filter(p => p.fileName !== fileName);
+  await Preferences.set({ key: PHOTOS_KEY, value: JSON.stringify(remaining) });
 }
