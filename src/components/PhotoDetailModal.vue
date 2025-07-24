@@ -6,17 +6,21 @@
         <ion-toolbar>
           <ion-buttons slot="start">
             <ion-button @click="close">
-              <ion-icon :icon="closeOutline" />
+              <ion-icon class="modal-close-icon" :icon="closeCircleOutline" />
             </ion-button>
           </ion-buttons>
-          <ion-title class="lumo-title-center">Foto</ion-title>
+          <ion-title class="lumo-title-center"></ion-title>
         </ion-toolbar>
       </ion-header>
 
       <!-- Bild -->
-      <ion-content v-if="photo" scroll="vertical">
-        <img :src="photo.webPath" class="detail-img" />
-      </ion-content>
+      <ion-content
+        v-if="photo"
+        class="detail-content"
+        scroll="vertical"
+      >
+  <img :src="photo.webPath" class="detail-img" />
+</ion-content>
 
       <!-- Footer (Buttons zentriert) -->
       <ion-footer v-if="photo">
@@ -73,7 +77,7 @@ import {
 import {
   createOutline,
   trashOutline,
-  closeOutline,
+  closeCircleOutline,
 } from 'ionicons/icons';
 
 import { ref, watch, defineProps, defineEmits } from 'vue';
