@@ -45,8 +45,9 @@
       @didDismiss="showAlert = false"
     />
 
-    <!-- Toast für Fehler / Hinweise -->
+    <!-- Toast -->
     <ion-toast
+      css-class="lum-toast"   
       :is-open="showToast"
       :message="toastMsg"
       :color="toastColor"

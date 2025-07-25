@@ -1,8 +1,8 @@
 <template>
   <ion-page>
     <!-- Header -->
-    <!-- Header -->
-    <ion-header>
+
+    <ion-header id="appHeader">
       <ion-toolbar>
         <ion-title class="lumo-title-center">
           <span class="header-text">LUM</span>
@@ -49,6 +49,7 @@
 
     <!-- Toast -->
     <ion-toast
+      css-class="lum-toast"
       :is-open="showToast"
       :message="toastMsg"
       :color="toastColor"

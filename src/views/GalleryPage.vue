@@ -128,6 +128,7 @@
       />
     </ion-content>
 
+    <!-- Toast -->
     <ion-toast
       css-class="lum-toast"
       position="top"
