@@ -5,7 +5,7 @@
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start">
-            <ion-button @click="close">
+            <ion-button class="close-btn" @click="close">
               <ion-icon class="modal-close-icon" :icon="closeCircleOutline" />
             </ion-button>
           </ion-buttons>

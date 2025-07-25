@@ -251,3 +251,37 @@ ion-popover.custom-popover::part(content) {
   transform: scale(0.7); 
   transform-origin: center;
 }
+
+
+/* ========== Auswahl‑Buttons (ohne Footer) ========== */
+.select-action-bar {
+  position: fixed;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 15px;                 
+  z-index: 60;         
+}
+
+.action-btn {
+  --border-radius: 12px;     
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --ion-font-family: 'Bahnschrift', sans-serif;
+  font-size: 15px;
+}
+
+.cancel-btn {
+  --background: #6e6e6e;
+  --background-hover: #7a7a7a;
+}
+
+.delete-btn {
+  --background: #d32f2f;
+  --background-hover: #b71c1c;
+}
+
+.action-btn::part(native) {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+}

@@ -96,17 +96,28 @@
         </div>
       </div>
 
-      <!-- Sammel‑Lösch FAB -->
-      <ion-fab
-        v-if="showSelect && selected.size"
-        slot="fixed"
-        vertical="bottom"
-        horizontal="end"
-      >
-        <ion-fab-button color="danger" @click="deleteSelected">
-          <ion-icon :icon="trash" />
-        </ion-fab-button>
-      </ion-fab>
+      <!-- Aktions‑Buttons im Auswahlmodus -->
+      <div v-if="showSelect" class="select-action-bar">
+    
+        <ion-button
+          class="action-btn cancel-btn"
+          color="medium"
+          @click="cancelSelect"
+        >
+          <ion-icon slot="start" :icon="close" />
+          Abbrechen
+        </ion-button>
+
+        <ion-button
+          class="action-btn delete-btn"
+          color="danger"
+          :disabled="!selected.size"
+          @click="deleteSelected"
+        >
+          <ion-icon slot="start" :icon="trash" />
+          Löschen
+        </ion-button>
+      </div>
 
       <!-- Detail‑Modal -->
       <PhotoDetailModal
@@ -145,18 +156,22 @@ import {
   IonButton,
   onIonViewWillEnter,
 } from '@ionic/vue';
+
 import {
   addOutline,
   menuOutline,
+  close,
   trash,
   checkboxOutline,
   cloudUploadOutline,
 } from 'ionicons/icons';
+
 import { useRouter } from 'vue-router';
 import { ref, computed } from 'vue';
 import { loadPhotos, StoredPhoto, deletePhoto, savePhoto } from '@/services/photoService';
 import PhotoDetailModal from '@/components/PhotoDetailModal.vue';
 import appLogo from '@/assets/Logo.png';
+
 // @ts-ignore
 import * as ExifReader from 'exifreader';
 
@@ -211,6 +226,11 @@ function activateSelect() {
 function triggerUpload() {
   showMenu.value = false;
   fileInput.value?.click();
+}
+
+function cancelSelect() {
+  showSelect.value = false;
+  selected.value.clear();
 }
 
 /* Upload‑Handler */
