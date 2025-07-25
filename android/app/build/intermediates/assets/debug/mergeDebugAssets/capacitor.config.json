@@ -1,5 +1,13 @@
 {
-	"appId": "io.github.lefi.lumo",
+	"appId": "com.lumo.app",
 	"appName": "LUMO",
-	"webDir": "dist"
+	"webDir": "dist",
+	"plugins": {
+		"StatusBar": {
+			"overlaysWebView": false,
+			"style": "LIGHT",
+			"backgroundColor": "#000000"
+		}
+	},
+	"android": {}
 }

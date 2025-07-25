@@ -1,7 +1,6 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
-
 import { IonicVue } from '@ionic/vue';
 
 /* Core CSS */
@@ -28,8 +27,25 @@ import '@ionic/vue/css/palettes/dark.system.css';
 /* Theme vars */
 import './theme/variables.css';
 
+/* Status-Bar */
+import { Capacitor } from '@capacitor/core';
+import { StatusBar, Style } from '@capacitor/status-bar';
+
+async function applyStatusBarFix() {
+  try {
+    await StatusBar.setOverlaysWebView({ overlay: false });
+    await StatusBar.setStyle({ style: Style.Light });
+    await StatusBar.setBackgroundColor({ color: '#000000' });
+  } catch (err) {
+    console.warn('StatusBar plugin not available', err);
+  }
+}
+
 const app = createApp(App).use(IonicVue).use(router);
 
-router.isReady().then(() => {
+router.isReady().then(async () => {
+  if (Capacitor.isNativePlatform()) {
+    await applyStatusBarFix();
+  }
   app.mount('#app');
 })
