@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <ion-page class="camera-page-transparent">
     <!-- Header -->
     <ion-header id="CameraHeader">
       <ion-toolbar>
@@ -12,7 +12,7 @@
 
     <!-- Kamera‑Content -->
     <ion-content :fullscreen="true" class="camera-content">
-      <!-- Android‑Preview   -->
+      <!-- Android‑Preview -->
       <div
         v-if="isAndroid"
         id="preview-wrapper"
@@ -78,10 +78,12 @@ import {
   IonContent,
   IonIcon,
   IonToast,
+  onIonViewDidEnter,
+  onIonViewWillLeave,
   onIonViewWillEnter,
 } from '@ionic/vue';
 import { refreshOutline, warning } from 'ionicons/icons';
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
 
 /* Capacitor ------------------------------------------------------------ */
@@ -91,12 +93,6 @@ import {
   CameraPreviewPictureOptions,
   CameraPreviewOptions,
 } from '@capacitor-community/camera-preview';
-
-import {
-  Camera,
-  CameraResultType,
-  CameraSource,
-} from '@capacitor/camera';
 
 /* Services & Assets ---------------------------------------------------- */
 import { savePhoto, loadPhotos } from '@/services/photoService';
@@ -126,23 +122,42 @@ function presentToast(msg: string) {
 }
 
 /* --------------------------------------------------------------------- */
-/* Android: Preview start/stop                                            */
+/* Android: Preview start/stop                                           */
 /* --------------------------------------------------------------------- */
+
 async function startNativePreview() {
+  await (CameraPreview as any).requestPermissions();
+  await nextTick();
+
   const opts: CameraPreviewOptions = {
     parent: 'preview-wrapper',
+    toBack: true,
     position: previewPosition.value,
-    toBack: false,
     enableZoom: true,
+    className: 'camera-preview-native',
   };
+
   await CameraPreview.start(opts);
+
+  // <<< NEU: Web‑View wirklich transparent schalten
+  await (CameraPreview as any).setTransparent({ isTransparent: true });
+  console.log('[NATIVE] Preview running & WebView transparent');
 }
+
+/* --------------------------------------------------------------------- */
+/* Android: Preview stoppen (wird beim Verlassen der Seite aufgerufen)   */
+/* --------------------------------------------------------------------- */
 
 async function stopNativePreview() {
   try {
     await CameraPreview.stop();
-  } catch { /* ignore if not running */ }
+    // Web‑View wieder deckend machen, falls nötig
+    await (CameraPreview as any).setTransparent({ isTransparent: false });
+  } catch {
+    /* Preview war nicht aktiv – einfach ignorieren */
+  }
 }
+
 
 /* --------------------------------------------------------------------- */
 /* Web‑Stream                                                            */
@@ -194,12 +209,10 @@ async function takePhoto() {
 
   /* Android – Capture aus Preview */
   try {
-    const picOpts: CameraPreviewPictureOptions = {
-      quality: 80,
-    };
-    const photo = await CameraPreview.capture(picOpts); // base64 ohne Header
+    const picOpts: CameraPreviewPictureOptions = { quality: 80 };
+    const { value: base64 } = await CameraPreview.capture(picOpts);
 
-    await savePhoto(photo.value);
+    await savePhoto(base64);
     await updateLastPhoto();
   } catch {
     presentToast('Foto konnte nicht gespeichert werden.');
@@ -233,20 +246,31 @@ async function toggleCamera() {
 const goToGallery = () => router.push('/tabs/gallery');
 
 /* Lifecycle ------------------------------------------------------------ */
-onMounted(async () => {
+
+onIonViewDidEnter(async () => {
   try {
     if (isWeb) {
       await startWebCamera();
     } else {
-      await Camera.requestPermissions(); // fragt nur beim 1. Mal
       await startNativePreview();
     }
-  } catch {
-    presentToast('Kamera‑Preview konnte nicht gestartet werden.');
+  } catch (err: any) {
+    /* Harmlos ignorieren, wenn Preview bereits läuft
+       oder setTransparent nicht unterstützt ist        */
+    const msg = err?.message ?? '';
+    const benign =
+      msg.includes('already running') ||
+      msg.includes('setTransparent')  ||
+      msg.includes('not supported');
+
+    if (!benign) {
+      console.error('[NATIVE] start error', err);
+      presentToast('Camera‑Preview start failed');
+    }
   }
 });
 
-onBeforeUnmount(async () => {
+onIonViewWillLeave(async () => {
   if (isWeb) stopWebCamera();
   else       await stopNativePreview();
 });
@@ -254,23 +278,3 @@ onBeforeUnmount(async () => {
 onIonViewWillEnter(updateLastPhoto);
 </script>
 
-<style scoped>
-/* Wrapper nimmt die volle Breite/Höhe des Contents ein */
-.preview-wrapper {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-/* eventuell: Controls mit z‑index über Preview */
-.camera-controls {
-  position: absolute;
-  bottom: 5.5rem; /* anpassen */
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  z-index: 10;
-}
-</style>

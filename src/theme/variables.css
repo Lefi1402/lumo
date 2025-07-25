@@ -10,6 +10,8 @@ ion-header,
 ion-toolbar {
   padding-top: env(safe-area-inset-top, 0);
   padding-top: calc(env(safe-area-inset-top, 0px) + var(--ion-safe-area-top, 24px));
+  --background: #222;            
+  background:   #222 !important; 
 }
 
 /* ===========================================================================
@@ -58,9 +60,17 @@ ion-toolbar {
 /* ===========================================================================
    Kamera‑Seite
 ========================================================================== */
+
 .camera-content {
-  --background: #111;
+  --background: transparent;
+  background: transparent !important;
   position: relative;
+}
+
+.camera-page-transparent,
+.camera-page-transparent ion-content {
+  --background: transparent;
+  background: transparent !important;
 }
 
 .camera-preview {
@@ -72,13 +82,17 @@ ion-toolbar {
 
 .camera-controls {
   position: absolute;
-  bottom: 75px;
-  left: 0;
-  right: 0;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 6rem);
+  width: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 24px;
+  justify-content: space-around;
+  z-index: 20;             
+}
+
+.preview-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 1;                
 }
 
 .camera-slot {
@@ -216,6 +230,8 @@ ion-alert.custom-alert
 ion-tab-bar {
   --color: #8a8a8a;        
   --color-selected: #ffffff;
+    --background: #222;
+  background:   #222 !important;
 }
 
 ion-tab-bar ion-icon {
@@ -325,3 +341,12 @@ ion-toast.lum-toast::part(icon) {
 }
 
 
+/* ===== Kamera‑Preview sichtbar machen (toBack:true) ===== */
+html,
+body,
+ion-app,
+ion-router-outlet,
+ion-page {
+  background: transparent !important;
+  --background: transparent;
+}
