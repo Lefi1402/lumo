@@ -1,9 +1,9 @@
 <template>
   <ion-page>
     <!-- Header -->
-    <ion-header>
+    <ion-header id="appHeader">
       <ion-toolbar>
-        <!-- Menü‑Kreis -->
+        <!-- Menü -->
         <ion-buttons slot="start">
           <ion-button @click="showMenu = true">
             <ion-icon :icon="menuOutline" />
@@ -127,6 +127,18 @@
         @edited="refresh"
       />
     </ion-content>
+
+    <ion-toast
+      css-class="lum-toast"
+      position="top"
+      position-anchor="appHeader"   
+      :is-open="showToast"
+      :message="toastMsg"
+      :icon="warning"
+      duration="2500"
+      @didDismiss="showToast = false"
+    />
+      
   </ion-page>
 </template>
 
@@ -155,6 +167,7 @@ import {
   IonButtons,
   IonButton,
   onIonViewWillEnter,
+  IonToast,
 } from '@ionic/vue';
 
 import {
@@ -164,6 +177,7 @@ import {
   trash,
   checkboxOutline,
   cloudUploadOutline,
+  warning
 } from 'ionicons/icons';
 
 import { useRouter } from 'vue-router';
@@ -218,11 +232,23 @@ const groupedPhotos = computed(() => {
 });
 
 /* -------------------- Menü‑Aktionen -------------------- */
+
+const showToast = ref(false);
+const toastMsg  = ref('');
+
 function activateSelect() {
   showMenu.value = false;
+
+  if (photos.value.length === 0) {
+    toastMsg.value  = 'Keine Bilder zum Auswählen vorhanden.';
+    showToast.value = true;
+    return;
+  }
+
   showSelect.value = true;
   selected.value.clear();
 }
+
 function triggerUpload() {
   showMenu.value = false;
   fileInput.value?.click();
@@ -259,6 +285,7 @@ function toggleSel(p: StoredPhoto) {
     ? selected.value.delete(p.fileName)
     : selected.value.add(p.fileName);
 }
+
 async function deleteSelected() {
   for (const name of selected.value) {
     await deletePhoto(name);
@@ -268,11 +295,13 @@ async function deleteSelected() {
 }
 
 /* -------------------- Hilfsfunktionen -------------------- */
+
 const goToCamera = () => router.push('/tabs/camera');
 function openPhoto(photo: StoredPhoto) {
   activePhoto.value = photo;
   showModal.value   = true;
 }
+
 function fileToBase64(file: File): Promise<string> {
   return new Promise(res => {
     const reader = new FileReader();

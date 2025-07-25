@@ -253,7 +253,9 @@ ion-popover.custom-popover::part(content) {
 }
 
 
-/* ========== Auswahl‑Buttons (ohne Footer) ========== */
+/* ===========================================================================
+   Auswahl Buttons
+========================================================================== */
 .select-action-bar {
   position: fixed;
   bottom: 50px;
@@ -284,4 +286,34 @@ ion-popover.custom-popover::part(content) {
 
 .action-btn::part(native) {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+}
+
+/* ===========================================================================
+   Toasts
+========================================================================== */
+
+ion-toast.lum-toast {
+  --width: 400px;
+  --min-width: unset;
+  --background: #ffc107;
+  --color: #111;
+  --border-radius: 12px;
+  --box-shadow: 0 6px 18px rgba(0,0,0,.45);
+  font-family: var(--lumo-font-family);
+}
+
+ion-toast.lum-toast::part(message) {
+  text-align: center;
+  white-space: normal;
+  font-size: 16px;
+}
+ion-toast.lum-toast::part(container) {
+  justify-content: flex-start;  /* statt Space‑Between/Zentrierung */
+  padding-inline-start: 10px;   /* etwas links/rechts‑Padding */
+  padding-inline-end:   10px;
+}
+/* Icon – nur kleiner Abstand */
+ion-toast.lum-toast::part(icon) {
+  margin-inline-end: 4px;       /* enger an Text */
+  color: #111;
 }
