@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="ic_launcher_background">#FFFFFF</color>
-    <string name="app_name">Lumo</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="title_activity_main">Lumo</string>
+    <string name="app_name">LUMO</string>
+    <string name="custom_url_scheme">io.github.lefi.lumo</string>
+    <string name="package_name">io.github.lefi.lumo</string>
+    <string name="title_activity_main">LUMO</string>
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         
         <item name="colorPrimary">@color/colorPrimary</item>

@@ -60,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-
+/* Ionic */
 import {
   IonModal,
   IonPage,
@@ -86,7 +86,12 @@ import {
 
 /* Capacitor & Plugins */
 import { Capacitor } from '@capacitor/core';
+import { Filesystem, Directory } from '@capacitor/filesystem';
 import { PhotoEditor } from '@capawesome/capacitor-photo-editor';
+
+/* Hilfs‑Lib */
+// @ts-ignore
+import { basename } from 'path-browserify';
 
 /* Vue */
 import { ref, watch, defineProps, defineEmits } from 'vue';
@@ -123,13 +128,25 @@ function close() {
   isOpen.value = false;
 }
 
+/* ---------- EDIT PHOTO (neu) ----------------------------------------- */
 async function editPhoto() {
   if (!isAndroid || !props.photo) return;
   try {
     await (PhotoEditor as any).requestPermissions();
-    const { path } = await (PhotoEditor as any).edit({ path: props.photo.webPath });
+
+    /* 1. Echten Datei‑Pfad innerhalb von Directory.Data holen */
+    const { uri } = await Filesystem.getUri({
+      path: props.photo.fileName,
+      directory: Directory.Data,
+    });
+
+    /* 2. Editor starten */
+    const { path } = await (PhotoEditor as any).edit({ path: uri });
+
+    /* 3. Ergebnis sichern + UI aktualisieren */
     if (path) {
-      props.photo.webPath = path;
+      props.photo.webPath  = Capacitor.convertFileSrc(path);
+      props.photo.fileName = basename(path);
       emit('edited');
     }
   } catch {
@@ -137,6 +154,7 @@ async function editPhoto() {
   }
 }
 
+/* Delete -------------------------------------------------------------- */
 function confirmDelete() {
   showAlert.value = true;
 }

@@ -6,6 +6,12 @@
   --lumo-text-color: #ffffff;
 }
 
+ion-header,
+ion-toolbar {
+  padding-top: env(safe-area-inset-top, 0);
+  padding-top: calc(env(safe-area-inset-top, 0px) + var(--ion-safe-area-top, 24px));
+}
+
 /* ===========================================================================
    Utility‑Klassen
 ========================================================================== */
@@ -317,3 +323,5 @@ ion-toast.lum-toast::part(icon) {
   margin-inline-end: 4px;       /* enger an Text */
   color: #111;
 }
+
+

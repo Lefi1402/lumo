@@ -15,13 +15,13 @@ ADDED from C:\Users\leonr\OneDrive\Desktop\lumo\android\app\src\main\AndroidMani
 INJECTED from C:\Users\leonr\OneDrive\Desktop\lumo\android\app\src\main\AndroidManifest.xml:2:1-41:12
 INJECTED from C:\Users\leonr\OneDrive\Desktop\lumo\android\app\src\main\AndroidManifest.xml:2:1-41:12
 INJECTED from C:\Users\leonr\OneDrive\Desktop\lumo\android\app\src\main\AndroidManifest.xml:2:1-41:12
+MERGED from [:capacitor-community-camera-preview] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor-community\camera-preview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
 MERGED from [:capacitor-app] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\app\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
 MERGED from [:capacitor-camera] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\camera\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-13:12
 MERGED from [:capacitor-filesystem] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\filesystem\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
 MERGED from [:capacitor-haptics] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\haptics\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-9:12
 MERGED from [:capacitor-keyboard] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\keyboard\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
 MERGED from [:capacitor-preferences] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\preferences\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
-MERGED from [:capacitor-splash-screen] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\splash-screen\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
 MERGED from [:capacitor-status-bar] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\status-bar\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
 MERGED from [:capawesome-capacitor-photo-editor] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capawesome\capacitor-photo-editor\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
 MERGED from [:capacitor-android] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\android\capacitor\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
@@ -121,7 +121,7 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\le
 		ADDED from C:\Users\leonr\OneDrive\Desktop\lumo\android\app\src\main\AndroidManifest.xml:5:9-35
 	android:theme
 		ADDED from C:\Users\leonr\OneDrive\Desktop\lumo\android\app\src\main\AndroidManifest.xml:10:9-40
-activity#io.ionic.starter.MainActivity
+activity#io.github.lefi.lumo.MainActivity
 ADDED from C:\Users\leonr\OneDrive\Desktop\lumo\android\app\src\main\AndroidManifest.xml:12:9-25:20
 	android:label
 		ADDED from C:\Users\leonr\OneDrive\Desktop\lumo\android\app\src\main\AndroidManifest.xml:15:13-56
@@ -145,6 +145,10 @@ category#android.intent.category.LAUNCHER
 ADDED from C:\Users\leonr\OneDrive\Desktop\lumo\android\app\src\main\AndroidManifest.xml:22:17-77
 	android:name
 		ADDED from C:\Users\leonr\OneDrive\Desktop\lumo\android\app\src\main\AndroidManifest.xml:22:27-74
+uses-permission#android.permission.CAMERA
+ADDED from C:\Users\leonr\OneDrive\Desktop\lumo\android\app\src\main\AndroidManifest.xml:39:5-65
+	android:name
+		ADDED from C:\Users\leonr\OneDrive\Desktop\lumo\android\app\src\main\AndroidManifest.xml:39:22-62
 uses-permission#android.permission.INTERNET
 ADDED from C:\Users\leonr\OneDrive\Desktop\lumo\android\app\src\main\AndroidManifest.xml:40:5-67
 	android:name
@@ -159,6 +163,8 @@ uses-sdk
 INJECTED from C:\Users\leonr\OneDrive\Desktop\lumo\android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\leonr\OneDrive\Desktop\lumo\android\app\src\main\AndroidManifest.xml
 INJECTED from C:\Users\leonr\OneDrive\Desktop\lumo\android\app\src\main\AndroidManifest.xml
+MERGED from [:capacitor-community-camera-preview] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor-community\camera-preview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:capacitor-community-camera-preview] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor-community\camera-preview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [:capacitor-app] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\app\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [:capacitor-app] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\app\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [:capacitor-camera] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\camera\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
@@ -171,8 +177,6 @@ MERGED from [:capacitor-keyboard] C:\Users\leonr\OneDrive\Desktop\lumo\node_modu
 MERGED from [:capacitor-keyboard] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\keyboard\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [:capacitor-preferences] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\preferences\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [:capacitor-preferences] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\preferences\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
-MERGED from [:capacitor-splash-screen] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\splash-screen\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
-MERGED from [:capacitor-splash-screen] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\splash-screen\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [:capacitor-status-bar] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\status-bar\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [:capacitor-status-bar] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\status-bar\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [:capawesome-capacitor-photo-editor] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capawesome\capacitor-photo-editor\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
@@ -331,7 +335,7 @@ ADDED from [androidx.core:core:1.15.0] C:\Users\leonr\.gradle\caches\8.13\transf
 		ADDED from [androidx.core:core:1.15.0] C:\Users\leonr\.gradle\caches\8.13\transforms\ea82f0e4740fea90ca38a885280cdee8\transformed\core-1.15.0\AndroidManifest.xml:24:9-44
 	android:name
 		ADDED from [androidx.core:core:1.15.0] C:\Users\leonr\.gradle\caches\8.13\transforms\ea82f0e4740fea90ca38a885280cdee8\transformed\core-1.15.0\AndroidManifest.xml:23:9-81
-permission#io.ionic.starter.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+permission#io.github.lefi.lumo.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
 ADDED from [androidx.core:core:1.15.0] C:\Users\leonr\.gradle\caches\8.13\transforms\ea82f0e4740fea90ca38a885280cdee8\transformed\core-1.15.0\AndroidManifest.xml:22:5-24:47
 	android:protectionLevel
 		ADDED from [androidx.core:core:1.15.0] C:\Users\leonr\.gradle\caches\8.13\transforms\ea82f0e4740fea90ca38a885280cdee8\transformed\core-1.15.0\AndroidManifest.xml:24:9-44
@@ -341,7 +345,7 @@ uses-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
 ADDED from [androidx.core:core:1.15.0] C:\Users\leonr\.gradle\caches\8.13\transforms\ea82f0e4740fea90ca38a885280cdee8\transformed\core-1.15.0\AndroidManifest.xml:26:5-97
 	android:name
 		ADDED from [androidx.core:core:1.15.0] C:\Users\leonr\.gradle\caches\8.13\transforms\ea82f0e4740fea90ca38a885280cdee8\transformed\core-1.15.0\AndroidManifest.xml:26:22-94
-uses-permission#io.ionic.starter.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+uses-permission#io.github.lefi.lumo.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
 ADDED from [androidx.core:core:1.15.0] C:\Users\leonr\.gradle\caches\8.13\transforms\ea82f0e4740fea90ca38a885280cdee8\transformed\core-1.15.0\AndroidManifest.xml:26:5-97
 	android:name
 		ADDED from [androidx.core:core:1.15.0] C:\Users\leonr\.gradle\caches\8.13\transforms\ea82f0e4740fea90ca38a885280cdee8\transformed\core-1.15.0\AndroidManifest.xml:26:22-94

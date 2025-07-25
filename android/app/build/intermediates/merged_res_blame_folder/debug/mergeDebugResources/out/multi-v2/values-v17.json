@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "io.ionic.starter.app-mergeDebugResources-36:/values-v17/values-v17.xml",
+            "outputFile": "io.github.lefi.lumo.app-mergeDebugResources-36:/values-v17/values-v17.xml",
             "map": [
                 {
                     "source": "C:\\Users\\leonr\\.gradle\\caches\\8.13\\transforms\\e2542f07e03e83966d61d2ce34c14b7c\\transformed\\appcompat-1.7.0\\res\\values-v17\\values-v17.xml",

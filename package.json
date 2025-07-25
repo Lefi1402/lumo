@@ -12,6 +12,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@capacitor-community/camera-preview": "^7.0.2",
     "@capacitor/app": "7.0.1",
     "@capacitor/camera": "^7.0.1",
     "@capacitor/core": "7.4.2",
@@ -19,13 +20,13 @@
     "@capacitor/haptics": "7.0.1",
     "@capacitor/keyboard": "7.0.1",
     "@capacitor/preferences": "^7.0.1",
-    "@capacitor/splash-screen": "^7.0.1",
     "@capacitor/status-bar": "7.0.1",
     "@capawesome/capacitor-photo-editor": "^7.0.1",
     "@ionic/vue": "^8.0.0",
     "@ionic/vue-router": "^8.0.0",
     "exifreader": "^4.31.1",
     "ionicons": "^7.0.0",
+    "path-browserify": "^1.0.1",
     "vue": "^3.3.0",
     "vue-router": "^4.2.0"
   },

@@ -1,14 +1,5 @@
 {
 	"appId": "io.github.lefi.lumo",
 	"appName": "LUMO",
-	"webDir": "dist",
-	"plugins": {
-		"SplashScreen": {
-			"launchShowDuration": 2000,
-			"launchAutoHide": true,
-			"backgroundColor": "#111111",
-			"androidScaleType": "CENTER_CROP",
-			"showSpinner": false
-		}
-	}
+	"webDir": "dist"
 }

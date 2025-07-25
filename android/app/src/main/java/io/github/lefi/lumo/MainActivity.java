@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package io.github.lefi.lumo;
 
 import com.getcapacitor.BridgeActivity;
 

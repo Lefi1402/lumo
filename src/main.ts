@@ -28,17 +28,8 @@ import '@ionic/vue/css/palettes/dark.system.css';
 /* Theme vars */
 import './theme/variables.css';
 
-/* Capacitor Splash */
-import { Capacitor } from '@capacitor/core';
-import { SplashScreen } from '@capacitor/splash-screen';
-
 const app = createApp(App).use(IonicVue).use(router);
 
 router.isReady().then(() => {
   app.mount('#app');
-
-  /* Splash nur auf nativer Plattform ausblenden */
-  if (Capacitor.isNativePlatform()) {
-    SplashScreen.hide();
-  }
-});
+})

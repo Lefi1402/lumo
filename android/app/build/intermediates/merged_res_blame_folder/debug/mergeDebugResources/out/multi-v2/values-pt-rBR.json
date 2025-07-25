@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "io.ionic.starter.app-mergeDebugResources-36:/values-pt-rBR/values-pt-rBR.xml",
+            "outputFile": "io.github.lefi.lumo.app-mergeDebugResources-36:/values-pt-rBR/values-pt-rBR.xml",
             "map": [
                 {
                     "source": "C:\\Users\\leonr\\.gradle\\caches\\8.13\\transforms\\32b79701d404d1a43e3db2528f6b21c8\\transformed\\material-1.12.0\\res\\values-pt-rBR\\values-pt-rBR.xml",
