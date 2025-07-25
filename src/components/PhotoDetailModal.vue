@@ -133,7 +133,7 @@ async function editPhoto() {
       emit('edited');
     }
   } catch {
-    presentToast('Bearbeiten abgebrochen oder fehlgeschlagen.');
+    presentToast('Bearbeiten fehlgeschlagen.');
   }
 }
 
