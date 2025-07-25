@@ -2,14 +2,14 @@
   <ion-modal css-class="photo-modal" :is-open="isOpen" @didDismiss="close">
     <ion-page>
       <!-- Header -->
-      <ion-header>
+      <ion-header id="appHeader">
         <ion-toolbar>
           <ion-buttons slot="start">
             <ion-button class="close-btn" @click="close">
-              <ion-icon class="modal-close-icon" :icon="closeCircleOutline" />
+              <ion-icon :icon="closeCircleOutline" class="modal-close-icon" />
             </ion-button>
           </ion-buttons>
-          <ion-title class="lumo-title-center"></ion-title>
+          <ion-title class="lumo-title-center" />
         </ion-toolbar>
       </ion-header>
 
@@ -18,7 +18,7 @@
         <img :src="photo.webPath" class="detail-img" />
       </ion-content>
 
-      <!-- Footer: Buttons zentriert -->
+      <!-- Footer -->
       <ion-footer v-if="photo">
         <ion-toolbar class="modal-footer" mode="md">
           <ion-buttons class="modal-btn-group">
@@ -45,12 +45,14 @@
       @didDismiss="showAlert = false"
     />
 
-    <!-- Toast -->
+    <!-- Toast (einheitlicher LUMO‑Stil) -->
     <ion-toast
-      css-class="lum-toast"   
+      css-class="lum-toast"
+      :icon="warning"
+      position="top"
+      position-anchor="appHeader"
       :is-open="showToast"
       :message="toastMsg"
-      :color="toastColor"
       duration="2500"
       @didDismiss="showToast = false"
     />
@@ -58,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-/* Ionic */
+
 import {
   IonModal,
   IonPage,
@@ -79,6 +81,7 @@ import {
   createOutline,
   trashOutline,
   closeCircleOutline,
+  warning,
 } from 'ionicons/icons';
 
 /* Capacitor & Plugins */
@@ -98,28 +101,20 @@ const props = defineProps<{
 }>();
 const emit = defineEmits(['update:modelValue', 'deleted', 'edited']);
 
-/* Local State */
-const isOpen     = ref(props.modelValue);
-const showAlert  = ref(false);
-const isAndroid  = Capacitor.getPlatform() === 'android';
+/* State */
+const isOpen    = ref(props.modelValue);
+const showAlert = ref(false);
+const isAndroid = Capacitor.getPlatform() === 'android';
 
-/* Toast‑State */
-type ToastColor = 'danger' | 'warning' | 'success' | 'light';
-
-const showToast  = ref(false);
-const toastMsg   = ref('');
-const toastColor = ref<ToastColor>('danger');
-
-function presentToast(
-  msg: string,
-  color: ToastColor = 'danger'
-) {
-  toastMsg.value   = msg;
-  toastColor.value = color;
-  showToast.value  = true;
+/* Toast */
+const showToast = ref(false);
+const toastMsg  = ref('');
+function presentToast(msg: string) {
+  toastMsg.value  = msg;
+  showToast.value = true;
 }
 
-/* Reactivity */
+/* Reaktivität */
 watch(() => props.modelValue, v => (isOpen.value = v));
 watch(isOpen, v => emit('update:modelValue', v));
 
@@ -128,30 +123,25 @@ function close() {
   isOpen.value = false;
 }
 
-/* Foto bearbeiten (nur Android) */
 async function editPhoto() {
   if (!isAndroid || !props.photo) return;
-
   try {
     await (PhotoEditor as any).requestPermissions();
-    const { path } = await (PhotoEditor as any).edit({
-      path: props.photo.webPath,
-    });
-
+    const { path } = await (PhotoEditor as any).edit({ path: props.photo.webPath });
     if (path) {
       props.photo.webPath = path;
       emit('edited');
     }
-  } catch (e) {
-    presentToast('Bearbeiten abgebrochen oder fehlgeschlagen.', 'warning');
+  } catch {
+    presentToast('Bearbeiten abgebrochen oder fehlgeschlagen.');
   }
 }
 
-/* Löschen‑Alert */
 function confirmDelete() {
   showAlert.value = true;
 }
 
+/* Alert‑Buttons */
 const alertButtons = [
   { text: 'Abbrechen', role: 'cancel', cssClass: 'alert-btn-cancel' },
   {

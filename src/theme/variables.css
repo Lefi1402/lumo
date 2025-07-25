@@ -308,11 +308,11 @@ ion-toast.lum-toast::part(message) {
   font-size: 16px;
 }
 ion-toast.lum-toast::part(container) {
-  justify-content: flex-start;  /* statt Space‑Between/Zentrierung */
-  padding-inline-start: 10px;   /* etwas links/rechts‑Padding */
+  justify-content: flex-start;  
+  padding-inline-start: 10px;   
   padding-inline-end:   10px;
 }
-/* Icon – nur kleiner Abstand */
+
 ion-toast.lum-toast::part(icon) {
   margin-inline-end: 4px;       /* enger an Text */
   color: #111;

@@ -1,27 +1,22 @@
 <template>
   <ion-page>
     <!-- Header -->
-
     <ion-header id="appHeader">
       <ion-toolbar>
         <ion-title class="lumo-title-center">
           <span class="header-text">LUM</span>
-          <img :src="appLogo" class="header-logo" alt="Logo" />
+          <img :src="appLogo" class="header-logo" />
         </ion-title>
       </ion-toolbar>
     </ion-header>
 
     <!-- Kamera‑Content -->
     <ion-content :fullscreen="true" class="camera-content">
-      <!-- Live‑Preview -->
-      <video ref="videoRef" autoplay playsinline class="camera-preview"></video>
-
-      <!-- Unsichtbares Canvas -->
-      <canvas ref="canvasRef" style="display: none"></canvas>
+      <video ref="videoRef" autoplay playsinline class="camera-preview" />
+      <canvas ref="canvasRef" style="display:none" />
 
       <!-- Controls -->
       <div class="camera-controls">
-        <!-- Thumbnail -->
         <div class="camera-slot">
           <img
             v-if="lastPhoto"
@@ -31,12 +26,10 @@
           />
         </div>
 
-        <!-- Auslöser -->
         <div class="camera-slot">
           <button class="camera-button" @click="takePhoto"></button>
         </div>
 
-        <!-- Kamera wechseln -->
         <div class="camera-slot">
           <ion-icon
             :icon="refreshOutline"
@@ -50,9 +43,11 @@
     <!-- Toast -->
     <ion-toast
       css-class="lum-toast"
+      position="top"
+      position-anchor="appHeader"
+      :icon="warning"
       :is-open="showToast"
       :message="toastMsg"
-      :color="toastColor"
       duration="2500"
       @didDismiss="showToast = false"
     />
@@ -60,7 +55,6 @@
 </template>
 
 <script setup lang="ts">
-
 import {
   IonPage,
   IonHeader,
@@ -71,7 +65,7 @@ import {
   IonToast,
   onIonViewWillEnter,
 } from '@ionic/vue';
-import { refreshOutline } from 'ionicons/icons';
+import { refreshOutline, warning } from 'ionicons/icons';
 import { Capacitor } from '@capacitor/core';
 import { Camera } from '@capacitor/camera';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
@@ -79,6 +73,7 @@ import { useRouter } from 'vue-router';
 import { savePhoto, loadPhotos } from '@/services/photoService';
 import appLogo from '@/assets/Logo.png';
 
+/* Router & refs */
 const router     = useRouter();
 const videoRef   = ref<HTMLVideoElement | null>(null);
 const canvasRef  = ref<HTMLCanvasElement  | null>(null);
@@ -86,17 +81,15 @@ const stream     = ref<MediaStream | null>(null);
 const lastPhoto  = ref<string | null>(null);
 const facingMode = ref<'user' | 'environment'>('environment');
 
-/* Toast State */
-const showToast  = ref(false);
-const toastMsg   = ref('');
-const toastColor = ref<'danger' | 'warning' | 'success' | 'light'>('light');
-const presentToast = (msg: string, color: typeof toastColor.value = 'danger') => {
-  toastMsg.value = msg;
-  toastColor.value = color;
+/* Toast */
+const showToast = ref(false);
+const toastMsg  = ref('');
+function presentToast(msg: string) {
+  toastMsg.value  = msg;
   showToast.value = true;
-};
+}
 
-/* Kamera‑Stream ----------------------------------------------------------- */
+/* Kamera‐Stream ----------------------------- */
 async function startCamera() {
   stopCamera();
   stream.value = await navigator.mediaDevices.getUserMedia({
@@ -108,13 +101,13 @@ function stopCamera() {
   stream.value?.getTracks().forEach(t => t.stop());
 }
 
-/* Thumbnail --------------------------------------------------------------- */
+/* Thumbnail --------------------------------- */
 async function updateLastPhoto() {
   const list = await loadPhotos();
   lastPhoto.value = list.length > 0 ? list[0].webPath : null;
 }
 
-/* Foto aufnehmen ---------------------------------------------------------- */
+/* Foto aufnehmen ---------------------------- */
 async function takePhoto() {
   const video = videoRef.value;
   const canvas = canvasRef.value;
@@ -130,12 +123,12 @@ async function takePhoto() {
     const base64 = canvas.toDataURL('image/jpeg', 0.8).split(',')[1];
     await savePhoto(base64);
     await updateLastPhoto();
-  } catch (err) {
+  } catch {
     presentToast('Foto konnte nicht gespeichert werden.');
   }
 }
 
-/* Kamera wechseln --------------------------------------------------------- */
+/* Kamera wechseln --------------------------- */
 async function toggleCamera() {
   facingMode.value = facingMode.value === 'user' ? 'environment' : 'user';
   try {
@@ -145,10 +138,10 @@ async function toggleCamera() {
   }
 }
 
-/* Navigation -------------------------------------------------------------- */
+/* Navigation -------------------------------- */
 const goToGallery = () => router.push('/tabs/gallery');
 
-/* Lifecycle --------------------------------------------------------------- */
+/* Lifecycle --------------------------------- */
 onMounted(async () => {
   try {
     if (Capacitor.isNativePlatform()) {
