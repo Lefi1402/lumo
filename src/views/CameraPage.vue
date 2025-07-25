@@ -10,19 +10,14 @@
     <!-- Kamera‑Content -->
     <ion-content :fullscreen="true" class="camera-content">
       <!-- Live‑Preview -->
-      <video
-        ref="videoRef"
-        autoplay
-        playsinline
-        class="camera-preview"
-      ></video>
+      <video ref="videoRef" autoplay playsinline class="camera-preview"></video>
 
       <!-- Unsichtbares Canvas -->
       <canvas ref="canvasRef" style="display: none"></canvas>
 
       <!-- Controls -->
       <div class="camera-controls">
-        <!-- Thumbnail (tap → Galerie) -->
+        <!-- Thumbnail -->
         <div class="camera-slot">
           <img
             v-if="lastPhoto"
@@ -47,11 +42,20 @@
         </div>
       </div>
     </ion-content>
+
+    <!-- Toast -->
+    <ion-toast
+      :is-open="showToast"
+      :message="toastMsg"
+      :color="toastColor"
+      duration="2500"
+      @didDismiss="showToast = false"
+    />
   </ion-page>
 </template>
 
 <script setup lang="ts">
-/* Ionic + Icons */
+/* Ionic */
 import {
   IonPage,
   IonHeader,
@@ -59,9 +63,14 @@ import {
   IonTitle,
   IonContent,
   IonIcon,
+  IonToast,
   onIonViewWillEnter,
 } from '@ionic/vue';
 import { refreshOutline } from 'ionicons/icons';
+
+/* Capacitor */
+import { Capacitor } from '@capacitor/core';
+import { Camera } from '@capacitor/camera';
 
 /* Vue & Router */
 import { ref, onMounted, onBeforeUnmount } from 'vue';
@@ -70,6 +79,7 @@ import { useRouter } from 'vue-router';
 /* Services */
 import { savePhoto, loadPhotos } from '@/services/photoService';
 
+/* Router & Refs */
 const router     = useRouter();
 const videoRef   = ref<HTMLVideoElement | null>(null);
 const canvasRef  = ref<HTMLCanvasElement  | null>(null);
@@ -77,60 +87,80 @@ const stream     = ref<MediaStream | null>(null);
 const lastPhoto  = ref<string | null>(null);
 const facingMode = ref<'user' | 'environment'>('environment');
 
-/* Kamera streamen */
+/* Toast State */
+const showToast  = ref(false);
+const toastMsg   = ref('');
+const toastColor = ref<'danger' | 'warning' | 'success' | 'light'>('light');
+const presentToast = (msg: string, color: typeof toastColor.value = 'danger') => {
+  toastMsg.value = msg;
+  toastColor.value = color;
+  showToast.value = true;
+};
+
+/* Kamera‑Stream ----------------------------------------------------------- */
 async function startCamera() {
   stopCamera();
-  try {
-    stream.value = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: facingMode.value },
-    });
-    if (videoRef.value) videoRef.value.srcObject = stream.value;
-  } catch (err) {
-    console.error('Kamera‑Start fehlgeschlagen:', err);
-  }
+  stream.value = await navigator.mediaDevices.getUserMedia({
+    video: { facingMode: facingMode.value },
+  });
+  if (videoRef.value) videoRef.value.srcObject = stream.value;
 }
 function stopCamera() {
   stream.value?.getTracks().forEach(t => t.stop());
 }
 
-/* Thumbnail aus Storage laden */
+/* Thumbnail --------------------------------------------------------------- */
 async function updateLastPhoto() {
   const list = await loadPhotos();
   lastPhoto.value = list.length > 0 ? list[0].webPath : null;
 }
 
-/* Foto aufnehmen */
+/* Foto aufnehmen ---------------------------------------------------------- */
 async function takePhoto() {
-  const video  = videoRef.value;
+  const video = videoRef.value;
   const canvas = canvasRef.value;
   if (!video || !canvas) return;
 
-  // Frame auf Canvas zeichnen
-  canvas.width  = video.videoWidth;
-  canvas.height = video.videoHeight;
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return;
-  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  try {
+    canvas.width  = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) throw new Error('Canvas context missing');
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-  // Base64 sichern
-  const base64 = canvas.toDataURL('image/jpeg', 0.8).split(',')[1];
-  await savePhoto(base64);
-
-  // Thumbnail neu berechnen (falls alle Fotos vorher gelöscht waren)
-  await updateLastPhoto();
+    const base64 = canvas.toDataURL('image/jpeg', 0.8).split(',')[1];
+    await savePhoto(base64);
+    await updateLastPhoto();
+  } catch (err) {
+    presentToast('Foto konnte nicht gespeichert werden.');
+  }
 }
 
-/* Kamera wechseln */
+/* Kamera wechseln --------------------------------------------------------- */
 async function toggleCamera() {
   facingMode.value = facingMode.value === 'user' ? 'environment' : 'user';
-  await startCamera();
+  try {
+    await startCamera();
+  } catch {
+    presentToast('Kamerawechsel fehlgeschlagen.');
+  }
 }
 
-/* Navigation */
+/* Navigation -------------------------------------------------------------- */
 const goToGallery = () => router.push('/tabs/gallery');
 
-/* Lifecycle */
-onMounted(startCamera);
+/* Lifecycle --------------------------------------------------------------- */
+onMounted(async () => {
+  try {
+    if (Capacitor.isNativePlatform()) {
+      await Camera.requestPermissions();
+    }
+    await startCamera();
+  } catch {
+    presentToast('Kamera konnte nicht gestartet werden.');
+  }
+});
+
 onBeforeUnmount(stopCamera);
 onIonViewWillEnter(updateLastPhoto);
 </script>
