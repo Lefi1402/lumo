@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <!-- Header -->
-    <ion-header id="appHeader">
+    <ion-header id="CameraHeader">
       <ion-toolbar>
         <ion-title class="lumo-title-center">
           <span class="header-text">LUM</span>
@@ -44,7 +44,7 @@
     <ion-toast
       css-class="lum-toast"
       position="top"
-      position-anchor="appHeader"
+      position-anchor="CameraHeader"
       :icon="warning"
       :is-open="showToast"
       :message="toastMsg"

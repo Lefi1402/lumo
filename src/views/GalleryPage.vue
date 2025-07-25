@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <!-- Header -->
-    <ion-header id="appHeader">
+    <ion-header id="GalleryHeader">
       <ion-toolbar>
         <!-- Menü -->
         <ion-buttons slot="start">
@@ -132,7 +132,7 @@
     <ion-toast
       css-class="lum-toast"
       position="top"
-      position-anchor="appHeader"   
+      position-anchor="GalleryHeader"   
       :is-open="showToast"
       :message="toastMsg"
       :icon="warning"

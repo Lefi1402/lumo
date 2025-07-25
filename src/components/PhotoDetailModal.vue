@@ -2,7 +2,7 @@
   <ion-modal css-class="photo-modal" :is-open="isOpen" @didDismiss="close">
     <ion-page>
       <!-- Header -->
-      <ion-header id="appHeader">
+      <ion-header id="ModalHeader">
         <ion-toolbar>
           <ion-buttons slot="start">
             <ion-button class="close-btn" @click="close">
@@ -50,7 +50,7 @@
       css-class="lum-toast"
       :icon="warning"
       position="top"
-      position-anchor="appHeader"
+      position-anchor="ModalHeader"
       :is-open="showToast"
       :message="toastMsg"
       duration="2500"
