@@ -1,9 +1,13 @@
 <template>
   <ion-page>
     <!-- Header -->
+    <!-- Header -->
     <ion-header>
       <ion-toolbar>
-        <ion-title class="lumo-title-center">LUMO</ion-title>
+        <ion-title class="lumo-title-center">
+          <span class="header-text">LUM</span>
+          <img :src="appLogo" class="header-logo" alt="Logo" />
+        </ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -55,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-/* Ionic */
+
 import {
   IonPage,
   IonHeader,
@@ -67,19 +71,13 @@ import {
   onIonViewWillEnter,
 } from '@ionic/vue';
 import { refreshOutline } from 'ionicons/icons';
-
-/* Capacitor */
 import { Capacitor } from '@capacitor/core';
 import { Camera } from '@capacitor/camera';
-
-/* Vue & Router */
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
-
-/* Services */
 import { savePhoto, loadPhotos } from '@/services/photoService';
+import appLogo from '@/assets/Logo.png';
 
-/* Router & Refs */
 const router     = useRouter();
 const videoRef   = ref<HTMLVideoElement | null>(null);
 const canvasRef  = ref<HTMLCanvasElement  | null>(null);
