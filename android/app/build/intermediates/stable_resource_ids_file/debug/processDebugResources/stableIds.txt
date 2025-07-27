@@ -61,6 +61,8 @@ io.github.lefi.lumo:styleable/AlertDialog = 0x7f110006
 io.github.lefi.lumo:styleable/ActivityChooserView = 0x7f110005
 io.github.lefi.lumo:styleable/ActionMode = 0x7f110004
 io.github.lefi.lumo:styleable/ActionMenuView = 0x7f110003
+io.github.lefi.lumo:style/capacitor_immersive_style = 0x7f100476
+io.github.lefi.lumo:style/capacitor_default_style = 0x7f100474
 io.github.lefi.lumo:style/Widget.Support.CoordinatorLayout = 0x7f100473
 io.github.lefi.lumo:style/Widget.MaterialComponents.Toolbar = 0x7f10046e
 io.github.lefi.lumo:style/Widget.MaterialComponents.TimePicker.Display.TextInputEditText = 0x7f10046a
@@ -773,6 +775,7 @@ io.github.lefi.lumo:macro/m3_comp_time_picker_period_selector_selected_hover_sta
 io.github.lefi.lumo:macro/m3_comp_time_picker_period_selector_selected_focus_state_layer_color = 0x7f0c0156
 io.github.lefi.lumo:macro/m3_comp_time_picker_period_selector_outline_color = 0x7f0c0154
 io.github.lefi.lumo:macro/m3_comp_time_picker_period_selector_container_shape = 0x7f0c0152
+io.github.lefi.lumo:style/capacitor_full_screen_style = 0x7f100475
 io.github.lefi.lumo:macro/m3_comp_time_picker_container_shape = 0x7f0c014f
 io.github.lefi.lumo:macro/m3_comp_time_picker_container_color = 0x7f0c014e
 io.github.lefi.lumo:style/Widget.MaterialComponents.Button.OutlinedButton.Icon = 0x7f10040d

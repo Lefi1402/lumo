@@ -22,6 +22,7 @@ MERGED from [:capacitor-filesystem] C:\Users\leonr\OneDrive\Desktop\lumo\node_mo
 MERGED from [:capacitor-haptics] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\haptics\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-9:12
 MERGED from [:capacitor-keyboard] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\keyboard\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
 MERGED from [:capacitor-preferences] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\preferences\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [:capacitor-splash-screen] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\splash-screen\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
 MERGED from [:capacitor-status-bar] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\status-bar\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
 MERGED from [:capawesome-capacitor-photo-editor] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capawesome\capacitor-photo-editor\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
 MERGED from [:capacitor-android] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\android\capacitor\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
@@ -177,6 +178,8 @@ MERGED from [:capacitor-keyboard] C:\Users\leonr\OneDrive\Desktop\lumo\node_modu
 MERGED from [:capacitor-keyboard] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\keyboard\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [:capacitor-preferences] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\preferences\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [:capacitor-preferences] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\preferences\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:capacitor-splash-screen] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\splash-screen\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:capacitor-splash-screen] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\splash-screen\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [:capacitor-status-bar] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\status-bar\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [:capacitor-status-bar] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\status-bar\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [:capawesome-capacitor-photo-editor] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capawesome\capacitor-photo-editor\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
