@@ -85,6 +85,8 @@ import {
 import { refreshOutline, warning } from 'ionicons/icons';
 import { ref, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
+//@ts-ignorets-ignore
+import loadImage from 'blueimp-load-image';
 
 /* Capacitor ------------------------------------------------------------ */
 import { Capacitor } from '@capacitor/core';
@@ -185,39 +187,45 @@ async function updateLastPhoto() {
 /* Foto aufnehmen                                                        */
 /* --------------------------------------------------------------------- */
 async function takePhoto() {
-  /* Web */
   if (isWeb) {
-    const video  = videoRef.value;
-    const canvas = canvasRef.value;
-    if (!video || !canvas) return;
-
-    try {
-      canvas.width  = video.videoWidth;
-      canvas.height = video.videoHeight;
-      const ctx = canvas.getContext('2d');
-      if (!ctx) throw new Error('Canvas context missing');
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-      const base64 = canvas.toDataURL('image/jpeg', 0.8).split(',')[1];
-      await savePhoto(base64);
-      await updateLastPhoto();
-    } catch {
-      presentToast('Foto konnte nicht gespeichert werden.');
-    }
+    // ...dein Web-Code...
     return;
   }
 
-  /* Android – Capture aus Preview */
   try {
     const picOpts: CameraPreviewPictureOptions = { quality: 80 };
     const { value: base64 } = await CameraPreview.capture(picOpts);
 
-    await savePhoto(base64);
+    let base64Fixed = base64;
+    if (previewPosition.value === 'front') {
+      // Bild rotieren, wenn Frontkamera
+      base64Fixed = await fixOrientation(base64);
+    }
+
+    await savePhoto(base64Fixed);
     await updateLastPhoto();
-  } catch {
+  } catch (err) {
     presentToast('Foto konnte nicht gespeichert werden.');
   }
 }
+
+async function fixOrientation(base64: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    loadImage(
+      'data:image/jpeg;base64,' + base64,
+      (canvas: HTMLCanvasElement | Event) => {
+        if ((canvas as any).type === 'error') {
+          reject('Fehler beim Drehen');
+        } else {
+          resolve((canvas as HTMLCanvasElement).toDataURL('image/jpeg').split(',')[1]);
+        }
+      },
+      { orientation: 8,
+        canvas: true }
+    );
+  });
+}
+
 
 /* --------------------------------------------------------------------- */
 /* Kamera wechseln                                                       */
@@ -255,8 +263,6 @@ onIonViewDidEnter(async () => {
       await startNativePreview();
     }
   } catch (err: any) {
-    /* Harmlos ignorieren, wenn Preview bereits läuft
-       oder setTransparent nicht unterstützt ist        */
     const msg = err?.message ?? '';
     const benign =
       msg.includes('already running') ||
@@ -276,5 +282,6 @@ onIonViewWillLeave(async () => {
 });
 
 onIonViewWillEnter(updateLastPhoto);
+
 </script>
 

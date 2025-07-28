@@ -2,4 +2,7 @@ include ':app'
 include ':capacitor-cordova-android-plugins'
 project(':capacitor-cordova-android-plugins').projectDir = new File('./capacitor-cordova-android-plugins/')
 
+include ':capawesome-capacitor-photo-editor'
+project(':capawesome-capacitor-photo-editor').projectDir = new File('../node_modules/@capawesome/capacitor-photo-editor/android')
+
 apply from: 'capacitor.settings.gradle'

@@ -3917,9 +3917,9 @@
                     "from": {
                         "startLines": "2,5,4,3",
                         "startColumns": "4,4,4,4",
-                        "startOffsets": "55,211,150,97",
+                        "startOffsets": "57,216,154,100",
                         "endColumns": "41,65,60,52",
-                        "endOffsets": "92,272,206,145"
+                        "endOffsets": "94,277,210,148"
                     },
                     "to": {
                         "startLines": "1915,1934,2052,2067",
