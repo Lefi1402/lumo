@@ -9,9 +9,17 @@ const config: CapacitorConfig = {
   plugins: {
     StatusBar: {
       overlaysWebView: false,
-      style: 'LIGHT',
-      backgroundColor: '#000000',
+      style: 'LIGHT',            
+      backgroundColor: '#000000', 
     },
+    SplashScreen: {
+      launchShowDuration: 2000,    
+      backgroundColor: '#000000',  
+      androidScaleType: 'CENTER_CROP', 
+      showSpinner: false,        
+      splashFullScreen: true,     
+      splashImmersive: true       
+    }
   },
   android: {
   },

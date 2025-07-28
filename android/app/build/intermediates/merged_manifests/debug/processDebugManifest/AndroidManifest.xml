@@ -50,6 +50,7 @@
             </intent-filter>
         </activity>
 
+        <!-- FileProvider für Zugriff auf eigene Dateien -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="io.github.lefi.lumo.fileprovider"

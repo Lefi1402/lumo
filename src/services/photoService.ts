@@ -11,6 +11,11 @@ export interface StoredPhoto {
 const PHOTOS_KEY = 'photos';
 const isWeb = Capacitor.getPlatform() === 'web';
 
+// Hilfsfunktion für Pfade im Filesystem
+export function getNativePhotoPath(fileName: string) {
+  return fileName.startsWith('public/') ? fileName : `public/${fileName}`;
+}
+
 /* ------------------------------------------------------------------ */
 /* Liste laden                                                        */
 /* ------------------------------------------------------------------ */
@@ -32,6 +37,7 @@ export async function loadPhotos(): Promise<StoredPhoto[]> {
  * @param dateOverride ISO‑Datum aus EXIF (optional)
  * @param mime 'image/jpeg' | 'image/png'  (Default JPEG)
  */
+
 export async function savePhoto(
   base64: string,
   dateOverride?: string,
@@ -43,13 +49,41 @@ export async function savePhoto(
 
   if (isWeb) {
     webPath = `data:${mime};base64,${base64}`;
+    console.log('[savePhoto] Web: Bild gespeichert unter Data-URL');
   } else {
-    const saved = await Filesystem.writeFile({
-      path: fileName,
-      data: base64,
-      directory: Directory.Data,
-    });
-    webPath = Capacitor.convertFileSrc(saved.uri);
+    // Ordner "public" anlegen (wenn nötig)
+    try {
+      console.log('[savePhoto] Versuche Ordner "public" anzulegen…');
+      await Filesystem.mkdir({
+        path: 'public',
+        directory: Directory.Data,
+        recursive: true,
+      });
+      console.log('[savePhoto] Ordner "public" wurde (neu) angelegt!');
+    } catch (e: any) {
+      if (String(e.message).includes('directory exists')) {
+        console.log('[savePhoto] Ordner "public" existiert bereits.');
+      } else {
+        console.warn('[savePhoto] mkdir public error:', e);
+      }
+    }
+
+    // Bild speichern (mit recursive: true)
+    const savePath = getNativePhotoPath(fileName);
+    console.log('[savePhoto] Schreibe Bild nach:', savePath);
+    try {
+      const saved = await Filesystem.writeFile({
+        path: savePath,
+        data: base64,
+        directory: Directory.Data,
+        recursive: true, // ← GANZ WICHTIG!
+      });
+      webPath = Capacitor.convertFileSrc(saved.uri);
+      console.log('[savePhoto] writeFile erfolgreich:', saved);
+    } catch (err) {
+      console.error('[savePhoto] Fehler beim Speichern:', err);
+      throw err;
+    }
   }
 
   const photo: StoredPhoto = {
@@ -61,6 +95,7 @@ export async function savePhoto(
   const photos = await loadPhotos();
   photos.unshift(photo);
   await Preferences.set({ key: PHOTOS_KEY, value: JSON.stringify(photos) });
+  console.log('[savePhoto] Foto gespeichert und Preferences aktualisiert:', photo);
 }
 
 /* ------------------------------------------------------------------ */
@@ -68,7 +103,15 @@ export async function savePhoto(
 /* ------------------------------------------------------------------ */
 export async function deletePhoto(fileName: string) {
   if (!isWeb) {
-    await Filesystem.deleteFile({ path: fileName, directory: Directory.Data });
+    const path = getNativePhotoPath(fileName); // robust gegen doppelten public/
+    try {
+      await Filesystem.deleteFile({ path, directory: Directory.Data });
+    } catch (e: any) {
+      // Fehler ignorieren, falls Datei bereits nicht mehr existiert
+      if (!String(e.message).includes('No such file')) {
+        console.warn('deleteFile error', e);
+      }
+    }
   }
   const remaining = (await loadPhotos()).filter(p => p.fileName !== fileName);
   await Preferences.set({ key: PHOTOS_KEY, value: JSON.stringify(remaining) });

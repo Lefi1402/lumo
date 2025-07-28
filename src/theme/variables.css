@@ -6,18 +6,9 @@
   --lumo-text-color: #ffffff;
 }
 
-ion-header,
-ion-toolbar {
-  padding-top: env(safe-area-inset-top, 0);
-  padding-top: calc(env(safe-area-inset-top, 0px) + var(--ion-safe-area-top, 24px));
-  --background: #222;            
-  background:   #222 !important; 
-}
-
 /* ===========================================================================
    Utility‑Klassen
 ========================================================================== */
-
 .lumo-title-center {
   position: absolute;
   top: 0;
@@ -28,18 +19,15 @@ ion-toolbar {
   align-items: center;
   font-family: var(--lumo-font-family);
 }
-
 .header-text {
   font-size: 28px;
   font-weight: 700;
 }
-
 .header-logo {
   height: 21px;
   margin-left: 1px;
   object-fit: contain;
 }
-
 .lumo-empty-gallery {
   display: flex;
   flex-direction: column;
@@ -48,7 +36,6 @@ ion-toolbar {
   height: 100%;
   color: var(--lumo-text-color);
 }
-
 .lumo-empty-text {
   margin-top: 140px;
   font-size: 1.2rem;
@@ -56,30 +43,25 @@ ion-toolbar {
   font-family: var(--lumo-font-family);
 }
 
-
 /* ===========================================================================
    Kamera‑Seite
 ========================================================================== */
-
 .camera-content {
   --background: transparent;
   background: transparent !important;
   position: relative;
 }
-
 .camera-page-transparent,
 .camera-page-transparent ion-content {
   --background: transparent;
   background: transparent !important;
 }
-
 .camera-preview {
   width: 100%;
   height: calc(100vh - 230px);
   object-fit: cover;
   background: black;
 }
-
 .camera-controls {
   position: absolute;
   bottom: calc(env(safe-area-inset-bottom, 0px) + 6rem);
@@ -88,13 +70,11 @@ ion-toolbar {
   justify-content: space-around;
   z-index: 20;             
 }
-
 .preview-wrapper {
   position: absolute;
   inset: 0;
   z-index: 1;                
 }
-
 .camera-slot {
   width: 70px;
   height: 70px;
@@ -103,7 +83,6 @@ ion-toolbar {
   align-items: center;
   justify-content: center;
 }
-
 .camera-button {
   width: 70px;
   height: 70px;
@@ -111,12 +90,10 @@ ion-toolbar {
   border-radius: 50%;
   border: 4px solid #aaa;
 }
-
 .camera-toggle {
   font-size: 28px;
   color: #fff;
 }
-
 .camera-thumbnail {
   width: 100%;
   height: 100%;
@@ -127,97 +104,106 @@ ion-toolbar {
 /* ===========================================================================
    Galerie – Grid & Monats‑Header
 ========================================================================== */
-
 ion-col.p-0 > ion-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   aspect-ratio: 1 / 1;
 }
-
 .month-header {
   margin: 20px 0 4px 8px;   
   font-size: 1.1rem;
   font-family: var(--lumo-font-family);
   color: var(--lumo-text-color);
 }
-
 .month-block + .month-block {
   margin-top: 8px;
 }
 
 /* ===========================================================================
-   Foto‑Detail‑Modal
+   MODAL Blur & Custom Size für PhotoModal (und Blur-Effekt)
 ========================================================================== */
-
-ion-modal.photo-modal {
-  --border-radius: 20px;
-  overflow: hidden;
+body.modal-blur .gallery-root {
+  filter: blur(10px) brightness(0.8) grayscale(0.2);
+  transition: filter 0.3s;
 }
-
+ion-modal.photo-modal,
+ion-modal.lumo-photo-modal {
+  --width: 95vw;
+  --max-width: 430px;
+  --height: 72vh;
+  --max-height: 700px;
+  --border-radius: 20px;
+  --box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  top: 5vh !important;
+  left: 50% !important;
+  transform: translateX(-50%);
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  background: rgba(25, 25, 25, 0.98);
+  overflow: hidden;
+  padding: 0 !important;
+  z-index: 1500;
+}
+/* Damit das Bild immer vollständig im Modal skaliert */
+ion-modal.photo-modal .detail-img,
+ion-modal.lumo-photo-modal .detail-img {
+  width: 100%;
+  height: auto;
+  max-height: 54vh;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+/* Header und Footer vom Modal */
+ion-modal.photo-modal ion-header,
+ion-modal.lumo-photo-modal ion-header,
+ion-modal.photo-modal ion-footer,
+ion-modal.lumo-photo-modal ion-footer {
+  background: transparent !important;
+  --background: transparent !important;
+  box-shadow: none !important;
+}
+/* Button-Gruppe im Footer */
+.modal-btn-group {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 16px;
+}
+/* Modal Close Icon */
 .modal-close-icon {
   width: 30px;
   height: 30px;
 }
 
-.detail-content {
-  --background: transparent;
-  --padding-top: 0;
-  --padding-bottom: 0;
-  --ion-background-color: transparent;
-}
-
-.detail-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.modal-footer {
-  --padding-start: 0;
-  --padding-end: 0;
-}
-
-.modal-btn-group {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.modal-btn-group ion-button {
-  --padding-start: 12px;
-  --padding-end: 12px;
-  font-family: var(--lumo-font-family);
-}
-
 /* ===========================================================================
-   IonAlert – Runde Ecken & Button‑Farben
+   IonAlert – Runde Ecken & Button‑Farben (für Löschen/Bearbeiten/Neues Foto)
 ========================================================================== */
-
 ion-alert.custom-alert .alert-wrapper {
   border-radius: 16px;
   font-family: var(--lumo-font-family);
 }
-
 ion-alert.custom-alert .alert-button {
   font-family: var(--lumo-font-family);
+  font-size: 16px;
 }
-
-ion-alert.custom-alert
-  .alert-button.alert-button-role-cancel {
-  color: #ffffff;
+ion-alert.custom-alert .alert-button.alert-button-role-cancel {
+  color: #ffffff !important;
+  font-weight: 500;
 }
-
-ion-alert.custom-alert
-  .alert-button.alert-button-role-destructive {
-  color: #ff4d4f;
+ion-alert.custom-alert .alert-button.alert-button-role-destructive {
+  color: #ff4d4f !important;
+  font-weight: 600;
+}
+ion-alert.custom-alert .alert-button.alert-button-role-newphoto {
+  color: #4caf50 !important;
+  font-weight: 600;
 }
 
 /* ===========================================================================
    Floating‑Action‑Button (weiß)
 ========================================================================== */
-
 .fab-white {
   --background: #ffffff;
   --color: #111111; /* Icon */
@@ -226,19 +212,16 @@ ion-alert.custom-alert
 /* ===========================================================================
    Tabs – Farbe & Icon‑Größe
 ========================================================================== */
-
 ion-tab-bar {
   --color: #8a8a8a;        
   --color-selected: #ffffff;
     --background: #222;
   background:   #222 !important;
 }
-
 ion-tab-bar ion-icon {
   width: 26px;
   height: 26px;
 }
-
 .select-box {
   --size:            25px;       
   --border-radius:   12px;         
@@ -256,24 +239,19 @@ ion-tab-bar ion-icon {
   right: 10px;
   z-index: 2;
 }
-
 .icon-select { color: #2196f3; }  
 .icon-upload { color: #4caf50; }   
-
 ion-popover.custom-popover ion-item::part(native) {
   --inner-border-width: 0;
 }
-
 ion-popover.custom-popover::part(content) {
   border-radius: 16px;
   --ion-font-family: 'Bahnschrift', sans-serif;
 }
-
 .select-box::part(mark) {
   transform: scale(0.7); 
   transform-origin: center;
 }
-
 
 /* ===========================================================================
    Auswahl Buttons
@@ -287,7 +265,6 @@ ion-popover.custom-popover::part(content) {
   gap: 15px;                 
   z-index: 60;         
 }
-
 .action-btn {
   --border-radius: 12px;     
   --padding-start: 20px;
@@ -295,17 +272,14 @@ ion-popover.custom-popover::part(content) {
   --ion-font-family: 'Bahnschrift', sans-serif;
   font-size: 15px;
 }
-
 .cancel-btn {
   --background: #6e6e6e;
   --background-hover: #7a7a7a;
 }
-
 .delete-btn {
   --background: #d32f2f;
   --background-hover: #b71c1c;
 }
-
 .action-btn::part(native) {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
 }
@@ -313,7 +287,6 @@ ion-popover.custom-popover::part(content) {
 /* ===========================================================================
    Toasts
 ========================================================================== */
-
 ion-toast.lum-toast {
   --width: 400px;
   --min-width: unset;
@@ -323,7 +296,6 @@ ion-toast.lum-toast {
   --box-shadow: 0 6px 18px rgba(0,0,0,.45);
   font-family: var(--lumo-font-family);
 }
-
 ion-toast.lum-toast::part(message) {
   text-align: center;
   white-space: normal;
@@ -334,12 +306,10 @@ ion-toast.lum-toast::part(container) {
   padding-inline-start: 10px;   
   padding-inline-end:   10px;
 }
-
 ion-toast.lum-toast::part(icon) {
   margin-inline-end: 4px;       /* enger an Text */
   color: #111;
 }
-
 
 /* ===== Kamera‑Preview sichtbar machen (toBack:true) ===== */
 html,

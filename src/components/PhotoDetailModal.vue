@@ -1,5 +1,10 @@
 <template>
-  <ion-modal css-class="photo-modal" :is-open="isOpen" @didDismiss="close">
+  <ion-modal
+    css-class="photo-modal lumo-photo-modal"
+    :is-open="isOpen"
+    @didDismiss="close"
+    backdrop-dismiss="true"
+  >
     <ion-page>
       <!-- Header -->
       <ion-header id="ModalHeader">
@@ -15,7 +20,7 @@
 
       <!-- Bild -->
       <ion-content v-if="photo" class="detail-content" scroll="vertical">
-        <img :src="photo.webPath" class="detail-img" />
+        <img :src="cacheBustedWebPath" class="detail-img" />
       </ion-content>
 
       <!-- Footer -->
@@ -35,7 +40,7 @@
       </ion-footer>
     </ion-page>
 
-    <!-- Löschen‑Bestätigung -->
+    <!-- Lösch‑Bestätigung -->
     <ion-alert
       :is-open="showAlert"
       header="Foto löschen?"
@@ -45,7 +50,17 @@
       @didDismiss="showAlert = false"
     />
 
-    <!-- Toast (einheitlicher LUMO‑Stil) -->
+    <!-- Bearbeiten: Ersetzen oder als neues Foto? -->
+    <ion-alert
+      :is-open="showEditChoice"
+      header="Bearbeitetes Foto speichern"
+      message="Möchtest du das Original ersetzen oder als neues Foto speichern?"
+      css-class="custom-alert"
+      :buttons="editChoiceButtons"
+      @didDismiss="showEditChoice = false"
+    />
+
+    <!-- Toast -->
     <ion-toast
       css-class="lum-toast"
       :icon="warning"
@@ -60,13 +75,12 @@
 </template>
 
 <script setup lang="ts">
-/* Ionic */
+// Ionic & Icons
 import {
   IonModal,
   IonPage,
   IonHeader,
   IonToolbar,
-  IonTitle,
   IonButtons,
   IonButton,
   IonContent,
@@ -75,8 +89,6 @@ import {
   IonAlert,
   IonToast,
 } from '@ionic/vue';
-
-/* Icons */
 import {
   createOutline,
   trashOutline,
@@ -84,82 +96,44 @@ import {
   warning,
 } from 'ionicons/icons';
 
-/* Capacitor & Plugins */
+import { ref, computed, watch, defineProps, defineEmits } from 'vue';
 import { Capacitor } from '@capacitor/core';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { PhotoEditor } from '@capawesome/capacitor-photo-editor';
-
-/* Hilfs‑Lib */
 // @ts-ignore
 import { basename } from 'path-browserify';
+import { StoredPhoto, deletePhoto, savePhoto } from '@/services/photoService';
 
-/* Vue */
-import { ref, watch, defineProps, defineEmits } from 'vue';
-
-/* Services */
-import { StoredPhoto, deletePhoto } from '@/services/photoService';
-
-/* Props & Events */
+// Props & Emits
 const props = defineProps<{
   modelValue: boolean;
   photo: StoredPhoto | null;
 }>();
 const emit = defineEmits(['update:modelValue', 'deleted', 'edited']);
 
-/* State */
-const isOpen    = ref(props.modelValue);
-const showAlert = ref(false);
-const isAndroid = Capacitor.getPlatform() === 'android';
+// State
+const isOpen        = ref(props.modelValue);
+const showAlert     = ref(false);
+const showToast     = ref(false);
+const toastMsg      = ref('');
+const isAndroid     = Capacitor.getPlatform() === 'android';
+const showEditChoice = ref(false);
+let editedResult: { path: string } | null = null;
 
-/* Toast */
-const showToast = ref(false);
-const toastMsg  = ref('');
-function presentToast(msg: string) {
-  toastMsg.value  = msg;
-  showToast.value = true;
-}
+// Cache-Buster
+const cacheBust = ref(0);
+const cacheBustedWebPath = computed(() =>
+  props.photo ? `${props.photo.webPath}?v=${cacheBust.value}` : ''
+);
 
-/* Reaktivität */
-watch(() => props.modelValue, v => (isOpen.value = v));
+watch(() => props.modelValue, v => isOpen.value = v);
 watch(isOpen, v => emit('update:modelValue', v));
 
-/* Helpers */
-function close() {
-  isOpen.value = false;
-}
+// Helper
+function close() { isOpen.value = false; }
+function presentToast(msg: string) { toastMsg.value = msg; showToast.value = true; }
 
-/* ---------- EDIT PHOTO (neu) ----------------------------------------- */
-async function editPhoto() {
-  if (!isAndroid || !props.photo) return;
-  try {
-    await (PhotoEditor as any).requestPermissions();
-
-    /* 1. Echten Datei‑Pfad innerhalb von Directory.Data holen */
-    const { uri } = await Filesystem.getUri({
-      path: props.photo.fileName,
-      directory: Directory.Data,
-    });
-
-    /* 2. Editor starten */
-    const { path } = await (PhotoEditor as any).edit({ path: uri });
-
-    /* 3. Ergebnis sichern + UI aktualisieren */
-    if (path) {
-      props.photo.webPath  = Capacitor.convertFileSrc(path);
-      props.photo.fileName = basename(path);
-      emit('edited');
-    }
-  } catch {
-    presentToast('Bearbeiten fehlgeschlagen.');
-  }
-}
-
-/* Delete -------------------------------------------------------------- */
-function confirmDelete() {
-  showAlert.value = true;
-}
-
-/* Alert‑Buttons */
+function confirmDelete() { showAlert.value = true; }
 const alertButtons = [
   { text: 'Abbrechen', role: 'cancel', cssClass: 'alert-btn-cancel' },
   {
@@ -178,4 +152,95 @@ const alertButtons = [
     },
   },
 ];
+
+// Bearbeiten mit Auswahl
+async function editPhoto() {
+  if (!isAndroid || !props.photo) return;
+  try {
+    const { uri } = await Filesystem.getUri({
+      directory: Directory.Data,
+      path: getNativePhotoPath(props.photo.fileName),
+    });
+
+    const result = await PhotoEditor.editPhoto({ path: uri }) as { path: string } | undefined;
+    if (!result || typeof result.path !== 'string' || !result.path) return;
+
+    editedResult = result;
+    showEditChoice.value = true;
+  } catch (e: any) {
+    if (e && e.message && e.message.toLowerCase().includes('cancel')) return;
+    console.error('editPhoto failed', e);
+    presentToast(`Bearbeiten fehlgeschlagen:\n${e.message || e}`);
+  }
+}
+
+// Buttons für Alert nach Bearbeitung
+const editChoiceButtons = [
+  {
+    text: 'Ersetzen',
+    role: 'destructive',
+    handler: async () => {
+      if (!props.photo || !editedResult) return;
+      props.photo.webPath  = Capacitor.convertFileSrc(editedResult.path);
+      props.photo.fileName = basename(editedResult.path);
+      cacheBust.value++; // Triggert Bild-Neuladen
+      emit('edited');
+      editedResult = null;
+    }
+  },
+  {
+    text: 'Als neues Foto',
+    role: 'cancel',
+    handler: async () => {
+      if (!editedResult) return;
+      try {
+        const file = await Filesystem.readFile({
+          path: editedResult.path,
+          directory: Directory.Data
+        });
+        let base64: string;
+        if (typeof file.data === 'string') {
+          base64 = file.data;
+        } else {
+          base64 = await blobToBase64(file.data);
+        }
+        await savePhoto(base64);
+        emit('edited');
+      } catch (e: any) {
+        presentToast('Speichern als neues Foto fehlgeschlagen.');
+      }
+      editedResult = null;
+    }
+  },
+  {
+    text: 'Abbrechen',
+    role: 'cancel',
+    cssClass: 'alert-btn-cancel',
+    handler: () => { editedResult = null; }
+  }
+];
+
+function getNativePhotoPath(fileName: string) {
+  return fileName.startsWith('public/') ? fileName : `public/${fileName}`;
+}
+async function blobToBase64(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const result = reader.result as string;
+      resolve(result.split(',')[1]);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
+// BLUR beim Öffnen des Modals
+watch(isOpen, (opened) => {
+  if (opened) {
+    document.body.classList.add('modal-blur');
+  } else {
+    document.body.classList.remove('modal-blur');
+  }
+});
 </script>
