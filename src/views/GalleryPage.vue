@@ -122,7 +122,6 @@
       <PhotoDetailModal
         v-model="showModal"
         :photo="activePhoto"
-        @didDismiss="onModalDismiss"
         @deleted="refresh"
         @edited="onEdited"
       />
