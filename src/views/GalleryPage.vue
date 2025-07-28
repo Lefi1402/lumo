@@ -15,25 +15,25 @@
       </ion-toolbar>
     </ion-header>
 
-    <!-- Menü‑Popover -->
+    <!-- Menü-Popover -->
     <ion-popover
       css-class="custom-popover"
       :is-open="showMenu"
       @didDismiss="showMenu = false"
     >
       <ion-list>
-        <ion-item button @click="activateSelect" >
+        <ion-item button @click="activateSelect">
           <ion-icon slot="start" :icon="checkboxOutline" class="icon-select" />
           <ion-label>Auswählen</ion-label>
         </ion-item>
-        <ion-item button @click="triggerUpload" >
+        <ion-item button @click="triggerUpload">
           <ion-icon slot="start" :icon="cloudUploadOutline" class="icon-upload" />
           <ion-label>Upload</ion-label>
         </ion-item>
       </ion-list>
     </ion-popover>
 
-    <!-- Verstecktes File‑Input -->
+    <!-- Verstecktes File-Input -->
     <input
       ref="fileInput"
       type="file"
@@ -43,7 +43,7 @@
     />
 
     <ion-content :fullscreen="true">
-      <!-- Pull‑to‑Refresh -->
+      <!-- Pull-to-Refresh -->
       <ion-refresher slot="fixed" @ionRefresh="doRefresh">
         <ion-refresher-content
           class="lum-refresher"
@@ -52,12 +52,12 @@
         />
       </ion-refresher>
 
-      <!-- Lade‑Spinner -->
+      <!-- Lade-Spinner -->
       <div v-if="loading" class="lumo-empty-gallery">
         <ion-spinner name="crescent" />
       </div>
 
-      <!-- Empty‑State -->
+      <!-- Empty-State -->
       <div v-else-if="photos.length === 0" class="lumo-empty-gallery">
         <ion-fab vertical="center" horizontal="center" slot="fixed">
           <ion-fab-button class="fab-white" @click="goToCamera">
@@ -97,13 +97,9 @@
         </div>
       </div>
 
-      <!-- Aktions‑Buttons im Auswahlmodus -->
+      <!-- Aktions-Buttons im Auswahlmodus -->
       <div v-if="showSelect" class="select-action-bar">
-        <ion-button
-          class="action-btn cancel-btn"
-          color="medium"
-          @click="cancelSelect"
-        >
+        <ion-button class="action-btn cancel-btn" color="medium" @click="cancelSelect">
           <ion-icon slot="start" :icon="close" />
           Abbrechen
         </ion-button>
@@ -118,14 +114,13 @@
         </ion-button>
       </div>
 
-      <!-- Detail‑Modal -->
+      <!-- Detail-Modal -->
       <PhotoDetailModal
         v-model="showModal"
         :photo="activePhoto"
         @deleted="refresh"
         @edited="onEdited"
       />
-
     </ion-content>
 
     <!-- Toast -->
@@ -146,8 +141,8 @@
 import {
   IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonImg, IonFab, IonFabButton, IonIcon,
   IonSpinner, IonRefresher, IonRefresherContent, IonPopover, IonList,
-  IonItem, IonLabel, IonCheckbox, IonButtons, IonButton,
-  onIonViewWillEnter, IonToast,
+  IonItem, IonLabel, IonCheckbox, IonButtons, IonButton, IonToast,
+  onIonViewWillEnter,
 } from '@ionic/vue';
 import {
   addOutline, menuOutline, close, trash, checkboxOutline,
@@ -161,57 +156,47 @@ import appLogo from '@/assets/Logo.png';
 // @ts-ignore
 import * as ExifReader from 'exifreader';
 
-/* -------------------- State -------------------- */
-const photos      = ref<StoredPhoto[]>([]);
+// ---------- State ----------
+const photos         = ref<StoredPhoto[]>([]);
+const loading        = ref(true);
+const showMenu       = ref(false);
+const showSelect     = ref(false);
+const selected       = ref<Set<string>>(new Set());
+const showModal      = ref(false);
+const activePhoto    = ref<StoredPhoto | null>(null);
+const fileInput      = ref<HTMLInputElement | null>(null);
+const loadingImages  = ref<Set<string>>(new Set());
 const imageUpdateMap = ref(new Map<string, number>());
-const loading     = ref(true);
-const showModal   = ref(false);
-const activePhoto = ref<StoredPhoto | null>(null);
+const showToast      = ref(false);
+const toastMsg       = ref('');
+const router         = useRouter();
 
-/* Menü & Auswahl */
-const showMenu   = ref(false);
-const showSelect = ref(false);
-const selected   = ref<Set<string>>(new Set());
-
-/* Upload */
-const fileInput = ref<HTMLInputElement | null>(null);
-const router = useRouter();
-
-/* --- Loader für einzelne Bilder beim Bearbeiten --- */
-const loadingImages = ref<Set<string>>(new Set());
-
-/* -------------------- Daten laden -------------------- */
+// ---------- Lifecycle: Daten laden ----------
 onIonViewWillEnter(refresh);
 
 async function refresh() {
   loading.value = true;
   photos.value  = await loadPhotos();
   loading.value = false;
-  // Nach vollständigem Laden Skeletons löschen
   loadingImages.value.clear();
 }
+
 async function doRefresh(ev: CustomEvent) {
   await refresh();
   (ev.target as HTMLIonRefresherElement).complete();
 }
 
-/* -------------------- Gruppierung -------------------- */
+// ---------- Gruppierung nach Monat ----------
 const groupedPhotos = computed(() => {
   const map = new Map<string, StoredPhoto[]>();
   for (const p of photos.value) {
-    const key = new Date(p.date).toLocaleDateString('de-DE', {
-      month: 'long',
-      year: 'numeric',
-    });
+    const key = new Date(p.date).toLocaleDateString('de-DE', { month: 'long', year: 'numeric' });
     (map.get(key) || map.set(key, []).get(key)!).push(p);
   }
   return Array.from(map.entries());
 });
 
-/* -------------------- Menü‑Aktionen -------------------- */
-const showToast = ref(false);
-const toastMsg  = ref('');
-
+// ---------- Menü & Auswahl ----------
 function activateSelect() {
   showMenu.value = false;
   if (photos.value.length === 0) {
@@ -231,7 +216,7 @@ function cancelSelect() {
   selected.value.clear();
 }
 
-/* Upload‑Handler */
+// ---------- Upload & Hilfsfunktionen ----------
 async function handleUpload(ev: Event) {
   const file = (ev.target as HTMLInputElement).files?.[0];
   if (!file) return;
@@ -248,12 +233,21 @@ async function handleUpload(ev: Event) {
   (ev.target as HTMLInputElement).value = '';
 }
 
-/* Auswahl‑Toggle */
+function fileToBase64(file: File): Promise<string> {
+  return new Promise(res => {
+    const reader = new FileReader();
+    reader.onload = () => res((reader.result as string).split(',')[1]);
+    reader.readAsDataURL(file);
+  });
+}
+
+// ---------- Auswahl & Löschen ----------
 function toggleSel(p: StoredPhoto) {
   selected.value.has(p.fileName)
     ? selected.value.delete(p.fileName)
     : selected.value.add(p.fileName);
 }
+
 async function deleteSelected() {
   for (const name of selected.value) {
     await deletePhoto(name);
@@ -262,10 +256,9 @@ async function deleteSelected() {
   showSelect.value = false;
 }
 
-/* -------------------- Detail-Modal Handling -------------------- */
-
-// Modal öffnen
+// ---------- Detail-Modal Handling ----------
 const goToCamera = () => router.push('/tabs/camera');
+
 function openPhoto(photo: StoredPhoto) {
   activePhoto.value = photo;
   showModal.value   = true;
@@ -273,14 +266,5 @@ function openPhoto(photo: StoredPhoto) {
 
 async function onEdited(editedPhoto: StoredPhoto) {
   imageUpdateMap.value.set(editedPhoto.fileName, Date.now());
-}
-
-/* -------------------- Hilfsfunktionen -------------------- */
-function fileToBase64(file: File): Promise<string> {
-  return new Promise(res => {
-    const reader = new FileReader();
-    reader.onload = () => res((reader.result as string).split(',')[1]);
-    reader.readAsDataURL(file);
-  });
 }
 </script>

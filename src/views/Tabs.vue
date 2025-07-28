@@ -9,7 +9,6 @@
           <ion-icon :icon="imagesOutline" aria-hidden="true" />
           <ion-label>Galerie</ion-label>
         </ion-tab-button>
-
         <!-- Kamera -->
         <ion-tab-button tab="camera" href="/tabs/camera">
           <ion-icon :icon="cameraOutline" aria-hidden="true" />
@@ -22,15 +21,7 @@
 
 <script setup lang="ts">
 import {
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
-  IonLabel,
-  IonIcon,
-  IonPage,
-  IonRouterOutlet,
+  IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet,
 } from '@ionic/vue';
-
-/* Ionicons – einfach aus dem Paket importieren */
 import { imagesOutline, cameraOutline } from 'ionicons/icons';
 </script>

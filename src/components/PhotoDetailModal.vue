@@ -60,27 +60,13 @@
 </template>
 
 <script setup lang="ts">
-// Ionic & Icons
 import {
-  IonModal,
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonButtons,
-  IonButton,
-  IonContent,
-  IonFooter,
-  IonIcon,
-  IonAlert,
-  IonToast,
+  IonModal, IonPage, IonHeader, IonToolbar, IonButtons, IonButton, IonTitle,
+  IonContent, IonFooter, IonIcon, IonAlert, IonToast
 } from '@ionic/vue';
 import {
-  createOutline,
-  trashOutline,
-  closeCircleOutline,
-  warning,
+  createOutline, trashOutline, closeCircleOutline, warning
 } from 'ionicons/icons';
-
 import { ref, computed, watch, defineProps, defineEmits } from 'vue';
 import { Capacitor } from '@capacitor/core';
 import { Filesystem, Directory } from '@capacitor/filesystem';
@@ -94,36 +80,31 @@ const props = defineProps<{
 }>();
 const emit = defineEmits(['update:modelValue', 'deleted', 'edited']);
 
-// State
-const isOpen = ref(props.modelValue);
-const showAlert = ref(false);
-const showToast = ref(false);
-const toastMsg = ref('');
-const isAndroid = Capacitor.getPlatform() === 'android';
-
-// **NEUE LOGIK FÜR CACHE-BUSTING**
+// State & Computed
+const isOpen      = ref(props.modelValue);
+const showAlert   = ref(false);
+const showToast   = ref(false);
+const toastMsg    = ref('');
+const isAndroid   = Capacitor.getPlatform() === 'android';
 const editTimestamp = ref(Date.now());
-const cacheBustedWebPath = computed(() => {
-  // Diese reaktive Variable sorgt dafür, dass die URL sich bei Bedarf ändert
-  return props.photo ? `${props.photo.webPath}?v=${editTimestamp.value}` : '';
-});
+const cacheBustedWebPath = computed(() =>
+  props.photo ? `${props.photo.webPath}?v=${editTimestamp.value}` : ''
+);
 
-// Zwei‑Wege Binding für Modal (open <-> modelValue)
+// Zwei-Wege-Binding für Modal-Öffnung
 watch(() => props.modelValue, (v) => (isOpen.value = v));
 watch(isOpen, (v) => emit('update:modelValue', v));
 
-// Helper-Funktionen
-function close() { isOpen.value = false; }
+// Modal schließen, Toast anzeigen
+function close()        { isOpen.value = false; }
 function presentToast(msg: string) { toastMsg.value = msg; showToast.value = true; }
 
-// Delete
+// Löschen-Logik
 function confirmDelete() { showAlert.value = true; }
 const alertButtons = [
   { text: 'Abbrechen', role: 'cancel', cssClass: 'alert-btn-cancel' },
   {
-    text: 'Löschen',
-    role: 'destructive',
-    cssClass: 'alert-btn-delete',
+    text: 'Löschen', role: 'destructive', cssClass: 'alert-btn-delete',
     handler: async () => {
       if (!props.photo) return;
       try {
@@ -133,40 +114,29 @@ const alertButtons = [
       } catch {
         presentToast('Löschen fehlgeschlagen.');
       }
-    },
-  },
+    }
+  }
 ];
 
-// **KOMPLETT NEUE `editPhoto`-FUNKTION**
+// Android-Bearbeitung
 async function editPhoto() {
   if (!isAndroid || !props.photo) return;
   try {
-    // Hole den Pfad der Datei, die bearbeitet werden soll
     const { uri } = await Filesystem.getUri({
       directory: Directory.Data,
       path: getNativePhotoPath(props.photo.fileName),
     });
-
-    // Öffne den Editor. Er bearbeitet die Datei direkt und gibt nichts zurück.
     await PhotoEditor.editPhoto({ path: uri });
-
-    // Bearbeitung erfolgreich. Nun zwingen wir das <img>-Tag zum Neuladen.
     editTimestamp.value = Date.now();
-
-    // Informiere die Galerie, damit sie ihr Thumbnail auch aktualisieren kann.
     emit('edited', props.photo);
-
   } catch (e: any) {
-    // Fange den Fall ab, dass der User den Editor abbricht.
-    if (e?.message?.toLowerCase().includes('cancel')) {
-      return;
-    }
+    if (e?.message?.toLowerCase().includes('cancel')) return;
     console.error('editPhoto failed', e);
     presentToast(`Bearbeiten fehlgeschlagen:\n${e.message || e}`);
   }
 }
 
-// Hilfsfunktionen
+// Native-Path Helper
 function getNativePhotoPath(fileName: string) {
   return fileName.startsWith('public/') ? fileName : `public/${fileName}`;
 }

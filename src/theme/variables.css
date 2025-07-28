@@ -30,15 +30,12 @@ ion-toast.lum-toast {
 
 ion-header,
 ion-toolbar {
-  padding-top: env(safe-area-inset-top, 0);
   padding-top: calc(env(safe-area-inset-top, 0px) + var(--ion-safe-area-top, 24px));
   --background: #222;            
   background:   #222 !important; 
 }
 
-/* ===========================================================================
-   Utility‑Klassen
-========================================================================== */
+/* ========================= UTILITY KLASSEN =============================== */
 .lumo-title-center {
   position: absolute;
   top: 0;
@@ -47,7 +44,6 @@ ion-toolbar {
   transform: translateX(-50%);
   display: flex;
   align-items: center;
-  font-family: var(--lumo-font-family);
 }
 .header-text {
   font-size: 28px;
@@ -70,17 +66,10 @@ ion-toolbar {
   margin-top: 140px;
   font-size: 1.2rem;
   text-align: center;
-  font-family: var(--lumo-font-family);
 }
 
-/* ===========================================================================
-   Kamera‑Seite
-========================================================================== */
-.camera-content {
-  --background: transparent;
-  background: transparent !important;
-  position: relative;
-}
+/* ======================== KAMERA-SEITE =================================== */
+.camera-content,
 .camera-page-transparent,
 .camera-page-transparent ion-content {
   --background: transparent;
@@ -98,12 +87,12 @@ ion-toolbar {
   width: 100%;
   display: flex;
   justify-content: space-around;
-  z-index: 20;             
+  z-index: 20;
 }
 .preview-wrapper {
   position: absolute;
   inset: 0;
-  z-index: 1;                
+  z-index: 1;
 }
 .camera-slot {
   width: 70px;
@@ -131,9 +120,7 @@ ion-toolbar {
   border-radius: 12px;
 }
 
-/* ===========================================================================
-   Galerie – Grid & Monats‑Header
-========================================================================== */
+/* ======================== GALERIE GRID & MONATSHEADER ===================== */
 ion-col.p-0 > ion-img {
   width: 100%;
   height: 100%;
@@ -141,7 +128,7 @@ ion-col.p-0 > ion-img {
   aspect-ratio: 1 / 1;
 }
 .month-header {
-  margin: 20px 0 4px 8px;   
+  margin: 20px 0 4px 8px;
   font-size: 1.1rem;
   color: var(--lumo-text-color);
 }
@@ -149,9 +136,7 @@ ion-col.p-0 > ion-img {
   margin-top: 8px;
 }
 
-/* ===========================================================================
-   Foto‑Detail‑Modal – zentriert, NICHT Fullscreen!
-========================================================================== */
+/* ======================== MODAL: FOTO-DETAIL ============================== */
 ion-modal.photo-modal,
 ion-modal.lumo-photo-modal {
   --width: 95vw;
@@ -220,15 +205,11 @@ ion-modal.lumo-photo-modal ion-footer {
   gap: 16px;
 }
 
-/* ===========================================================================
-   IonAlert – Runde Ecken & Button‑Farben
-========================================================================== */
+/* ======================== ALERT: CUSTOM DIALOG ============================ */
 ion-alert.custom-alert .alert-wrapper {
   border-radius: 16px;
-  font-family: var(--lumo-font-family);
 }
 ion-alert.custom-alert .alert-button {
-  font-family: var(--lumo-font-family);
   font-size: 16px;
 }
 ion-alert.custom-alert .alert-button.alert-button-role-cancel {
@@ -244,19 +225,15 @@ ion-alert.custom-alert .alert-button.alert-button-role-newphoto {
   font-weight: 600;
 }
 
-/* ===========================================================================
-   Floating‑Action‑Button (weiß)
-========================================================================== */
+/* ======================== FAB BUTTON WEISS ================================ */
 .fab-white {
   --background: #ffffff;
-  --color: #111111; /* Icon */
+  --color: #111111;
 }
 
-/* ===========================================================================
-   Tabs – Farbe & Icon‑Größe
-========================================================================== */
+/* ======================== TABS BAR ======================================== */
 ion-tab-bar {
-  --color: #8a8a8a;        
+  --color: #8a8a8a;
   --color-selected: #ffffff;
   --background: #222;
   background:   #222 !important;
@@ -266,37 +243,32 @@ ion-tab-bar ion-icon {
   height: 26px;
 }
 
-/* ===========================================================================
-   Auswahl-Checkboxen und ActionBar
-========================================================================== */
+/* ======================== AUSWAHL & ACTIONBAR ============================= */
 .select-box {
-  --size:            25px;       
-  --border-radius:   12px;         
-  --border-width:    2px;
-  --border-style:    solid;
-  --border-color:    #ffffff;     
-  --border-color-checked: var(--border-color); 
-  --checkbox-background:         transparent; 
-  --checkbox-background-checked: #2196f3;    
-  --checkmark-color:  #ffffff;
-  --checkmark-width:  2px;
-
+  --size: 25px;
+  --border-radius: 12px;
+  --border-width: 2px;
+  --border-style: solid;
+  --border-color: #ffffff;
+  --border-color-checked: var(--border-color);
+  --checkbox-background: transparent;
+  --checkbox-background-checked: #2196f3;
+  --checkmark-color: #ffffff;
+  --checkmark-width: 2px;
   position: absolute;
   top: 10px;
   right: 10px;
   z-index: 2;
 }
-.icon-select { color: #2196f3; }  
-.icon-upload { color: #4caf50; }   
-ion-popover.custom-popover ion-item::part(native) {
-  --inner-border-width: 0;
-}
+.icon-select { color: #2196f3; }
+.icon-upload { color: #4caf50; }
+ion-popover.custom-popover ion-item::part(native) { --inner-border-width: 0; }
 ion-popover.custom-popover::part(content) {
   border-radius: 16px;
   --ion-font-family: 'Bahnschrift', sans-serif;
 }
 .select-box::part(mark) {
-  transform: scale(0.7); 
+  transform: scale(0.7);
   transform-origin: center;
 }
 .select-action-bar {
@@ -305,56 +277,36 @@ ion-popover.custom-popover::part(content) {
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 15px;                 
-  z-index: 60;         
+  gap: 15px;
+  z-index: 60;
 }
 .action-btn {
-  --border-radius: 12px;     
+  --border-radius: 12px;
   --padding-start: 20px;
   --padding-end: 20px;
-  --ion-font-family: 'Bahnschrift', sans-serif;
   font-size: 15px;
 }
-.cancel-btn {
-  --background: #6e6e6e;
-  --background-hover: #7a7a7a;
-}
-.delete-btn {
-  --background: #d32f2f;
-  --background-hover: #b71c1c;
-}
-.action-btn::part(native) {
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
-}
+.cancel-btn { --background: #6e6e6e; --background-hover: #7a7a7a; }
+.delete-btn { --background: #d32f2f; --background-hover: #b71c1c; }
+.action-btn::part(native) { box-shadow: 0 6px 18px rgba(0,0,0,0.55); }
 
-/* ===========================================================================
-   Toasts
-========================================================================== */
+/* ======================== TOASTS ========================================== */
 ion-toast.lum-toast {
   --width: 400px;
-  --min-width: unset;
   --background: #ffc107;
   --color: #111;
   --border-radius: 12px;
   --box-shadow: 0 6px 18px rgba(0,0,0,.45);
-  font-family: var(--lumo-font-family);
 }
-ion-toast.lum-toast::part(message) {
-  text-align: center;
-  white-space: normal;
-  font-size: 16px;
-}
+ion-toast.lum-toast::part(message) { text-align: center; font-size: 16px; }
 ion-toast.lum-toast::part(container) {
-  justify-content: flex-start;  
-  padding-inline-start: 10px;   
+  justify-content: flex-start;
+  padding-inline-start: 10px;
   padding-inline-end:   10px;
 }
-ion-toast.lum-toast::part(icon) {
-  margin-inline-end: 4px;
-  color: #111;
-}
+ion-toast.lum-toast::part(icon) { margin-inline-end: 4px; color: #111; }
 
-/* ===== Kamera‑Preview sichtbar machen (toBack:true) ===== */
+/* =========== Kamera-Preview  ============================================= */
 html,
 body,
 ion-app,
@@ -364,9 +316,7 @@ ion-page {
   --background: transparent;
 }
 
-
-/* ===== Other ===== */
-
+/* ========== Skeleton Loader ============================================== */
 .skeleton-img {
   width: 100%;
   aspect-ratio: 1/1;

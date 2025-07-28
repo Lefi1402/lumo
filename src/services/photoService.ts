@@ -1,24 +1,25 @@
+// photoService.ts
+// Handles persistent storage and file operations for LUMO gallery photos on web and Android
+
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Preferences } from '@capacitor/preferences';
 import { Capacitor } from '@capacitor/core';
 
 export interface StoredPhoto {
   fileName: string;
-  webPath:  string;   // Data‑URL (Web) oder convertFileSrc‑Pfad (Native)
-  date:     string;   // ISO‑Datum
+  webPath:  string;   
+  date:     string;   
 }
 
 const PHOTOS_KEY = 'photos';
 const isWeb = Capacitor.getPlatform() === 'web';
 
-// Hilfsfunktion für Pfade im Filesystem
+// Liefert den richtigen Pfad für native Dateien
 export function getNativePhotoPath(fileName: string) {
   return fileName.startsWith('public/') ? fileName : `public/${fileName}`;
 }
 
-/* ------------------------------------------------------------------ */
-/* Liste laden                                                        */
-/* ------------------------------------------------------------------ */
+// Lädt die gespeicherten Fotos aus Preferences
 export async function loadPhotos(): Promise<StoredPhoto[]> {
   const { value } = await Preferences.get({ key: PHOTOS_KEY });
   try {
@@ -29,56 +30,40 @@ export async function loadPhotos(): Promise<StoredPhoto[]> {
   }
 }
 
-/* ------------------------------------------------------------------ */
-/* Bild speichern                                                     */
-/* ------------------------------------------------------------------ */
-/**
- * @param base64 
- * @param dateOverride 
- * @param mime 
- */
+// Speichert ein neues Foto und legt es im Filesystem oder als Data-URL an
 export async function savePhoto(
   base64: string,
   dateOverride?: string,
   mime: 'image/jpeg' | 'image/png' = 'image/jpeg'
-): Promise<StoredPhoto> {   // <<< Rückgabewert geändert
+): Promise<StoredPhoto> {
   const ext      = mime === 'image/png' ? 'png' : 'jpeg';
   const fileName = `${Date.now()}.${ext}`;
   let   webPath: string;
 
   if (isWeb) {
     webPath = `data:${mime};base64,${base64}`;
-    console.log('[savePhoto] Web: Bild gespeichert unter Data-URL');
   } else {
-    // Ordner "public" anlegen (wenn nötig)
     try {
-      console.log('[savePhoto] Versuche Ordner "public" anzulegen…');
       await Filesystem.mkdir({
         path: 'public',
         directory: Directory.Data,
         recursive: true,
       });
-      console.log('[savePhoto] Ordner "public" wurde (neu) angelegt!');
     } catch (e: any) {
-      if (String(e.message).includes('directory exists')) {
-        console.log('[savePhoto] Ordner "public" existiert bereits.');
-      } else {
+      if (!String(e.message).includes('directory exists')) {
         console.warn('[savePhoto] mkdir public error:', e);
       }
     }
-
-    // Bild speichern (mit recursive: true)
+    // Bild speichern
     const savePath = getNativePhotoPath(fileName);
-    console.log('[savePhoto] Schreibe Bild nach:', savePath);
     try {
       const saved = await Filesystem.writeFile({
         path: savePath,
         data: base64,
         directory: Directory.Data,
-        recursive: true, // ← GANZ WICHTIG!
+        recursive: true,
       });
       webPath = Capacitor.convertFileSrc(saved.uri);
-      console.log('[savePhoto] writeFile erfolgreich:', saved);
     } catch (err) {
       console.error('[savePhoto] Fehler beim Speichern:', err);
       throw err;
@@ -94,21 +79,17 @@ export async function savePhoto(
   const photos = await loadPhotos();
   photos.unshift(photo);
   await Preferences.set({ key: PHOTOS_KEY, value: JSON.stringify(photos) });
-  console.log('[savePhoto] Foto gespeichert und Preferences aktualisiert:', photo);
 
-  return photo; // <<<<<< Das ist die Änderung!
+  return photo;
 }
 
-/* ------------------------------------------------------------------ */
-/* Foto löschen                                                       */
-/* ------------------------------------------------------------------ */
+// Löscht ein Foto sowohl aus dem Filesystem als auch aus Preferences
 export async function deletePhoto(fileName: string) {
   if (!isWeb) {
-    const path = getNativePhotoPath(fileName); // robust gegen doppelten public/
+    const path = getNativePhotoPath(fileName);
     try {
       await Filesystem.deleteFile({ path, directory: Directory.Data });
     } catch (e: any) {
-      // Fehler ignorieren, falls Datei bereits nicht mehr existiert
       if (!String(e.message).includes('No such file')) {
         console.warn('deleteFile error', e);
       }
