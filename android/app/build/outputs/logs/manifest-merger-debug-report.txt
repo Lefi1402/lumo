@@ -15,6 +15,7 @@ ADDED from C:\Users\leonr\OneDrive\Desktop\lumo\android\app\src\main\AndroidMani
 INJECTED from C:\Users\leonr\OneDrive\Desktop\lumo\android\app\src\main\AndroidManifest.xml:2:1-42:12
 INJECTED from C:\Users\leonr\OneDrive\Desktop\lumo\android\app\src\main\AndroidManifest.xml:2:1-42:12
 INJECTED from C:\Users\leonr\OneDrive\Desktop\lumo\android\app\src\main\AndroidManifest.xml:2:1-42:12
+MERGED from [:capawesome-capacitor-photo-editor] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capawesome\capacitor-photo-editor\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
 MERGED from [:capacitor-community-camera-preview] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor-community\camera-preview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
 MERGED from [:capacitor-app] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\app\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
 MERGED from [:capacitor-camera] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\camera\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-13:12
@@ -24,7 +25,6 @@ MERGED from [:capacitor-keyboard] C:\Users\leonr\OneDrive\Desktop\lumo\node_modu
 MERGED from [:capacitor-preferences] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\preferences\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
 MERGED from [:capacitor-splash-screen] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\splash-screen\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
 MERGED from [:capacitor-status-bar] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\status-bar\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
-MERGED from [:capawesome-capacitor-photo-editor] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capawesome\capacitor-photo-editor\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
 MERGED from [:capacitor-android] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\android\capacitor\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
 MERGED from [:capacitor-cordova-android-plugins] C:\Users\leonr\OneDrive\Desktop\lumo\android\capacitor-cordova-android-plugins\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.appcompat:appcompat-resources:1.7.0] C:\Users\leonr\.gradle\caches\8.13\transforms\0d0aa8469f3a45927795e5e14c85ad05\transformed\appcompat-resources-1.7.0\AndroidManifest.xml:2:1-7:12
@@ -164,6 +164,8 @@ uses-sdk
 INJECTED from C:\Users\leonr\OneDrive\Desktop\lumo\android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\leonr\OneDrive\Desktop\lumo\android\app\src\main\AndroidManifest.xml
 INJECTED from C:\Users\leonr\OneDrive\Desktop\lumo\android\app\src\main\AndroidManifest.xml
+MERGED from [:capawesome-capacitor-photo-editor] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capawesome\capacitor-photo-editor\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:capawesome-capacitor-photo-editor] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capawesome\capacitor-photo-editor\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [:capacitor-community-camera-preview] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor-community\camera-preview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [:capacitor-community-camera-preview] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor-community\camera-preview\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [:capacitor-app] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\app\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
@@ -182,8 +184,6 @@ MERGED from [:capacitor-splash-screen] C:\Users\leonr\OneDrive\Desktop\lumo\node
 MERGED from [:capacitor-splash-screen] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\splash-screen\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [:capacitor-status-bar] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\status-bar\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [:capacitor-status-bar] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\status-bar\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
-MERGED from [:capawesome-capacitor-photo-editor] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capawesome\capacitor-photo-editor\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
-MERGED from [:capawesome-capacitor-photo-editor] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capawesome\capacitor-photo-editor\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [:capacitor-android] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\android\capacitor\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [:capacitor-android] C:\Users\leonr\OneDrive\Desktop\lumo\node_modules\@capacitor\android\capacitor\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [:capacitor-cordova-android-plugins] C:\Users\leonr\OneDrive\Desktop\lumo\android\capacitor-cordova-android-plugins\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:6:5-44

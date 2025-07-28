@@ -33,9 +33,9 @@ export async function loadPhotos(): Promise<StoredPhoto[]> {
 /* Bild speichern                                                     */
 /* ------------------------------------------------------------------ */
 /**
- * @param base64 Reiner Base64‑String (ohne data:… Präfix)
- * @param dateOverride ISO‑Datum aus EXIF (optional)
- * @param mime 'image/jpeg' | 'image/png'  (Default JPEG)
+ * @param base64 
+ * @param dateOverride 
+ * @param mime 
  */
 export async function savePhoto(
   base64: string,

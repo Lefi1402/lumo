@@ -4,4 +4,5 @@
     <cache-path name="my_cache_images" path="." />
     <files-path name="my_images" path="public/" />
     <files-path name="files_root" path="." />
+    <data-path name="data" path="." />
 </paths>

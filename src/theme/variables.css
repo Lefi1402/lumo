@@ -168,8 +168,8 @@ ion-modal.photo-modal::part(content),
 ion-modal.lumo-photo-modal::part(content) {
   margin: auto;
   border-radius: 20px;
-  max-width: 430px;
-  max-height: 700px;
+  max-width: 350px;
+  max-height: 400px;
   width: 95vw;
   height: 72vh;
   background: rgba(25,25,25,0.98);
@@ -197,7 +197,6 @@ ion-modal.lumo-photo-modal .detail-img {
   object-fit: contain;
   display: block;
   margin: 0;
-  border-radius: 10px;
   background: #181818;
   max-height: none;
   min-height: 0;
@@ -363,4 +362,19 @@ ion-router-outlet,
 ion-page {
   background: transparent !important;
   --background: transparent;
+}
+
+
+/* ===== Other ===== */
+
+.skeleton-img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 12px;
+  background: linear-gradient(90deg,#2c2c2c 25%,#444 50%,#2c2c2c 75%);
+  animation: skeleton 1.1s infinite linear;
+}
+@keyframes skeleton {
+  0% { background-position: -200px 0 }
+  100% { background-position: 200px 0 }
 }

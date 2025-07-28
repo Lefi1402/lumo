@@ -3,13 +3,11 @@
     <!-- Header -->
     <ion-header id="GalleryHeader">
       <ion-toolbar>
-        <!-- Menü -->
         <ion-buttons slot="start">
           <ion-button @click="showMenu = true">
             <ion-icon :icon="menuOutline" />
           </ion-button>
         </ion-buttons>
-
         <ion-title class="lumo-title-center">
           <span class="header-text">LUM</span>
           <img :src="appLogo" class="header-logo" />
@@ -28,7 +26,6 @@
           <ion-icon slot="start" :icon="checkboxOutline" class="icon-select" />
           <ion-label>Auswählen</ion-label>
         </ion-item>
-
         <ion-item button @click="triggerUpload" >
           <ion-icon slot="start" :icon="cloudUploadOutline" class="icon-upload" />
           <ion-label>Upload</ion-label>
@@ -74,7 +71,6 @@
       <div v-else>
         <div v-for="([month, list]) in groupedPhotos" :key="month" class="month-block">
           <h4 class="month-header">{{ month }}</h4>
-
           <ion-grid>
             <ion-row>
               <ion-col
@@ -84,7 +80,12 @@
                 class="p-0 thumb-box"
                 @click="showSelect ? toggleSel(p) : openPhoto(p)"
               >
-                <ion-img :src="p.webPath" />
+                <template v-if="loadingImages.has(p.fileName)">
+                  <div class="skeleton-img"></div>
+                </template>
+                <template v-else>
+                  <ion-img :src="p.webPath + '?v=' + p.fileName" />
+                </template>
                 <ion-checkbox
                   v-if="showSelect"
                   :checked="selected.has(p.fileName)"
@@ -98,7 +99,6 @@
 
       <!-- Aktions‑Buttons im Auswahlmodus -->
       <div v-if="showSelect" class="select-action-bar">
-    
         <ion-button
           class="action-btn cancel-btn"
           color="medium"
@@ -107,7 +107,6 @@
           <ion-icon slot="start" :icon="close" />
           Abbrechen
         </ion-button>
-
         <ion-button
           class="action-btn delete-btn"
           color="danger"
@@ -123,70 +122,43 @@
       <PhotoDetailModal
         v-model="showModal"
         :photo="activePhoto"
+        @didDismiss="onModalDismiss"
         @deleted="refresh"
-        @edited="refresh"
+        @edited="onEdited"
       />
+
     </ion-content>
 
     <!-- Toast -->
     <ion-toast
       css-class="lum-toast"
       position="top"
-      position-anchor="GalleryHeader"   
+      position-anchor="GalleryHeader"
       :is-open="showToast"
       :message="toastMsg"
       :icon="warning"
       duration="2500"
       @didDismiss="showToast = false"
     />
-      
   </ion-page>
 </template>
 
 <script setup lang="ts">
 import {
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonImg,
-  IonFab,
-  IonFabButton,
-  IonIcon,
-  IonSpinner,
-  IonRefresher,
-  IonRefresherContent,
-  IonPopover,
-  IonList,
-  IonItem,
-  IonLabel,
-  IonCheckbox,
-  IonButtons,
-  IonButton,
-  onIonViewWillEnter,
-  IonToast,
+  IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonImg, IonFab, IonFabButton, IonIcon,
+  IonSpinner, IonRefresher, IonRefresherContent, IonPopover, IonList,
+  IonItem, IonLabel, IonCheckbox, IonButtons, IonButton,
+  onIonViewWillEnter, IonToast,
 } from '@ionic/vue';
-
 import {
-  addOutline,
-  menuOutline,
-  close,
-  trash,
-  checkboxOutline,
-  cloudUploadOutline,
-  warning
+  addOutline, menuOutline, close, trash, checkboxOutline,
+  cloudUploadOutline, warning
 } from 'ionicons/icons';
-
 import { useRouter } from 'vue-router';
 import { ref, computed } from 'vue';
 import { loadPhotos, StoredPhoto, deletePhoto, savePhoto } from '@/services/photoService';
 import PhotoDetailModal from '@/components/PhotoDetailModal.vue';
 import appLogo from '@/assets/Logo.png';
-
 // @ts-ignore
 import * as ExifReader from 'exifreader';
 
@@ -203,17 +175,21 @@ const selected   = ref<Set<string>>(new Set());
 
 /* Upload */
 const fileInput = ref<HTMLInputElement | null>(null);
-
 const router = useRouter();
 
+/* --- Loader für einzelne Bilder beim Bearbeiten --- */
+const loadingImages = ref<Set<string>>(new Set());
+
 /* -------------------- Daten laden -------------------- */
+onIonViewWillEnter(refresh);
+
 async function refresh() {
   loading.value = true;
   photos.value  = await loadPhotos();
   loading.value = false;
+  // Nach vollständigem Laden Skeletons löschen
+  loadingImages.value.clear();
 }
-onIonViewWillEnter(refresh);
-
 async function doRefresh(ev: CustomEvent) {
   await refresh();
   (ev.target as HTMLIonRefresherElement).complete();
@@ -233,28 +209,23 @@ const groupedPhotos = computed(() => {
 });
 
 /* -------------------- Menü‑Aktionen -------------------- */
-
 const showToast = ref(false);
 const toastMsg  = ref('');
 
 function activateSelect() {
   showMenu.value = false;
-
   if (photos.value.length === 0) {
     toastMsg.value  = 'Keine Bilder zum Auswählen vorhanden.';
     showToast.value = true;
     return;
   }
-
   showSelect.value = true;
   selected.value.clear();
 }
-
 function triggerUpload() {
   showMenu.value = false;
   fileInput.value?.click();
 }
-
 function cancelSelect() {
   showSelect.value = false;
   selected.value.clear();
@@ -264,16 +235,13 @@ function cancelSelect() {
 async function handleUpload(ev: Event) {
   const file = (ev.target as HTMLInputElement).files?.[0];
   if (!file) return;
-
   const mimeType = file.type as 'image/jpeg' | 'image/png';
-
   const arrayBuf = await file.arrayBuffer();
   const tags = ExifReader.load(arrayBuf);
   const dateTag = tags['DateTimeOriginal'] ?? tags['DateTime'];
   const iso = dateTag
     ? new Date(dateTag.description.replace(/:/g, '-')).toISOString()
     : undefined;
-
   const b64 = await fileToBase64(file);
   await savePhoto(b64, iso, mimeType);
   await refresh();
@@ -286,7 +254,6 @@ function toggleSel(p: StoredPhoto) {
     ? selected.value.delete(p.fileName)
     : selected.value.add(p.fileName);
 }
-
 async function deleteSelected() {
   for (const name of selected.value) {
     await deletePhoto(name);
@@ -295,14 +262,36 @@ async function deleteSelected() {
   showSelect.value = false;
 }
 
-/* -------------------- Hilfsfunktionen -------------------- */
+/* -------------------- Detail-Modal Handling -------------------- */
 
+// Modal öffnen
 const goToCamera = () => router.push('/tabs/camera');
 function openPhoto(photo: StoredPhoto) {
   activePhoto.value = photo;
   showModal.value   = true;
 }
 
+async function onEdited(newPhoto: StoredPhoto) {
+  // Finde Index des alten Fotos
+  const idx = photos.value.findIndex(p => p.fileName === activePhoto.value?.fileName);
+
+  if (idx !== -1) {
+    // Entferne das alte Foto
+    photos.value.splice(idx, 1);
+    // Füge das neue Foto an gleicher Stelle ein
+    photos.value.splice(idx, 0, newPhoto);
+    // Aktualisiere das aktive Foto (z.B. im Modal)
+    activePhoto.value = newPhoto;
+  }
+  await refresh();
+}
+
+// Modal zu? -> immer refreshe Galerie
+async function onModalDismiss() {
+  await refresh();
+}
+
+/* -------------------- Hilfsfunktionen -------------------- */
 function fileToBase64(file: File): Promise<string> {
   return new Promise(res => {
     const reader = new FileReader();

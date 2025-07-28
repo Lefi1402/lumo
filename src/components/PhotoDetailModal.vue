@@ -147,50 +147,40 @@ const alertButtons = [
 async function editPhoto() {
   if (!isAndroid || !props.photo) return;
   try {
-    // 1. Alten Pfad merken
     const oldFileName = props.photo.fileName;
-    const oldPhoto = props.photo;
-
-    // 2. Hole Pfad für Editor
+    // Hole Pfad für Editor
     const { uri } = await Filesystem.getUri({
       directory: Directory.Data,
       path: getNativePhotoPath(oldFileName),
     });
 
-    // 3. Öffne PhotoEditor nativ
+    // Editor öffnen
     const result = await PhotoEditor.editPhoto({ path: uri }) as { path: string } | undefined;
-    if (!result || typeof result.path !== 'string' || !result.path) return;
+    if (!result?.path) return;
 
-    // 4. Datei einlesen (Base64)
+    // Einlesen des neuen Bildes
     const file = await Filesystem.readFile({
       path: result.path,
       directory: Directory.Data
     });
-    let base64: string;
-    if (typeof file.data === 'string') {
-      base64 = file.data;
-    } else {
-      base64 = await blobToBase64(file.data);
-    }
+    const base64 = typeof file.data === 'string'
+      ? file.data
+      : await blobToBase64(file.data);
 
-    // 5. Altes Bild löschen
+    // Altes Foto löschen
     await Filesystem.deleteFile({
       path: getNativePhotoPath(oldFileName),
       directory: Directory.Data
     });
 
-    // 6. Neues Bild speichern (mit neuem Dateinamen)
-    const newPhoto: StoredPhoto = await savePhoto(base64);
+    // Neues Foto speichern (liefert neues Objekt)
+    const newPhoto = await savePhoto(base64);
 
-    // 7. Modal zeigt jetzt das neue Bild
-    if (props.photo) {
-      props.photo.webPath  = newPhoto.webPath;
-      props.photo.fileName = newPhoto.fileName;
-      cacheBust.value++;
-      emit('edited');
-    }
+    // Übergib das neue Objekt per Emit, damit der Parent aktualisiert
+    emit('edited', newPhoto);
+
   } catch (e: any) {
-    if (e && e.message && e.message.toLowerCase().includes('cancel')) return;
+    if (e?.message?.toLowerCase().includes('cancel')) return;
     console.error('editPhoto failed', e);
     presentToast(`Bearbeiten fehlgeschlagen:\n${e.message || e}`);
   }
