@@ -84,7 +84,7 @@
                   <div class="skeleton-img"></div>
                 </template>
                 <template v-else>
-                  <ion-img :src="p.webPath + '?v=' + p.fileName" />
+                  <ion-img :src="p.webPath + '?v=' + (imageUpdateMap.get(p.fileName) || '0')" />
                 </template>
                 <ion-checkbox
                   v-if="showSelect"
@@ -164,6 +164,7 @@ import * as ExifReader from 'exifreader';
 
 /* -------------------- State -------------------- */
 const photos      = ref<StoredPhoto[]>([]);
+const imageUpdateMap = ref(new Map<string, number>());
 const loading     = ref(true);
 const showModal   = ref(false);
 const activePhoto = ref<StoredPhoto | null>(null);
@@ -271,24 +272,8 @@ function openPhoto(photo: StoredPhoto) {
   showModal.value   = true;
 }
 
-async function onEdited(newPhoto: StoredPhoto) {
-  // Finde Index des alten Fotos
-  const idx = photos.value.findIndex(p => p.fileName === activePhoto.value?.fileName);
-
-  if (idx !== -1) {
-    // Entferne das alte Foto
-    photos.value.splice(idx, 1);
-    // Füge das neue Foto an gleicher Stelle ein
-    photos.value.splice(idx, 0, newPhoto);
-    // Aktualisiere das aktive Foto (z.B. im Modal)
-    activePhoto.value = newPhoto;
-  }
-  await refresh();
-}
-
-// Modal zu? -> immer refreshe Galerie
-async function onModalDismiss() {
-  await refresh();
+async function onEdited(editedPhoto: StoredPhoto) {
+  imageUpdateMap.value.set(editedPhoto.fileName, Date.now());
 }
 
 /* -------------------- Hilfsfunktionen -------------------- */

@@ -6,7 +6,6 @@
     backdrop-dismiss="true"
   >
     <ion-page>
-      <!-- Header -->
       <ion-header id="ModalHeader">
         <ion-toolbar>
           <ion-buttons slot="start">
@@ -18,12 +17,10 @@
         </ion-toolbar>
       </ion-header>
 
-      <!-- Bild -->
       <ion-content v-if="photo" class="detail-content" scroll="vertical">
         <img :src="cacheBustedWebPath" class="detail-img" />
       </ion-content>
 
-      <!-- Footer -->
       <ion-footer v-if="photo">
         <ion-toolbar class="modal-footer" mode="md">
           <ion-buttons class="modal-btn-group">
@@ -40,7 +37,6 @@
       </ion-footer>
     </ion-page>
 
-    <!-- Lösch‑Bestätigung -->
     <ion-alert
       :is-open="showAlert"
       header="Foto löschen?"
@@ -50,7 +46,6 @@
       @didDismiss="showAlert = false"
     />
 
-    <!-- Toast -->
     <ion-toast
       css-class="lum-toast"
       :icon="warning"
@@ -90,9 +85,7 @@ import { ref, computed, watch, defineProps, defineEmits } from 'vue';
 import { Capacitor } from '@capacitor/core';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { PhotoEditor } from '@capawesome/capacitor-photo-editor';
-// @ts-ignore
-import { basename } from 'path-browserify';
-import { StoredPhoto, deletePhoto, savePhoto } from '@/services/photoService';
+import { StoredPhoto, deletePhoto } from '@/services/photoService';
 
 // Props & Emits
 const props = defineProps<{
@@ -102,21 +95,22 @@ const props = defineProps<{
 const emit = defineEmits(['update:modelValue', 'deleted', 'edited']);
 
 // State
-const isOpen        = ref(props.modelValue);
-const showAlert     = ref(false);
-const showToast     = ref(false);
-const toastMsg      = ref('');
-const isAndroid     = Capacitor.getPlatform() === 'android';
+const isOpen = ref(props.modelValue);
+const showAlert = ref(false);
+const showToast = ref(false);
+const toastMsg = ref('');
+const isAndroid = Capacitor.getPlatform() === 'android';
 
-// Cache-Buster für korrektes Nachladen nach Editieren
-const cacheBust = ref(0);
-const cacheBustedWebPath = computed(() =>
-  props.photo ? `${props.photo.webPath}?v=${cacheBust.value}` : ''
-);
+// **NEUE LOGIK FÜR CACHE-BUSTING**
+const editTimestamp = ref(Date.now());
+const cacheBustedWebPath = computed(() => {
+  // Diese reaktive Variable sorgt dafür, dass die URL sich bei Bedarf ändert
+  return props.photo ? `${props.photo.webPath}?v=${editTimestamp.value}` : '';
+});
 
 // Zwei‑Wege Binding für Modal (open <-> modelValue)
-watch(() => props.modelValue, v => isOpen.value = v);
-watch(isOpen, v => emit('update:modelValue', v));
+watch(() => props.modelValue, (v) => (isOpen.value = v));
+watch(isOpen, (v) => emit('update:modelValue', v));
 
 // Helper-Funktionen
 function close() { isOpen.value = false; }
@@ -143,44 +137,30 @@ const alertButtons = [
   },
 ];
 
-// Bild bearbeiten (nur Android, ersetzt automatisch das aktuelle Bild)
+// **KOMPLETT NEUE `editPhoto`-FUNKTION**
 async function editPhoto() {
   if (!isAndroid || !props.photo) return;
   try {
-    const oldFileName = props.photo.fileName;
-    // Hole Pfad für Editor
+    // Hole den Pfad der Datei, die bearbeitet werden soll
     const { uri } = await Filesystem.getUri({
       directory: Directory.Data,
-      path: getNativePhotoPath(oldFileName),
+      path: getNativePhotoPath(props.photo.fileName),
     });
 
-    // Editor öffnen
-    const result = await PhotoEditor.editPhoto({ path: uri }) as { path: string } | undefined;
-    if (!result?.path) return;
+    // Öffne den Editor. Er bearbeitet die Datei direkt und gibt nichts zurück.
+    await PhotoEditor.editPhoto({ path: uri });
 
-    // Einlesen des neuen Bildes
-    const file = await Filesystem.readFile({
-      path: result.path,
-      directory: Directory.Data
-    });
-    const base64 = typeof file.data === 'string'
-      ? file.data
-      : await blobToBase64(file.data);
+    // Bearbeitung erfolgreich. Nun zwingen wir das <img>-Tag zum Neuladen.
+    editTimestamp.value = Date.now();
 
-    // Altes Foto löschen
-    await Filesystem.deleteFile({
-      path: getNativePhotoPath(oldFileName),
-      directory: Directory.Data
-    });
-
-    // Neues Foto speichern (liefert neues Objekt)
-    const newPhoto = await savePhoto(base64);
-
-    // Übergib das neue Objekt per Emit, damit der Parent aktualisiert
-    emit('edited', newPhoto);
+    // Informiere die Galerie, damit sie ihr Thumbnail auch aktualisieren kann.
+    emit('edited', props.photo);
 
   } catch (e: any) {
-    if (e?.message?.toLowerCase().includes('cancel')) return;
+    // Fange den Fall ab, dass der User den Editor abbricht.
+    if (e?.message?.toLowerCase().includes('cancel')) {
+      return;
+    }
     console.error('editPhoto failed', e);
     presentToast(`Bearbeiten fehlgeschlagen:\n${e.message || e}`);
   }
@@ -190,16 +170,4 @@ async function editPhoto() {
 function getNativePhotoPath(fileName: string) {
   return fileName.startsWith('public/') ? fileName : `public/${fileName}`;
 }
-async function blobToBase64(blob: Blob): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const result = reader.result as string;
-      resolve(result.split(',')[1]);
-    };
-    reader.onerror = reject;
-    reader.readAsDataURL(blob);
-  });
-}
-
 </script>
