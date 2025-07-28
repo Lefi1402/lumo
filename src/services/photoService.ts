@@ -37,12 +37,11 @@ export async function loadPhotos(): Promise<StoredPhoto[]> {
  * @param dateOverride ISO‑Datum aus EXIF (optional)
  * @param mime 'image/jpeg' | 'image/png'  (Default JPEG)
  */
-
 export async function savePhoto(
   base64: string,
   dateOverride?: string,
   mime: 'image/jpeg' | 'image/png' = 'image/jpeg'
-): Promise<void> {
+): Promise<StoredPhoto> {   // <<< Rückgabewert geändert
   const ext      = mime === 'image/png' ? 'png' : 'jpeg';
   const fileName = `${Date.now()}.${ext}`;
   let   webPath: string;
@@ -96,6 +95,8 @@ export async function savePhoto(
   photos.unshift(photo);
   await Preferences.set({ key: PHOTOS_KEY, value: JSON.stringify(photos) });
   console.log('[savePhoto] Foto gespeichert und Preferences aktualisiert:', photo);
+
+  return photo; // <<<<<< Das ist die Änderung!
 }
 
 /* ------------------------------------------------------------------ */

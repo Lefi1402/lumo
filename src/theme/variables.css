@@ -1,9 +1,39 @@
 /* ===========================================================================
    LUMO – Global Theme
 ========================================================================== */
+
+@font-face {
+  font-family: 'Bahnschrift';
+  src: url('/assets/fonts/Bahnschrift.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --lumo-font-family: 'Bahnschrift', sans-serif;
   --lumo-text-color: #ffffff;
+}
+
+body,
+ion-app,
+.lumo-title-center,
+.detail-content,
+.header-text,
+.lumo-empty-gallery,
+.lumo-empty-text,
+.month-header,
+ion-alert.custom-alert,
+ion-toast.lum-toast {
+  font-family: var(--lumo-font-family) !important;
+}
+
+ion-header,
+ion-toolbar {
+  padding-top: env(safe-area-inset-top, 0);
+  padding-top: calc(env(safe-area-inset-top, 0px) + var(--ion-safe-area-top, 24px));
+  --background: #222;            
+  background:   #222 !important; 
 }
 
 /* ===========================================================================
@@ -113,7 +143,6 @@ ion-col.p-0 > ion-img {
 .month-header {
   margin: 20px 0 4px 8px;   
   font-size: 1.1rem;
-  font-family: var(--lumo-font-family);
   color: var(--lumo-text-color);
 }
 .month-block + .month-block {
@@ -121,12 +150,8 @@ ion-col.p-0 > ion-img {
 }
 
 /* ===========================================================================
-   MODAL Blur & Custom Size für PhotoModal (und Blur-Effekt)
+   Foto‑Detail‑Modal – zentriert, NICHT Fullscreen!
 ========================================================================== */
-body.modal-blur .gallery-root {
-  filter: blur(10px) brightness(0.8) grayscale(0.2);
-  transition: filter 0.3s;
-}
 ion-modal.photo-modal,
 ion-modal.lumo-photo-modal {
   --width: 95vw;
@@ -134,51 +159,70 @@ ion-modal.lumo-photo-modal {
   --height: 72vh;
   --max-height: 700px;
   --border-radius: 20px;
+  --background: rgba(25,25,25,0.98);
   --box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-  top: 5vh !important;
-  left: 50% !important;
-  transform: translateX(-50%);
-  align-items: flex-start !important;
-  justify-content: flex-start !important;
-  background: rgba(25, 25, 25, 0.98);
   overflow: hidden;
   padding: 0 !important;
-  z-index: 1500;
 }
-/* Damit das Bild immer vollständig im Modal skaliert */
+ion-modal.photo-modal::part(content),
+ion-modal.lumo-photo-modal::part(content) {
+  margin: auto;
+  border-radius: 20px;
+  max-width: 430px;
+  max-height: 700px;
+  width: 95vw;
+  height: 72vh;
+  background: rgba(25,25,25,0.98);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+ion-modal.photo-modal .detail-content,
+ion-modal.lumo-photo-modal .detail-content {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  padding: 0 !important;
+  margin: 0 !important;
+  min-height: 0;
+  background: transparent;
+}
 ion-modal.photo-modal .detail-img,
 ion-modal.lumo-photo-modal .detail-img {
   width: 100%;
-  height: auto;
-  max-height: 54vh;
+  height: 100%;
   object-fit: contain;
   display: block;
-  margin: 0 auto;
+  margin: 0;
+  border-radius: 10px;
+  background: #181818;
+  max-height: none;
+  min-height: 0;
 }
-/* Header und Footer vom Modal */
 ion-modal.photo-modal ion-header,
-ion-modal.lumo-photo-modal ion-header,
 ion-modal.photo-modal ion-footer,
+ion-modal.lumo-photo-modal ion-header,
 ion-modal.lumo-photo-modal ion-footer {
   background: transparent !important;
   --background: transparent !important;
   box-shadow: none !important;
 }
-/* Button-Gruppe im Footer */
+.modal-close-icon {
+  width: 30px;
+  height: 30px;
+}
 .modal-btn-group {
   display: flex;
   justify-content: center;
   width: 100%;
   gap: 16px;
 }
-/* Modal Close Icon */
-.modal-close-icon {
-  width: 30px;
-  height: 30px;
-}
 
 /* ===========================================================================
-   IonAlert – Runde Ecken & Button‑Farben (für Löschen/Bearbeiten/Neues Foto)
+   IonAlert – Runde Ecken & Button‑Farben
 ========================================================================== */
 ion-alert.custom-alert .alert-wrapper {
   border-radius: 16px;
@@ -215,13 +259,17 @@ ion-alert.custom-alert .alert-button.alert-button-role-newphoto {
 ion-tab-bar {
   --color: #8a8a8a;        
   --color-selected: #ffffff;
-    --background: #222;
+  --background: #222;
   background:   #222 !important;
 }
 ion-tab-bar ion-icon {
   width: 26px;
   height: 26px;
 }
+
+/* ===========================================================================
+   Auswahl-Checkboxen und ActionBar
+========================================================================== */
 .select-box {
   --size:            25px;       
   --border-radius:   12px;         
@@ -231,7 +279,7 @@ ion-tab-bar ion-icon {
   --border-color-checked: var(--border-color); 
   --checkbox-background:         transparent; 
   --checkbox-background-checked: #2196f3;    
-  --checkmark-color:  #ffffff;    /* weißes Häkchen */
+  --checkmark-color:  #ffffff;
   --checkmark-width:  2px;
 
   position: absolute;
@@ -252,10 +300,6 @@ ion-popover.custom-popover::part(content) {
   transform: scale(0.7); 
   transform-origin: center;
 }
-
-/* ===========================================================================
-   Auswahl Buttons
-========================================================================== */
 .select-action-bar {
   position: fixed;
   bottom: 50px;
@@ -307,7 +351,7 @@ ion-toast.lum-toast::part(container) {
   padding-inline-end:   10px;
 }
 ion-toast.lum-toast::part(icon) {
-  margin-inline-end: 4px;       /* enger an Text */
+  margin-inline-end: 4px;
   color: #111;
 }
 
