@@ -1,6 +1,5 @@
 <template>
   <ion-page class="camera-page-transparent">
-    <!-- Header -->
     <ion-header id="CameraHeader">
       <ion-toolbar>
         <ion-title class="lumo-title-center">
@@ -9,22 +8,27 @@
         </ion-title>
       </ion-toolbar>
     </ion-header>
-
-    <!-- Kamera-Content -->
     <ion-content
       :fullscreen="true"
       class="camera-content"
       @touchstart="onTouchStart"
       @touchend="onTouchEnd"
     >
-      <!-- Android-Preview -->
+      <!-- Android-Preview (NUR DIESER DIV für Native) -->
       <div v-if="isAndroid" id="preview-wrapper" class="preview-wrapper"></div>
       <!-- Web-Preview -->
       <video v-else ref="videoRef" autoplay playsinline class="camera-preview" />
       <canvas v-if="isWeb" ref="canvasRef" style="display:none" />
 
-      <!-- Controls -->
+      <!-- RASTER-GRID (immer über Preview, nie über Controls, nicht full fixed!) -->
+      <div class="camera-grid">
+        <div class="vline left"></div>
+        <div class="vline right"></div>
+      </div>
+
+      <!-- Controls & abgedunkelter Hintergrund -->
       <div class="camera-controls">
+        <div class="controls-bg"></div>
         <div class="camera-slot">
           <img v-if="lastPhoto" :src="lastPhoto" class="camera-thumbnail" @click="goToGallery" />
         </div>
@@ -40,7 +44,7 @@
               class="camera-toggle"  
               :style="{ transform: `rotate(${toggleRotation}deg)`, transition: 'transform 0.33s cubic-bezier(.4,.2,.2,1)' }"
               @click="toggleCamera"
-              />
+            />
           </div>
         </div>
       </div>
@@ -76,7 +80,6 @@ import { savePhoto, loadPhotos } from '@/services/photoService';
 import appLogo from '@/assets/Logo.png';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
-
 // ---------- Plattform-Flags ----------
 const isWeb     = Capacitor.getPlatform() === 'web';
 const isAndroid = Capacitor.getPlatform() === 'android';
@@ -92,7 +95,6 @@ const previewPosition= ref<'rear' | 'front'>('rear');              // Android
 const showToast      = ref(false);
 const toastMsg       = ref('');
 const toggleRotation = ref(0);
-
 
 // ---------- Swipe-Gesten ----------
 const touchStartX = ref(0);
@@ -215,6 +217,7 @@ async function fixOrientation(base64: string): Promise<string> {
 }
 
 // ========== Kamera wechseln ==========
+
 async function toggleCamera() {
   toggleRotation.value += 180;
   if (isWeb) {

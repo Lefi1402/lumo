@@ -29,45 +29,51 @@ ion-toast.lum-toast {
   font-family: var(--lumo-font-family) !important;
 }
 
+ion-button {
+  font-family: 'Bahnschrift', var(--lumo-font-family), sans-serif !important;
+}
+
+/* ===================== Header ===================== */
 ion-header,
 ion-toolbar {
   padding-top: calc(env(safe-area-inset-top, 0px) + var(--ion-safe-area-top, 24px));
-  --background: #222;
-  background: #222 !important;
+  --background: #000;
+  background: #000 !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+/* ===================== Tabs Bar ===================== */
+ion-tab-bar {
+  --color: #8a8a8a;
+  --color-selected: #fff;
+  --background: #000;
+  background: #000 !important;
+  --border-width: 0 !important;
+  border-top: none !important;
+  box-shadow: none !important;
+}
+ion-tab-bar ion-icon {
+  width: 24px;
+  height: 24px;
 }
 
 /* ===================== Utility-Klassen ===================== */
 .lumo-title-center {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
+  top: 0; bottom: 0; left: 50%;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
 }
-.header-text {
-  font-size: 28px;
-  font-weight: 700;
-}
-.header-logo {
-  height: 21px;
-  margin-left: 1px;
-  object-fit: contain;
-}
+.header-text { font-size: 28px; font-weight: 700; }
+.header-logo { height: 21px; margin-left: 1px; object-fit: contain; }
 .lumo-empty-gallery {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  color: var(--lumo-text-color);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  height: 100%; color: var(--lumo-text-color);
 }
-.lumo-empty-text {
-  margin-top: 140px;
-  font-size: 1.2rem;
-  text-align: center;
-}
+.lumo-empty-text { margin-top: 140px; font-size: 1.2rem; text-align: center; }
 
 /* ===================== Kamera-Seite ===================== */
 .camera-content,
@@ -76,25 +82,53 @@ ion-toolbar {
   --background: transparent;
   background: transparent !important;
 }
+.camera-preview,
+.preview-wrapper {
+  transition: transform 0.45s cubic-bezier(0.4, 0.2, 0.2, 1);
+  backface-visibility: hidden;
+}
 .camera-preview {
   width: 100%;
   height: calc(100vh - 230px);
   object-fit: cover;
   background: black;
 }
-.camera-controls {
-  position: absolute;
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 6rem);
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  z-index: 20;
+.camera-preview.flipping,
+.preview-wrapper.flipping {
+  transform: rotateY(180deg);
 }
 .preview-wrapper {
   position: absolute;
   inset: 0;
   z-index: 1;
 }
+
+/* ===== Controls & Hintergrundbalken ===== */
+.camera-controls {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 20;
+  bottom: 80px;
+}
+.controls-bg {
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 120px;
+  background: rgba(0,0,0);
+  z-index: 1;
+  pointer-events: none;
+}
+.camera-controls > *:not(.controls-bg) {
+  z-index: 2;
+  position: relative;
+}
+
+/* ===== Einzelne Buttons ===== */
 .camera-slot {
   width: 78px;
   height: 70px;
@@ -109,61 +143,59 @@ ion-toolbar {
   object-fit: cover;
   border-radius: 40px;
 }
-
 .shutter-outer {
-  width: 70px;
-  height: 70px;
+  width: 70px; height: 70px;
   background: rgba(255,255,255,0.12);
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   box-shadow: 0 0 0 2px #fff;
 }
 .shutter-inner {
-  width: 62px;
-  height: 62px;
-  background: #fff;
-  border-radius: 50%;
-  border: none;
-  outline: none;
-  cursor: pointer;
+  width: 62px; height: 62px;
+  background: #fff; border-radius: 50%;
+  border: none; outline: none; cursor: pointer;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   transition: box-shadow 0.15s;
 }
-.shutter-inner:active {
-  box-shadow: 0 0 0 4px #bbb;
-}
-
+.shutter-inner:active { box-shadow: 0 0 0 4px #bbb; }
 .toggle-bg {
-  width: 70%;
-  height: 80%;
+  width: 70%; height: 80%;
   background: rgba(44,44,44,0.55);
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
 }
-.camera-toggle {
-  font-size: 30px;
-  color: #fff;
-}
+.camera-toggle { font-size: 30px; color: #fff; }
 
-.camera-preview,
-.preview-wrapper {
-  transition: transform 0.45s cubic-bezier(0.4, 0.2, 0.2, 1);
-  backface-visibility: hidden;
+/* ===== Camera Grid (Raster) ===== */
+.camera-grid {
+  position: absolute;
+  left: 0; right: 0;
+  top: 0px;
+  bottom: 175px;
+  z-index: 5;
+  pointer-events: none;
 }
-
-.camera-preview.flipping,
-.preview-wrapper.flipping {
-  transform: rotateY(180deg);
+.camera-grid::before,
+.camera-grid::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  border-top: 1.5px solid rgba(255,255,255,0.25);
+  width: 100%;
 }
+.camera-grid::before { top: 33.33%; }
+.camera-grid::after  { top: 66.66%; }
+.camera-grid .vline {
+  position: absolute; top: 0; bottom: 0;
+  width: 1.5px;
+  background: rgba(255,255,255,0.25);
+}
+.camera-grid .vline.left  { left: 33.33%; }
+.camera-grid .vline.right { left: 66.66%; }
 
 /* ===================== Galerie & Monatsheader ===================== */
 ion-col.p-0 > ion-img {
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   object-fit: cover;
   aspect-ratio: 1 / 1;
 }
@@ -172,11 +204,9 @@ ion-col.p-0 > ion-img {
   font-size: 1.1rem;
   color: var(--lumo-text-color);
 }
-.month-block + .month-block {
-  margin-top: 8px;
-}
+.month-block + .month-block { margin-top: 8px; }
 
-/* ===================== Foto-Detail ===================== */
+/* ===================== Foto-Detail Modal ===================== */
 ion-modal.photo-modal,
 ion-modal.lumo-photo-modal {
   --width: 95vw;
@@ -226,12 +256,14 @@ ion-modal.lumo-photo-modal .detail-img {
   max-height: none;
   min-height: 0;
 }
+
 ion-modal.photo-modal ion-header,
-ion-modal.photo-modal ion-footer,
-ion-modal.lumo-photo-modal ion-header,
-ion-modal.lumo-photo-modal ion-footer {
-  background: transparent !important;
-  --background: transparent !important;
+ion-modal.photo-modal ion-toolbar,
+ion-modal.photo-modal ion-footer {
+  --background: #181818 !important;
+  background:   #181818 !important;
+  --color: #fff;
+  border: none !important;
   box-shadow: none !important;
 }
 .modal-close-icon {
@@ -246,42 +278,14 @@ ion-modal.lumo-photo-modal ion-footer {
 }
 
 /* ===================== Alerts ===================== */
-ion-alert.custom-alert .alert-wrapper {
-  border-radius: 16px;
-}
-ion-alert.custom-alert .alert-button {
-  font-size: 16px;
-}
-ion-alert.custom-alert .alert-button.alert-button-role-cancel {
-  color: #ffffff !important;
-  font-weight: 500;
-}
-ion-alert.custom-alert .alert-button.alert-button-role-destructive {
-  color: #ff4d4f !important;
-  font-weight: 600;
-}
-ion-alert.custom-alert .alert-button.alert-button-role-newphoto {
-  color: #4caf50 !important;
-  font-weight: 600;
-}
+ion-alert.custom-alert .alert-wrapper { border-radius: 16px; }
+ion-alert.custom-alert .alert-button { font-size: 16px; }
+ion-alert.custom-alert .alert-button.alert-button-role-cancel { color: #fff !important; font-weight: 500; }
+ion-alert.custom-alert .alert-button.alert-button-role-destructive { color: #ff4d4f !important; font-weight: 600; }
+ion-alert.custom-alert .alert-button.alert-button-role-newphoto { color: #4caf50 !important; font-weight: 600; }
 
 /* ===================== FAB Button ===================== */
-.fab-white {
-  --background: #ffffff;
-  --color: #111111;
-}
-
-/* ===================== Tabs Bar ===================== */
-ion-tab-bar {
-  --color: #8a8a8a;
-  --color-selected: #ffffff;
-  --background: #222;
-  background: #222 !important;
-}
-ion-tab-bar ion-icon {
-  width: 24px;
-  height: 24px;
-}
+.fab-white { --background: #fff; --color: #111; }
 
 /* ===================== Auswahl & Actionbar ===================== */
 .select-box {
@@ -289,11 +293,11 @@ ion-tab-bar ion-icon {
   --border-radius: 12px;
   --border-width: 2px;
   --border-style: solid;
-  --border-color: #ffffff;
+  --border-color: #fff;
   --border-color-checked: var(--border-color);
   --checkbox-background: transparent;
   --checkbox-background-checked: #2196f3;
-  --checkmark-color: #ffffff;
+  --checkmark-color: #fff;
   --checkmark-width: 2px;
   position: absolute;
   top: 10px;
@@ -372,28 +376,4 @@ ion-page {
 @keyframes skeleton {
   0% { background-position: -200px 0 }
   100% { background-position: 200px 0 }
-}
-
-
-/* Test */
-
-.slide-page-enter-active, .slide-page-leave-active {
-  transition: transform 0.35s cubic-bezier(0.4,0.2,0.2,1);
-  will-change: transform;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
-.slide-page-enter-from {
-  transform: translateX(100%);
-}
-.slide-page-leave-to {
-  transform: translateX(-50%);
-  opacity: 0.7;
-}
-
-.slide-page-enter-to,
-.slide-page-leave-from {
-  transform: translateX(0%);
 }

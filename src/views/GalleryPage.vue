@@ -101,26 +101,28 @@
         </div>
       </div>
 
-      <!-- Aktions-Buttons im Auswahlmodus: jetzt als Icon-Buttons -->
+        <!-- Aktions-Buttons im Auswahlmodus: Icon + Text -->
       <div v-if="showSelect" class="select-action-bar">
         <ion-button
-          shape="round"
-          class="icon-circle cancel-btn"
+          class="action-btn cancel-btn"
           color="medium"
           @click="cancelSelect"
           title="Abbrechen"
+          shape="round"
         >
-          <ion-icon :icon="close" />
+          <ion-icon :icon="close" slot="start" />
+          Abbrechen
         </ion-button>
         <ion-button
-          shape="round"
-          class="icon-circle delete-btn"
+          class="action-btn delete-btn"
           color="danger"
           :disabled="!selected.size"
           @click="deleteSelected"
           title="Löschen"
+          shape="round"
         >
-          <ion-icon :icon="trash" />
+          <ion-icon :icon="trash" slot="start" />
+          Löschen
         </ion-button>
       </div>
 
