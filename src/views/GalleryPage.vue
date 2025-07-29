@@ -42,7 +42,11 @@
       @change="handleUpload"
     />
 
-    <ion-content :fullscreen="true">
+    <ion-content
+      :fullscreen="true"
+      @touchstart="onTouchStart"
+      @touchend="onTouchEnd"
+    >
       <!-- Pull-to-Refresh -->
       <ion-refresher slot="fixed" @ionRefresh="doRefresh">
         <ion-refresher-content
@@ -97,20 +101,26 @@
         </div>
       </div>
 
-      <!-- Aktions-Buttons im Auswahlmodus -->
+      <!-- Aktions-Buttons im Auswahlmodus: jetzt als Icon-Buttons -->
       <div v-if="showSelect" class="select-action-bar">
-        <ion-button class="action-btn cancel-btn" color="medium" @click="cancelSelect">
-          <ion-icon slot="start" :icon="close" />
-          Abbrechen
+        <ion-button
+          shape="round"
+          class="icon-circle cancel-btn"
+          color="medium"
+          @click="cancelSelect"
+          title="Abbrechen"
+        >
+          <ion-icon :icon="close" />
         </ion-button>
         <ion-button
-          class="action-btn delete-btn"
+          shape="round"
+          class="icon-circle delete-btn"
           color="danger"
           :disabled="!selected.size"
           @click="deleteSelected"
+          title="Löschen"
         >
-          <ion-icon slot="start" :icon="trash" />
-          Löschen
+          <ion-icon :icon="trash" />
         </ion-button>
       </div>
 
@@ -170,6 +180,20 @@ const imageUpdateMap = ref(new Map<string, number>());
 const showToast      = ref(false);
 const toastMsg       = ref('');
 const router         = useRouter();
+
+// ---------- Swipe-Gesten ----------
+const touchStartX = ref(0);
+
+function onTouchStart(ev: TouchEvent) {
+  touchStartX.value = ev.changedTouches[0].clientX;
+}
+function onTouchEnd(ev: TouchEvent) {
+  const deltaX = ev.changedTouches[0].clientX - touchStartX.value;
+  // Swipe nach rechts: Kamera öffnen
+  if (deltaX > 50) {
+    router.push('/tabs/camera');
+  }
+}
 
 // ---------- Lifecycle: Daten laden ----------
 onIonViewWillEnter(refresh);

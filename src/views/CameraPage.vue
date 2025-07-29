@@ -11,7 +11,12 @@
     </ion-header>
 
     <!-- Kamera-Content -->
-    <ion-content :fullscreen="true" class="camera-content">
+    <ion-content
+      :fullscreen="true"
+      class="camera-content"
+      @touchstart="onTouchStart"
+      @touchend="onTouchEnd"
+    >
       <!-- Android-Preview -->
       <div v-if="isAndroid" id="preview-wrapper" class="preview-wrapper"></div>
       <!-- Web-Preview -->
@@ -24,10 +29,14 @@
           <img v-if="lastPhoto" :src="lastPhoto" class="camera-thumbnail" @click="goToGallery" />
         </div>
         <div class="camera-slot">
-          <button class="camera-button" @click="takePhoto"></button>
+          <div class="shutter-outer">
+            <button class="shutter-inner" @click="takePhoto"></button>
+          </div>
         </div>
         <div class="camera-slot">
-          <ion-icon :icon="refreshOutline" class="camera-toggle" @click="toggleCamera" />
+          <div class="toggle-bg">
+            <ion-icon :icon="refreshOutline" class="camera-toggle" @click="toggleCamera" />
+          </div>
         </div>
       </div>
     </ion-content>
@@ -76,6 +85,20 @@ const previewPosition= ref<'rear' | 'front'>('rear');              // Android
 const showToast      = ref(false);
 const toastMsg       = ref('');
 
+// ---------- Swipe-Gesten ----------
+const touchStartX = ref(0);
+
+function onTouchStart(ev: TouchEvent) {
+  touchStartX.value = ev.changedTouches[0].clientX;
+}
+function onTouchEnd(ev: TouchEvent) {
+  const deltaX = ev.changedTouches[0].clientX - touchStartX.value;
+  // Swipe nach links (Wechsel zur Galerie)
+  if (deltaX < -50) {
+    router.push('/tabs/gallery');
+  }
+}
+
 // ---------- Toast ----------
 function presentToast(msg: string) {
   toastMsg.value  = msg;
@@ -96,7 +119,6 @@ async function startNativePreview() {
   await CameraPreview.start(opts);
   await (CameraPreview as any).setTransparent({ isTransparent: true });
 }
-
 async function stopNativePreview() {
   try {
     await CameraPreview.stop();
@@ -193,12 +215,10 @@ onIonViewDidEnter(async () => {
     }
   }
 });
-
 onIonViewWillLeave(async () => {
   if (isWeb) stopWebCamera();
   else       await stopNativePreview();
 });
-
 onIonViewWillEnter(updateLastPhoto);
 
 </script>
