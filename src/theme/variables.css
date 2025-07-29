@@ -1,6 +1,6 @@
-/* ===========================================================================
+/* =======================================================================
    LUMO – Global Theme
-========================================================================== */
+======================================================================= */
 
 @font-face {
   font-family: 'Bahnschrift';
@@ -15,6 +15,7 @@
   --lumo-text-color: #ffffff;
 }
 
+/* ===================== General ===================== */
 body,
 ion-app,
 .lumo-title-center,
@@ -31,11 +32,11 @@ ion-toast.lum-toast {
 ion-header,
 ion-toolbar {
   padding-top: calc(env(safe-area-inset-top, 0px) + var(--ion-safe-area-top, 24px));
-  --background: #222;            
-  background:   #222 !important; 
+  --background: #222;
+  background: #222 !important;
 }
 
-/* ========================= UTILITY KLASSEN =============================== */
+/* ===================== Utility-Klassen ===================== */
 .lumo-title-center {
   position: absolute;
   top: 0;
@@ -68,7 +69,7 @@ ion-toolbar {
   text-align: center;
 }
 
-/* ======================== KAMERA-SEITE =================================== */
+/* ===================== Kamera-Seite ===================== */
 .camera-content,
 .camera-page-transparent,
 .camera-page-transparent ion-content {
@@ -102,17 +103,6 @@ ion-toolbar {
   align-items: center;
   justify-content: center;
 }
-.camera-button {
-  width: 70px;
-  height: 70px;
-  background: #fff;
-  border-radius: 50%;
-  border: 4px solid #aaa;
-}
-.camera-toggle {
-  font-size: 26px;
-  color: #fff;
-}
 .camera-thumbnail {
   width: 80%;
   height: 80%;
@@ -120,7 +110,46 @@ ion-toolbar {
   border-radius: 40px;
 }
 
-/* ======================== GALERIE GRID & MONATSHEADER ===================== */
+.shutter-outer {
+  width: 78px;
+  height: 78px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 2px #fff;
+}
+.shutter-inner {
+  width: 62px;
+  height: 62px;
+  background: #fff;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: box-shadow 0.15s;
+}
+.shutter-inner:active {
+  box-shadow: 0 0 0 4px #bbb;
+}
+
+.toggle-bg {
+  width: 56px;
+  height: 56px;
+  background: rgba(44,44,44,0.55);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.camera-toggle {
+  font-size: 28px;
+  color: #fff;
+}
+
+/* ===================== Galerie & Monatsheader ===================== */
 ion-col.p-0 > ion-img {
   width: 100%;
   height: 100%;
@@ -136,7 +165,7 @@ ion-col.p-0 > ion-img {
   margin-top: 8px;
 }
 
-/* ======================== MODAL: FOTO-DETAIL ============================== */
+/* ===================== Foto-Detail ===================== */
 ion-modal.photo-modal,
 ion-modal.lumo-photo-modal {
   --width: 95vw;
@@ -205,7 +234,7 @@ ion-modal.lumo-photo-modal ion-footer {
   gap: 16px;
 }
 
-/* ======================== ALERT: CUSTOM DIALOG ============================ */
+/* ===================== Alerts ===================== */
 ion-alert.custom-alert .alert-wrapper {
   border-radius: 16px;
 }
@@ -225,25 +254,25 @@ ion-alert.custom-alert .alert-button.alert-button-role-newphoto {
   font-weight: 600;
 }
 
-/* ======================== FAB BUTTON WEISS ================================ */
+/* ===================== FAB Button ===================== */
 .fab-white {
   --background: #ffffff;
   --color: #111111;
 }
 
-/* ======================== TABS BAR ======================================== */
+/* ===================== Tabs Bar ===================== */
 ion-tab-bar {
   --color: #8a8a8a;
   --color-selected: #ffffff;
   --background: #222;
-  background:   #222 !important;
+  background: #222 !important;
 }
 ion-tab-bar ion-icon {
   width: 24px;
   height: 24px;
 }
 
-/* ======================== AUSWAHL & ACTIONBAR ============================= */
+/* ===================== Auswahl & Actionbar ===================== */
 .select-box {
   --size: 25px;
   --border-radius: 12px;
@@ -280,17 +309,22 @@ ion-popover.custom-popover::part(content) {
   gap: 15px;
   z-index: 60;
 }
-.action-btn {
-  --border-radius: 12px;
-  --padding-start: 20px;
-  --padding-end: 20px;
-  font-size: 15px;
+.icon-circle {
+  min-width: 56px;
+  height: 56px;
+  border-radius: 50% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+  font-size: 28px;
 }
-.cancel-btn { --background: #6e6e6e; --background-hover: #7a7a7a; }
-.delete-btn { --background: #d32f2f; --background-hover: #b71c1c; }
-.action-btn::part(native) { box-shadow: 0 6px 18px rgba(0,0,0,0.55); }
+.icon-circle ion-icon {
+  font-size: 28px;
+  margin: 0;
+}
 
-/* ======================== TOASTS ========================================== */
+/* ===================== Toasts ===================== */
 ion-toast.lum-toast {
   --width: 400px;
   --background: #ffc107;
@@ -302,11 +336,11 @@ ion-toast.lum-toast::part(message) { text-align: center; font-size: 16px; }
 ion-toast.lum-toast::part(container) {
   justify-content: flex-start;
   padding-inline-start: 10px;
-  padding-inline-end:   10px;
+  padding-inline-end: 10px;
 }
 ion-toast.lum-toast::part(icon) { margin-inline-end: 4px; color: #111; }
 
-/* =========== Kamera-Preview  ============================================= */
+/* ===== Kamera-Preview sichtbar machen (toBack:true) ===== */
 html,
 body,
 ion-app,
@@ -316,7 +350,7 @@ ion-page {
   --background: transparent;
 }
 
-/* ========== Skeleton Loader ============================================== */
+/* ===================== Skeleton Loader ===================== */
 .skeleton-img {
   width: 100%;
   aspect-ratio: 1/1;
@@ -327,47 +361,4 @@ ion-page {
 @keyframes skeleton {
   0% { background-position: -200px 0 }
   100% { background-position: 200px 0 }
-}
-
-
-/* ========== Test ============================================== */
-
-.shutter-outer {
-  width: 78px;
-  height: 70px;
-  background: rgba(255,255,255,0.12);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 0 2px #fff;
-}
-.shutter-inner {
-  width: 62px;
-  height: 62px;
-  background: #fff;
-  border-radius: 50%;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  transition: box-shadow 0.15s;
-}
-.shutter-inner:active {
-  box-shadow: 0 0 0 4px #bbb;
-}
-
-/* Kamera-Wechsel-Button Hintergrund */
-.toggle-bg {
-  width: 80%;
-  height: 80%;
-  background: rgba(44,44,44,0.55);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.camera-toggle {
-  font-size: 28px;
-  color: #fff;
 }
