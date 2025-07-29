@@ -159,7 +159,7 @@ import {
   cloudUploadOutline, warning
 } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
-import { ref, computed } from 'vue';
+import { ref, computed, nextTick } from 'vue';
 import { loadPhotos, StoredPhoto, deletePhoto, savePhoto } from '@/services/photoService';
 import PhotoDetailModal from '@/components/PhotoDetailModal.vue';
 import appLogo from '@/assets/Logo.png';
@@ -183,17 +183,25 @@ const router         = useRouter();
 
 // ---------- Swipe-Gesten ----------
 const touchStartX = ref(0);
+const touchStartY = ref(0);
 
 function onTouchStart(ev: TouchEvent) {
   touchStartX.value = ev.changedTouches[0].clientX;
+  touchStartY.value = ev.changedTouches[0].clientY;
 }
-function onTouchEnd(ev: TouchEvent) {
+
+async function onTouchEnd(ev: TouchEvent) {
   const deltaX = ev.changedTouches[0].clientX - touchStartX.value;
-  // Swipe nach rechts: Kamera öffnen
-  if (deltaX > 50) {
+  const deltaY = Math.abs(ev.changedTouches[0].clientY - touchStartY.value);
+  if (deltaX < -60 && deltaY < 40) {
     router.push('/tabs/camera');
+    await nextTick();
+    const tabBar = document.querySelector('ion-tab-bar');
+    const tabBtn = tabBar?.querySelector('ion-tab-button[tab="camera"]');
+    if (tabBtn) (tabBtn as HTMLElement).click();
   }
 }
+
 
 // ---------- Lifecycle: Daten laden ----------
 onIonViewWillEnter(refresh);

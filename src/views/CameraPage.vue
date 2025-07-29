@@ -35,7 +35,12 @@
         </div>
         <div class="camera-slot">
           <div class="toggle-bg">
-            <ion-icon :icon="refreshOutline" class="camera-toggle" @click="toggleCamera" />
+            <ion-icon 
+              :icon="syncOutline" 
+              class="camera-toggle"  
+              :style="{ transform: `rotate(${toggleRotation}deg)`, transition: 'transform 0.33s cubic-bezier(.4,.2,.2,1)' }"
+              @click="toggleCamera"
+              />
           </div>
         </div>
       </div>
@@ -60,7 +65,7 @@ import {
   IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon, IonToast,
   onIonViewDidEnter, onIonViewWillLeave, onIonViewWillEnter,
 } from '@ionic/vue';
-import { refreshOutline, warning } from 'ionicons/icons';
+import { syncOutline, warning } from 'ionicons/icons';
 import { ref, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
 // @ts-ignore
@@ -69,6 +74,8 @@ import { Capacitor } from '@capacitor/core';
 import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions } from '@capacitor-community/camera-preview';
 import { savePhoto, loadPhotos } from '@/services/photoService';
 import appLogo from '@/assets/Logo.png';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
+
 
 // ---------- Plattform-Flags ----------
 const isWeb     = Capacitor.getPlatform() === 'web';
@@ -84,18 +91,27 @@ const facingMode     = ref<'user' | 'environment'>('environment'); // Web
 const previewPosition= ref<'rear' | 'front'>('rear');              // Android
 const showToast      = ref(false);
 const toastMsg       = ref('');
+const toggleRotation = ref(0);
+
 
 // ---------- Swipe-Gesten ----------
 const touchStartX = ref(0);
+const touchStartY = ref(0);
 
 function onTouchStart(ev: TouchEvent) {
   touchStartX.value = ev.changedTouches[0].clientX;
+  touchStartY.value = ev.changedTouches[0].clientY;
 }
-function onTouchEnd(ev: TouchEvent) {
+
+async function onTouchEnd(ev: TouchEvent) {
   const deltaX = ev.changedTouches[0].clientX - touchStartX.value;
-  // Swipe nach links (Wechsel zur Galerie)
-  if (deltaX < -50) {
+  const deltaY = Math.abs(ev.changedTouches[0].clientY - touchStartY.value);
+  if (deltaX > 60 && deltaY < 40) {
     router.push('/tabs/gallery');
+    await nextTick();
+    const tabBar = document.querySelector('ion-tab-bar');
+    const tabBtn = tabBar?.querySelector('ion-tab-button[tab="gallery"]');
+    if (tabBtn) (tabBtn as HTMLElement).click();
   }
 }
 
@@ -146,6 +162,7 @@ async function updateLastPhoto() {
 
 // ========== Foto aufnehmen ==========
 async function takePhoto() {
+  await Haptics.impact({ style: ImpactStyle.Light });
   if (isWeb) {
     // (Web-Code)
     return;
@@ -163,6 +180,7 @@ async function takePhoto() {
     presentToast('Foto konnte nicht gespeichert werden.');
   }
 }
+
 async function fixOrientation(base64: string): Promise<string> {
   return new Promise((resolve, reject) => {
     loadImage(
@@ -171,7 +189,24 @@ async function fixOrientation(base64: string): Promise<string> {
         if ((canvas as any).type === 'error') {
           reject('Fehler beim Drehen');
         } else {
-          resolve((canvas as HTMLCanvasElement).toDataURL('image/jpeg').split(',')[1]);
+          const orig = canvas as HTMLCanvasElement;
+          const w = orig.width;
+          const h = orig.height;
+          const ctx = orig.getContext('2d');
+          if (ctx) {
+            const flipCanvas = document.createElement('canvas');
+            flipCanvas.width = w;
+            flipCanvas.height = h;
+            const flipCtx = flipCanvas.getContext('2d');
+            if (flipCtx) {
+              flipCtx.translate(w, 0); 
+              flipCtx.scale(-1, 1);   
+              flipCtx.drawImage(orig, 0, 0, w, h, 0, 0, w, h);
+              resolve(flipCanvas.toDataURL('image/jpeg').split(',')[1]);
+              return;
+            }
+          }
+          resolve(orig.toDataURL('image/jpeg').split(',')[1]);
         }
       },
       { orientation: 8, canvas: true }
@@ -181,6 +216,7 @@ async function fixOrientation(base64: string): Promise<string> {
 
 // ========== Kamera wechseln ==========
 async function toggleCamera() {
+  toggleRotation.value += 180;
   if (isWeb) {
     facingMode.value = facingMode.value === 'user' ? 'environment' : 'user';
     try {

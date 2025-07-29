@@ -104,15 +104,15 @@ ion-toolbar {
   justify-content: center;
 }
 .camera-thumbnail {
-  width: 80%;
+  width: 70%;
   height: 80%;
   object-fit: cover;
   border-radius: 40px;
 }
 
 .shutter-outer {
-  width: 78px;
-  height: 78px;
+  width: 70px;
+  height: 70px;
   background: rgba(255,255,255,0.12);
   border-radius: 50%;
   display: flex;
@@ -136,8 +136,8 @@ ion-toolbar {
 }
 
 .toggle-bg {
-  width: 56px;
-  height: 56px;
+  width: 70%;
+  height: 80%;
   background: rgba(44,44,44,0.55);
   border-radius: 50%;
   display: flex;
@@ -145,8 +145,19 @@ ion-toolbar {
   justify-content: center;
 }
 .camera-toggle {
-  font-size: 28px;
+  font-size: 30px;
   color: #fff;
+}
+
+.camera-preview,
+.preview-wrapper {
+  transition: transform 0.45s cubic-bezier(0.4, 0.2, 0.2, 1);
+  backface-visibility: hidden;
+}
+
+.camera-preview.flipping,
+.preview-wrapper.flipping {
+  transform: rotateY(180deg);
 }
 
 /* ===================== Galerie & Monatsheader ===================== */
@@ -361,4 +372,28 @@ ion-page {
 @keyframes skeleton {
   0% { background-position: -200px 0 }
   100% { background-position: 200px 0 }
+}
+
+
+/* Test */
+
+.slide-page-enter-active, .slide-page-leave-active {
+  transition: transform 0.35s cubic-bezier(0.4,0.2,0.2,1);
+  will-change: transform;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.slide-page-enter-from {
+  transform: translateX(100%);
+}
+.slide-page-leave-to {
+  transform: translateX(-50%);
+  opacity: 0.7;
+}
+
+.slide-page-enter-to,
+.slide-page-leave-from {
+  transform: translateX(0%);
 }
