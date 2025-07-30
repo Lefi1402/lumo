@@ -82,7 +82,7 @@ src/
  │   └─ photoService.ts         # z.B. savePhoto / loadPhotos
  ├─ views/
  │   ├─ GalleryPage.vue         # Gallerie - Seite
- │   ├─ CameraPage.vue			# Kamera - Seite
+ │   ├─ CameraPage.vue          # Kamera - Seite
  │   └─ Tabs.vue                # Seiten
  ├─ router/
  └─ theme/variables.css         # Custom CSS
