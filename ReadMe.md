@@ -1,8 +1,8 @@
 
 # 📸 LUMO – Die smarte Fotos-App
 
-Verwalte, bearbeite und gruppiere deine Fotos mit **Vue 3**, **Ionic Vue** und **Capacitor**.  
-Die App unterstützt einen modernen Web‑First‑Workflow sowie native Android-Builds.
+Verwalte, bearbeite und gruppiere deine Fotos mit **Vue 3**, **Ionic** und **Capacitor**.  
+Die App unterstützt native Android-Builds.
 
 ## ✨ Features
 
