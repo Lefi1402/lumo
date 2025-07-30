@@ -77,7 +77,7 @@ cd android
 ```
 src/
  ├─ components/  
- ├─	 └─ PhotoDetailModal.vue        # u.a. PhotoDetailModal
+ ├─	 └─ PhotoDetailModal.vue    # u.a. PhotoDetailModal
  ├─ services/
  │   └─ photoService.ts             # z.B. savePhoto / loadPhotos
  ├─ views/
