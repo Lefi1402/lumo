@@ -77,15 +77,15 @@ cd android
 ```
 src/
  ├─ components/  
- ├─	 └─ PhotoDetailModal.vue    # u.a. PhotoDetailModal
+ ├─	 └─ PhotoDetailModal.vue        # u.a. PhotoDetailModal
  ├─ services/
- │   └─ photoService.ts         # z.B. savePhoto / loadPhotos
+ │   └─ photoService.ts             # z.B. savePhoto / loadPhotos
  ├─ views/
- │   ├─ GalleryPage.vue         # Gallerie - Seite
- │   ├─ CameraPage.vue          # Kamera - Seite
- │   └─ Tabs.vue                # Seiten
+ │   ├─ GalleryPage.vue             # Gallerie - Seite
+ │   ├─ CameraPage.vue              # Kamera - Seite
+ │   └─ Tabs.vue                    # Seiten
  ├─ router/
- └─ theme/variables.css         # Custom CSS
+ └─ theme/variables.css             # Custom CSS
 
 capacitor.config.ts
 android/
