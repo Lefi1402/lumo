@@ -30,8 +30,8 @@ Die App unterstützt einen modernen Web‑First‑Workflow sowie native Android-
 ### 1. Repository klonen
 
 ```bash
-git clone https://github.com/Lefi1402/lumo-photo-app.git
-cd lumo-photo-app
+git clone https://github.com/Lefi1402/lumo.git
+cd lumo
 ```
 
 ### 2. Abhängigkeiten installieren
@@ -51,18 +51,9 @@ ionic serve
 ## 🤖 Android: Build & Test
 
 ```bash
-npx cap add android
 npm run build
 npx cap sync android
 npx cap open android
-```
-
-## 🍏 iOS (optional)
-
-```bash
-npx cap add ios
-npm run build && npx cap sync ios
-npx cap open ios
 ```
 
 ## 🏗 Build & Release
@@ -79,12 +70,6 @@ npm run build
 cd android
 ./gradlew bundleRelease    # für Google Play
 ./gradlew assembleRelease  # lokale APK
-```
-
-### iOS IPA
-
-```bash
-xcodebuild -workspace App.xcworkspace -scheme App -configuration Release
 ```
 
 ## 📁 Projektstruktur (Kurzüberblick)
