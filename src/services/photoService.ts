@@ -14,7 +14,7 @@ export interface StoredPhoto {
 const PHOTOS_KEY = 'photos';
 const isWeb = Capacitor.getPlatform() === 'web';
 
-// Liefert den richtigen Pfad für native Dateien
+// Liefert den Pfad für native Dateien
 export function getNativePhotoPath(fileName: string) {
   return fileName.startsWith('public/') ? fileName : `public/${fileName}`;
 }
@@ -25,7 +25,7 @@ export async function loadPhotos(): Promise<StoredPhoto[]> {
   try {
     return value ? (JSON.parse(value) as StoredPhoto[]) : [];
   } catch {
-    await Preferences.remove({ key: PHOTOS_KEY }); // defekte JSON leeren
+    await Preferences.remove({ key: PHOTOS_KEY });
     return [];
   }
 }

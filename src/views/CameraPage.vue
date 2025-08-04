@@ -14,13 +14,13 @@
       @touchstart="onTouchStart"
       @touchend="onTouchEnd"
     >
-      <!-- Android-Preview (NUR DIESER DIV für Native) -->
+      <!-- Android-Preview -->
       <div v-if="isAndroid" id="preview-wrapper" class="preview-wrapper"></div>
       <!-- Web-Preview -->
       <video v-else ref="videoRef" autoplay playsinline class="camera-preview" />
       <canvas v-if="isWeb" ref="canvasRef" style="display:none" />
 
-      <!-- RASTER-GRID (immer über Preview, nie über Controls, nicht full fixed!) -->
+      <!-- RASTER-GRID -->
       <div class="camera-grid">
         <div class="vline left"></div>
         <div class="vline right"></div>
@@ -141,7 +141,7 @@ async function stopNativePreview() {
   try {
     await CameraPreview.stop();
     await (CameraPreview as any).setTransparent({ isTransparent: false });
-  } catch { /* Ignore if not running */ }
+  } catch {}
 }
 
 // ========== Preview: Web ==========

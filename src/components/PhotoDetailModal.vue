@@ -140,4 +140,5 @@ async function editPhoto() {
 function getNativePhotoPath(fileName: string) {
   return fileName.startsWith('public/') ? fileName : `public/${fileName}`;
 }
+
 </script>

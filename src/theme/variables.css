@@ -58,7 +58,7 @@ ion-tab-bar ion-icon {
   height: 24px;
 }
 
-/* ===================== Utility-Klassen ===================== */
+/* ===================== Utility-Classes ===================== */
 .lumo-title-center {
   position: absolute;
   top: 0; bottom: 0; left: 50%;
@@ -75,7 +75,7 @@ ion-tab-bar ion-icon {
 }
 .lumo-empty-text { margin-top: 140px; font-size: 1.2rem; text-align: center; }
 
-/* ===================== Kamera-Seite ===================== */
+/* ===================== CameraPage.vue ===================== */
 .camera-content,
 .camera-page-transparent,
 .camera-page-transparent ion-content {
@@ -103,7 +103,7 @@ ion-tab-bar ion-icon {
   z-index: 1;
 }
 
-/* ===== Controls & Hintergrundbalken ===== */
+/* ===== Controls ===== */
 .camera-controls {
   position: absolute;
   width: 100%;
@@ -128,7 +128,7 @@ ion-tab-bar ion-icon {
   position: relative;
 }
 
-/* ===== Einzelne Buttons ===== */
+/* ===== Buttons ===== */
 .camera-slot {
   width: 78px;
   height: 70px;
@@ -166,7 +166,7 @@ ion-tab-bar ion-icon {
 }
 .camera-toggle { font-size: 30px; color: #fff; }
 
-/* ===== Camera Grid (Raster) ===== */
+/* ===== Camera Grid ===== */
 .camera-grid {
   position: absolute;
   left: 0; right: 0;
@@ -193,7 +193,7 @@ ion-tab-bar ion-icon {
 .camera-grid .vline.left  { left: 33.33%; }
 .camera-grid .vline.right { left: 66.66%; }
 
-/* ===================== Galerie & Monatsheader ===================== */
+/* ===================== GalleryPage.vue ===================== */
 ion-col.p-0 > ion-img {
   width: 100%; height: 100%;
   object-fit: cover;
@@ -206,7 +206,7 @@ ion-col.p-0 > ion-img {
 }
 .month-block + .month-block { margin-top: 8px; }
 
-/* ===================== Foto-Detail Modal ===================== */
+/* ===================== Detail Modal ===================== */
 ion-modal.photo-modal,
 ion-modal.lumo-photo-modal {
   --width: 95vw;
@@ -287,7 +287,7 @@ ion-alert.custom-alert .alert-button.alert-button-role-newphoto { color: #4caf50
 /* ===================== FAB Button ===================== */
 .fab-white { --background: #fff; --color: #111; }
 
-/* ===================== Auswahl & Actionbar ===================== */
+/* ===================== Menu ===================== */
 .select-box {
   --size: 25px;
   --border-radius: 12px;
@@ -355,7 +355,7 @@ ion-toast.lum-toast::part(container) {
 }
 ion-toast.lum-toast::part(icon) { margin-inline-end: 4px; color: #111; }
 
-/* ===== Kamera-Preview sichtbar machen (toBack:true) ===== */
+/* ===== Kamera-Preview ===== */
 html,
 body,
 ion-app,
