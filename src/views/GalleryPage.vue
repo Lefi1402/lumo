@@ -26,21 +26,13 @@
           <ion-icon slot="start" :icon="checkboxOutline" class="icon-select" />
           <ion-label>Auswählen</ion-label>
         </ion-item>
-        <ion-item button @click="triggerUpload">
+        <!-- NEU: nativer Import -->
+        <ion-item button @click="importFromDevice">
           <ion-icon slot="start" :icon="cloudUploadOutline" class="icon-upload" />
-          <ion-label>Upload</ion-label>
+          <ion-label>Importieren</ion-label>
         </ion-item>
       </ion-list>
     </ion-popover>
-
-    <!-- Verstecktes File-Input -->
-    <input
-      ref="fileInput"
-      type="file"
-      accept="image/jpeg,image/png"
-      hidden
-      @change="handleUpload"
-    />
 
     <ion-content
       :fullscreen="true"
@@ -101,7 +93,7 @@
         </div>
       </div>
 
-        <!-- Aktions-Buttons im Auswahlmodus: Icon + Text -->
+      <!-- Aktions-Buttons im Auswahlmodus -->
       <div v-if="showSelect" class="select-action-bar">
         <ion-button
           class="action-btn cancel-btn"
@@ -165,8 +157,10 @@ import { ref, computed, nextTick } from 'vue';
 import { loadPhotos, StoredPhoto, deletePhoto, savePhoto } from '@/services/photoService';
 import PhotoDetailModal from '@/components/PhotoDetailModal.vue';
 import appLogo from '@/assets/Logo.png';
-// @ts-ignore
-import * as ExifReader from 'exifreader';
+import { Camera, CameraResultType, CameraSource, GalleryPhoto } from '@capacitor/camera';
+import { Filesystem } from '@capacitor/filesystem';
+import { Capacitor } from '@capacitor/core';
+
 
 // ---------- State ----------
 const photos         = ref<StoredPhoto[]>([]);
@@ -176,7 +170,6 @@ const showSelect     = ref(false);
 const selected       = ref<Set<string>>(new Set());
 const showModal      = ref(false);
 const activePhoto    = ref<StoredPhoto | null>(null);
-const fileInput      = ref<HTMLInputElement | null>(null);
 const loadingImages  = ref<Set<string>>(new Set());
 const imageUpdateMap = ref(new Map<string, number>());
 const showToast      = ref(false);
@@ -205,7 +198,7 @@ async function onTouchEnd(ev: TouchEvent) {
 }
 
 
-// ---------- Lifecycle: Daten laden ----------
+// ---------- Lifecycle ----------
 onIonViewWillEnter(refresh);
 
 async function refresh() {
@@ -241,37 +234,67 @@ function activateSelect() {
   showSelect.value = true;
   selected.value.clear();
 }
-function triggerUpload() {
-  showMenu.value = false;
-  fileInput.value?.click();
-}
+
 function cancelSelect() {
   showSelect.value = false;
   selected.value.clear();
 }
 
-// ---------- Upload & Hilfsfunktionen ----------
-async function handleUpload(ev: Event) {
-  const file = (ev.target as HTMLInputElement).files?.[0];
-  if (!file) return;
-  const mimeType = file.type as 'image/jpeg' | 'image/png';
-  const arrayBuf = await file.arrayBuffer();
-  const tags = ExifReader.load(arrayBuf);
-  const dateTag = tags['DateTimeOriginal'] ?? tags['DateTime'];
-  const iso = dateTag
-    ? new Date(dateTag.description.replace(/:/g, '-')).toISOString()
-    : undefined;
-  const b64 = await fileToBase64(file);
-  await savePhoto(b64, iso, mimeType);
-  await refresh();
-  (ev.target as HTMLInputElement).value = '';
+
+// ---------- Import  ----------
+async function importFromDevice() {
+  showMenu.value = false;
+  try {
+    const res = await Camera.pickImages({ quality: 85, limit: 20 });
+    let imported = 0;
+
+    for (const p of res.photos) {
+      try {
+        const base64 = await getBase64(p.path ?? p.webPath);
+        const mime   = (p.format?.toLowerCase() === 'png') ? 'image/png' : 'image/jpeg';
+        await savePhoto(base64, undefined, mime);
+        imported++;
+      } catch {/* einzelnes Bild überspringen */}
+    }
+    if (imported > 0) {
+      await refresh();
+      return;
+    }
+    const ph = await Camera.getPhoto({
+      source: CameraSource.Photos,
+      resultType: CameraResultType.Base64,
+      quality: 85,
+      correctOrientation: true,
+    });
+    if (ph.base64String) {
+      await savePhoto(ph.base64String, undefined, 'image/jpeg');
+      await refresh();
+      return;
+    }
+    toastMsg.value = 'Keine Bilder importiert.';
+    showToast.value = true;
+  } catch {
+    toastMsg.value = 'Import abgebrochen oder fehlgeschlagen.';
+    showToast.value = true;
+  }
 }
 
-function fileToBase64(file: File): Promise<string> {
-  return new Promise(res => {
-    const reader = new FileReader();
-    reader.onload = () => res((reader.result as string).split(',')[1]);
-    reader.readAsDataURL(file);
+// ---------- Hilfsfunktion ----------
+async function getBase64(uri?: string | null): Promise<string> {
+  if (!uri) throw new Error('Kein URI verfügbar');
+  try {
+    const file = await Filesystem.readFile({ path: uri });
+    if (typeof file.data === 'string') return file.data; 
+  } catch {/* weiter zu B */ }
+  const url  = Capacitor.convertFileSrc(uri);
+  const resp = await fetch(url);
+  const blob = await resp.blob();
+
+  return await new Promise<string>((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve((r.result as string).split(',')[1]);
+    r.onerror = reject;
+    r.readAsDataURL(blob);
   });
 }
 

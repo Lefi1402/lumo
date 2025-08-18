@@ -82,25 +82,17 @@ ion-tab-bar ion-icon {
   --background: transparent;
   background: transparent !important;
 }
-.camera-preview,
+
 .preview-wrapper {
   transition: transform 0.45s cubic-bezier(0.4, 0.2, 0.2, 1);
   backface-visibility: hidden;
-}
-.camera-preview {
-  width: 100%;
-  height: calc(100vh - 230px);
-  object-fit: cover;
-  background: black;
-}
-.camera-preview.flipping,
-.preview-wrapper.flipping {
-  transform: rotateY(180deg);
-}
-.preview-wrapper {
   position: absolute;
   inset: 0;
   z-index: 1;
+}
+
+.preview-wrapper.flipping {
+  transform: rotateY(180deg);
 }
 
 /* ===== Controls ===== */
