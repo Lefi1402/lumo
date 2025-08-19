@@ -325,3 +325,4 @@ async function onEdited(editedPhoto: StoredPhoto) {
   imageUpdateMap.value.set(editedPhoto.fileName, Date.now());
 }
 </script>
+
