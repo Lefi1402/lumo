@@ -7,12 +7,12 @@ Die App unterstützt native Android-Builds.
 ## ✨ Features
 
 - 📁 **Galerie-Grid**: Mindestens 3 Bilder pro Zeile, automatisch gruppiert nach Monat/Jahr
-- 📷 **Kamera-Seite**: Fotos aufnehmen (Web via `getUserMedia`, nativ via `@capacitor/camera`)
+- 📷 **Kamera-Seite**: Fotos aufnehmen (nativ via `@capacitor/camera`)
 - 🖼️ **Detailansicht**: Vollbild-Modal mit Bearbeiten (Android-only via `PhotoEditor`), Löschen
 - ✅ **Mehrfachauswahl und Batch-Delete**
-- ☁️ **Datei-Upload** (JPG/PNG) inklusive EXIF-Auswertung → korrekte zeitliche Einordnung
-- 🔔 Einheitliche Toasts, Dialoge mit abgerundeten Ecken, **Bahnschrift-Font**
-- 🌙 **Dark Mode Ready** (basierend auf Ionic Dark Palette)
+- ☁️ **Datei-Upload** (JPG/PNG) 
+- 🔔 Einheitliche Toasts, Dialoge, **Bahnschrift-Font**
+- 🌙 **Dark Mode** (basierend auf Ionic Dark Palette)
 
 ## 🧰 Voraussetzungen
 
@@ -23,7 +23,6 @@ Die App unterstützt native Android-Builds.
 | Ionic CLI       | ~7.x (`npm i -g @ionic/cli`)                |
 | Android Studio  | 2023.x (SDK 34)                             |
 | Java JDK        | 17                                          |
-| Xcode           | 15 + CocoaPods ≥ 1.13 (für iOS, optional)   |
 
 ## 🚀 Schnellstart
 
